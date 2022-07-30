@@ -1,20 +1,38 @@
 package View;
 
+import Controllers.ForgotPasswordController;
+import Controllers.SignUpController;
 import DataBase.DataBase;
 import DataBase.UserRepository;
 import ShowClass.ShowStartPage;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Scanner;
 
 
 public class Main extends Application {
+
+    @FXML
+    private TextField idTextField;
+
+    @FXML
+    private TextField passwordTextField;
+
+    @FXML
+    private VBox right;
+
 
     private static Stage stage;
     @Override
@@ -32,7 +50,7 @@ public class Main extends Application {
 
 
 
-//        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("fxml\\Login.fxml"));
+       // FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/Login.fxml"));
 //        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
 //        stage.setTitle("Hello!");
 //        stage.setScene(scene);
@@ -40,7 +58,7 @@ public class Main extends Application {
 
 
         this.stage=stage;
-        Pane pane = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
+        BorderPane pane = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
         Scene scene = new Scene(pane);
         stage.setScene(scene);
         stage.setTitle("EDU");
@@ -50,5 +68,28 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public void signUp(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SignUp.fxml"));
+        VBox vBox=fxmlLoader.load();
+        SignUpController signUpController=fxmlLoader.getController();
+        right=vBox;
+        Scene scene = new Scene(vBox);
+        stage.setScene(scene);
+    }
+
+    public void forgetPassword(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/ForgotPassword.fxml"));
+        VBox vBox=fxmlLoader.load();
+        ForgotPasswordController forgotPasswordController=fxmlLoader.getController();
+        right=vBox;
+    }
+
+    public void exit(ActionEvent actionEvent) {
+        Controller.stage.close();
+    }
+
+    public void logIn(ActionEvent actionEvent) {
     }
 }
