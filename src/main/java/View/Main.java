@@ -2,9 +2,6 @@ package View;
 
 import Controllers.ForgotPasswordController;
 import Controllers.SignUpController;
-import DataBase.DataBase;
-import DataBase.UserRepository;
-import ShowClass.ShowStartPage;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,14 +9,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.util.Scanner;
 
 
 public class Main extends Application {

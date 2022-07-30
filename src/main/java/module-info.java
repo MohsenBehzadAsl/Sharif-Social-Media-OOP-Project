@@ -6,4 +6,6 @@ module oop_project {
 
     opens View to javafx.fxml;
     exports View;
+    exports Controllers;
+    opens Controllers to javafx.fxml;
 }

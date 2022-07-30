@@ -1,5 +1,7 @@
 package Controllers;
 
+import Controllers.ForgotPasswordController;
+import Controllers.SignUpController;
 import View.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,17 +23,19 @@ public class LoginController {
 
 
     public void signUp(ActionEvent actionEvent) throws IOException {
+        right.getChildren().clear();
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SignUp.fxml"));
         VBox vBox=fxmlLoader.load();
         SignUpController signUpController=fxmlLoader.getController();
-        right=vBox;
+        right.getChildren().add(vBox);
     }
 
     public void forgetPassword(ActionEvent actionEvent) throws IOException {
+        right.getChildren().clear();
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/ForgotPassword.fxml"));
         VBox vBox=fxmlLoader.load();
         ForgotPasswordController forgotPasswordController=fxmlLoader.getController();
-        right=vBox;
+        right.getChildren().add(vBox);
     }
 
     public void exit(ActionEvent actionEvent) {
