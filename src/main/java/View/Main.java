@@ -40,7 +40,7 @@ public class Main extends Application {
 
 
         this.stage=stage;
-        Pane pane = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));
+        Pane pane = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
         Scene scene = new Scene(pane);
         stage.setScene(scene);
         stage.setTitle("EDU");

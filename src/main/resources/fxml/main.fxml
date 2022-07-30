@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <VBox prefHeight="200.0" prefWidth="635.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="335.0" prefWidth="635.0" spacing="10.0">
+               <padding>
+                  <Insets left="100.0" top="40.0" />
+               </padding>
+               <children>
+                  <Label prefHeight="77.0" prefWidth="503.0" text="Sharif Twitter Project">
+                     <font>
+                        <Font name="Bell MT" size="55.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="18.0" prefWidth="285.0" text="Developed By:">
+                     <font>
+                        <Font name="Bell MT" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="18.0" prefWidth="285.0" text="   Mohsen BehzadAsl">
+                     <font>
+                        <Font name="Bell MT" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="35.0" prefWidth="302.0" text="   Seyed Hamid Ghasemi">
+                     <font>
+                        <Font name="Bell MT" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="18.0" prefWidth="285.0" text="   Mohammad Morsali">
+                     <font>
+                        <Font name="Bell MT" size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="264.0" prefWidth="633.0" spacing="25.0">
+               <padding>
+                  <Insets left="30.0" right="30.0" />
+               </padding>
+               <children>
+                  <HBox prefHeight="39.0" prefWidth="452.0">
+                     <children>
+                        <Label prefHeight="39.0" prefWidth="125.0" text="ID">
+                           <font>
+                              <Font name="Bell MT" size="30.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <TextField prefHeight="36.0" prefWidth="320.0" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+                  <HBox prefHeight="41.0" prefWidth="452.0">
+                     <children>
+                        <Label prefHeight="41.0" prefWidth="125.0" text="Password">
+                           <font>
+                              <Font name="Bell MT" size="30.0" />
+                           </font>
+                        </Label>
+                        <TextField prefHeight="41.0" prefWidth="319.0" />
+                     </children>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+            </VBox>
+         </children>
+      </VBox>
+   </left>
+</BorderPane>
