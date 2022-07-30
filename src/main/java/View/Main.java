@@ -73,16 +73,20 @@ public class Main extends Application {
     public void signUp(ActionEvent actionEvent) throws IOException {
         right.getChildren().clear();
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SignUp.fxml"));
+        System.out.println(getClass().getResource("/fxml/SignUp.fxml"));
         VBox vBox=fxmlLoader.load();
         SignUpController signUpController=fxmlLoader.getController();
+        signUpController.right=right;
         right.getChildren().add(vBox);
     }
 
     public void forgetPassword(ActionEvent actionEvent) throws IOException {
         right.getChildren().clear();
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/ForgotPassword.fxml"));
+        System.out.println(getClass().getResource("/fxml/ForgotPassword.fxml"));
         VBox vBox=fxmlLoader.load();
         ForgotPasswordController forgotPasswordController=fxmlLoader.getController();
+        forgotPasswordController.right=right;
         right.getChildren().add(vBox);
     }
 
