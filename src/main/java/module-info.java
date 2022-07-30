@@ -1,8 +1,9 @@
-module sample.oop_project {
+module oop_project {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
 
-    opens sample.oop_project to javafx.fxml;
-    exports sample.oop_project;
+    opens View to javafx.fxml;
+    exports View;
 }
