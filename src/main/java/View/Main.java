@@ -70,7 +70,7 @@ public class Main extends Application {
         VBox vBox=fxmlLoader.load();
         SignUpController signUpController=fxmlLoader.getController();
         signUpController.right=right;
-        right.getChildren().add(vBox);
+        right.getChildren().set(0,vBox);
     }
 
     public void forgetPassword(ActionEvent actionEvent) throws IOException {
