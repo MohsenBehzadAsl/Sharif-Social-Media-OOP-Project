@@ -23,7 +23,7 @@ public class ShowAnalyzePage {
     public void main() throws SQLException, ClassNotFoundException {
         boolean running = true;
         num=0;
-        while (running) {
+        while (running){
             ManagerShow.showAnalyzePage(num,user);
             input = in.nextLine();
             if (!input.matches("\\w{1}")) {
