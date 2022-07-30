@@ -37,14 +37,14 @@ public class Main extends Application {
     private static Stage stage;
     @Override
     public void start(Stage stage) throws Exception {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection connection= DriverManager.
-                getConnection("jdbc:mysql://localhost:3306/joel"
-                        , "root",
-                        DataBase.password);
-        UserRepository.getData().createTable(connection);
-        UserRepository.getData().initializeuser(connection);
-        Scanner in=new Scanner(System.in);
+//        Class.forName("com.mysql.cj.jdbc.Driver");
+//        Connection connection= DriverManager.
+//                getConnection("jdbc:mysql://localhost:3306/joel"
+//                        , "root",
+//                        DataBase.password);
+//        UserRepository.getData().createTable(connection);
+//        UserRepository.getData().initializeuser(connection);
+//        Scanner in=new Scanner(System.in);
         //ShowStartPage showLoginPage=new ShowStartPage(in);
         //showLoginPage.processor();
 
@@ -71,12 +71,11 @@ public class Main extends Application {
     }
 
     public void signUp(ActionEvent actionEvent) throws IOException {
+        right.getChildren().clear();
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SignUp.fxml"));
         VBox vBox=fxmlLoader.load();
         SignUpController signUpController=fxmlLoader.getController();
-        right=vBox;
-        Scene scene = new Scene(vBox);
-        stage.setScene(scene);
+        right.getChildren().add(vBox);
     }
 
     public void forgetPassword(ActionEvent actionEvent) throws IOException {
