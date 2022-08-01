@@ -20,6 +20,7 @@ import java.util.TimerTask;
 public class Controller {
     public static User user=new User();
     public static Stage stage=new Stage();
+    public static Scene startPage;
 
     public static void showHomePage(String id) throws IOException {
         Controller.user= DataBase.getUserWithId(id);
