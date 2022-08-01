@@ -409,10 +409,10 @@ public class ShowStartPage {
             else if (input.equals("1")){
                 running=false;
                 String gender="Normal";
-                dataBase.addUser(userName,id,password,passwordHint,in,gender,question,ansQuestion);
+                dataBase.addUser(userName,id,password,passwordHint,gender,question,ansQuestion);
             }
             else if (input.equals("2")){
-                dataBase.addUser(userName,id,password,passwordHint,in,"Business",question,ansQuestion);
+                dataBase.addUser(userName,id,password,passwordHint,"Business",question,ansQuestion);
                 running=false;
             }
             else if (input.equals("3")){

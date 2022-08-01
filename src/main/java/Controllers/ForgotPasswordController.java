@@ -88,9 +88,13 @@ public class ForgotPasswordController {
         Boolean flag=false;
         if (newPassword.isEmpty()){
             flag=true;
+            Controller.changeTextFieldColor(newPasswordTextField,"Please fill Password.", "#ec1a1a",true,true);
         }if (check.isEmpty()){
             flag=true;
+            Controller.changeTextFieldColor(checkPasswordTextField," Please fill check Password.", "#ec1a1a",true,true);
+
         }if (flag){
+
             return;
         }
         if (managerLoginPage.validPassword(newPassword)) {

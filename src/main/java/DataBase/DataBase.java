@@ -68,15 +68,15 @@ public class DataBase {
         users.add(new User(userName, id, password, passwordHint, type, question, ansQuestion));
         userIDs.add(id);
     }
-        public void addUser(String userName, String id, String password, String passwordHint, Scanner in , String type,String question,String ansQuestion) throws SQLException, ClassNotFoundException {
+        public static void addUser(String userName, String id, String password, String passwordHint,  String type,String question,String ansQuestion) throws SQLException, ClassNotFoundException {
             User User=new User(userName,id,password,passwordHint,type,question,ansQuestion);
             //  System.out.printf("*****************uigyujgayfdgdsdfs");
             addUserToTable(User);
             users.add(User);
             userIDs.add(id);
             System.out.println("i am in addUser and add "+userName+" :)");
-            showHomepage=new ShowHomepage(users.get(users.size()-1),in);
-            showHomepage.main();
+            //showHomepage=new ShowHomepage(users.get(users.size()-1),in);
+            //showHomepage.main();
         }
     public static void addUserToTable(User user) throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
