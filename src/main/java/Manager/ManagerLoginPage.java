@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class ManagerLoginPage {
     DataBase dataBase=new DataBase();
     Scanner in=new Scanner(System.in);
-    public ManagerLoginPage(Scanner in){
+    public ManagerLoginPage(){
         this.in=in;
     }
     public boolean validPassword(String password){
@@ -47,8 +47,8 @@ public class ManagerLoginPage {
         }
         User user= getUserWithID(id);
         if (user.getPassword().equals(password)){
-            ShowHomepage showHomepage= new ShowHomepage(user,in);
-            showHomepage.main();
+//            ShowHomepage showHomepage= new ShowHomepage(user,in);
+//            showHomepage.main();
             return 1;
         }
         return -1;

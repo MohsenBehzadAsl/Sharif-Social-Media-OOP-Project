@@ -14,7 +14,7 @@ public class ShowStartPage {
 
     public ShowStartPage(Scanner in) throws SQLException, ClassNotFoundException {
         this.in=in;
-        managerLoginPage=new ManagerLoginPage(this.in);
+        managerLoginPage=new ManagerLoginPage();
      //   initialize();
     }
 /*    public void initialize() throws SQLException, ClassNotFoundException {

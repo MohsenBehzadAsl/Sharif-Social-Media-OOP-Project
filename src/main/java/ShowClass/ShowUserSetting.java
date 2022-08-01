@@ -23,7 +23,7 @@ public class ShowUserSetting {
     public ShowUserSetting(User user, Scanner in) {
         this.in=in;
         this.user=user;
-        managerLoginPage=new ManagerLoginPage(this.in);
+        managerLoginPage=new ManagerLoginPage();
     }
 
     public  void showSetting() throws SQLException, ClassNotFoundException {

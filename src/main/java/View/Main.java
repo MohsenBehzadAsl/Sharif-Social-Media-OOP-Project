@@ -2,6 +2,8 @@ package View;
 
 import Controllers.ForgotPasswordController;
 import Controllers.SignUpController;
+import DataBase.DataBase;
+import DataBase.UserRepository;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,11 +12,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 
 public class Main extends Application {
@@ -26,19 +31,19 @@ public class Main extends Application {
     private TextField passwordTextField;
 
     @FXML
-    private VBox right;
+    private GridPane right;
 
 
     private static Stage stage;
     @Override
     public void start(Stage stage) throws Exception {
-//        Class.forName("com.mysql.cj.jdbc.Driver");
-//        Connection connection= DriverManager.
-//                getConnection("jdbc:mysql://localhost:3306/joel"
-//                        , "root",
-//                        DataBase.password);
-//        UserRepository.getData().createTable(connection);
-//        UserRepository.getData().initializeuser(connection);
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection= DriverManager.
+                getConnection("jdbc:mysql://localhost:3306/joel"
+                        , "root",
+                DataBase.password);
+        UserRepository.getData().createTable(connection);
+        UserRepository.getData().initializeuser(connection);
 //        Scanner in=new Scanner(System.in);
         //ShowStartPage showLoginPage=new ShowStartPage(in);
         //showLoginPage.processor();
