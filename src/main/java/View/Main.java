@@ -6,11 +6,13 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 
@@ -49,9 +51,10 @@ public class Main extends Application {
 //        stage.setScene(scene);
 //        stage.show();
 
-
         this.stage=stage;
-        BorderPane pane = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
+        stage.setMinHeight(636);
+        stage.setMinWidth(1095);
+        Parent pane = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
         Scene scene = new Scene(pane);
         stage.setScene(scene);
         stage.setTitle("EDU");

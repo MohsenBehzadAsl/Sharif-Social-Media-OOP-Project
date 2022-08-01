@@ -1,10 +1,11 @@
 package Controllers;
 
 import javafx.event.ActionEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 public class ForgotPasswordController {
-    public VBox right;
+    public GridPane right;
 
     public void Check(ActionEvent actionEvent) {
     }
@@ -13,5 +14,6 @@ public class ForgotPasswordController {
     }
 
     public void Back(ActionEvent actionEvent) {
+        right.getChildren().clear();
     }
 }
