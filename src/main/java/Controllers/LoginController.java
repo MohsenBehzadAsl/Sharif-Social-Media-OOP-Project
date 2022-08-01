@@ -27,6 +27,7 @@ public class LoginController {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SignUp.fxml"));
         VBox vBox=fxmlLoader.load();
         SignUpController signUpController=fxmlLoader.getController();
+
         right.getChildren().add(vBox);
     }
 
