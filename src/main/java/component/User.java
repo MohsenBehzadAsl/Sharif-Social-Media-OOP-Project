@@ -1,6 +1,7 @@
 package component;
 
 import DataBase.DataBase;
+import View.Controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,6 +13,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class User {
+
+    private String photoNameFromImageFolder;
     private String query;
     private DataBase dataBase=new DataBase();
     private String userName=new String();
@@ -155,7 +158,9 @@ public class User {
         return followers;
     }
     public User(String userName, String id, String password, String passwordHint , String gender, String question, String ansQuestion) {
-        System.out.printf("**********");
+        photoNameFromImageFolder=new String();
+        int index= (int) Math.random()%7;
+        photoNameFromImageFolder="sampleProfilePhoto"+index;
         //     Repository.statement.executeQuery("INSERT INTO meow  (userName,id,password,passwordHint,type,question,ansQuestion) VALUES (a,b,c,d,e,f,g))");
         this.userName = userName;
         this.id = id;
@@ -354,6 +359,19 @@ public class User {
         preparedStatement.executeUpdate();
         preparedStatement1.executeUpdate();
     }
+    public String getPhotoNameFromImageFolder() {
+        if (photoNameFromImageFolder==null){
+            photoNameFromImageFolder=new String();
+            int index= ((int) (Math.random()*10))%7;
+            photoNameFromImageFolder="sampleProfilePhoto"+index;
+        }
+        return String.valueOf(Controller.class.getResource("/images/"+photoNameFromImageFolder+".png"));
+    }
+
+    public void setPhotoNameFromImageFolder(String photoNameFromImageFolder) {
+        this.photoNameFromImageFolder = photoNameFromImageFolder;
+    }
+
 
  /*   @Override
     public String toString() {

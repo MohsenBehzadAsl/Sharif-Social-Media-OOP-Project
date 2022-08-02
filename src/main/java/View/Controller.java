@@ -12,10 +12,12 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Controller {
+    public final static String Block_Photo= String.valueOf(Controller.class.getResource("/images/block.png"));
     public static User user=new User();
     public static Stage stage=new Stage();
     public static Scene startPage;
@@ -28,6 +30,24 @@ public class Controller {
         Scene scene = new Scene(pane);
         Controller.stage.setScene(scene);
     }
+    public static boolean find(String sentence, String key) {
+        if (key.matches("(^\")(.+)(\"$)")) { //exact search
+            key=key.replaceAll("\"","");
+            if (sentence.matches("(.*)" + "(\\s+)" + key + "(\\s+)" + "(.*)") ||
+                    sentence.matches("^" + key + "(\\s+)" + "(.*)") ||
+                    sentence.matches("(.*)" + "(\\s+)" + key + "$") ||
+                    sentence.matches("^"+key+"$")) {
+                return true;
+            }
+            return false;
+        }else{
+            if (sentence.matches("(.*)"+ key +"(.*)")){
+                return true;
+            }
+            return false;
+        }
+    }
+
 
 
     public static void changeTextFieldColor(TextField textField, String promptText, String color, Boolean timer,Boolean clicked){
