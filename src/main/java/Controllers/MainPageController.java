@@ -19,10 +19,17 @@ public class MainPageController {
     @FXML
     private GridPane main;
 
+    @FXML
+    private GridPane total;
+
 
     @FXML
     public void initialize(){
         Controller.main=main;
+
+        Controller.stage.widthProperty().addListener((obs, oldVal, newVal) -> {
+            total.getColumnConstraints().get(0).setPercentWidth(16725/Controller.stage.getWidth());
+        });
     }
     @FXML
     void AnalysePage(MouseEvent event) {

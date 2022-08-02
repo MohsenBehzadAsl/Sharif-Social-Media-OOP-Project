@@ -62,6 +62,7 @@ public class Main extends Application {
         Parent pane = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
         Scene scene = new Scene(pane);
         Controller.startPage=scene;
+
         stage.setScene(scene);
         stage.setTitle("EDU");
         Controller.stage=stage;

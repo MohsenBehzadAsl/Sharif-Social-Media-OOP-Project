@@ -12,8 +12,6 @@ import java.util.ArrayList;
 public class Pv {
     private static int index=0;
     private String pvId;
-
-
     private User user1;
     private User user2;
     private ArrayList<Message> messages=new ArrayList<Message>();
