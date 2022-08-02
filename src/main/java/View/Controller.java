@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ public class Controller {
     public static User user=new User();
     public static Stage stage=new Stage();
     public static Scene startPage;
+    public static GridPane main;
 
     public static void showHomePage(String id) throws IOException {
         Controller.user= DataBase.getUserWithId(id);

@@ -11,8 +11,7 @@ import javafx.scene.layout.VBox;
 
 public class PvPageController {
 
-    @FXML
-    private ImageView back;
+
 
     @FXML
     private ImageView backIndexSearch;
@@ -91,4 +90,7 @@ public class PvPageController {
 
     }
 
+    public void back(MouseEvent mouseEvent) {
+
+    }
 }

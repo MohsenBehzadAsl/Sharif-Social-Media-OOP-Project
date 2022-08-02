@@ -19,11 +19,15 @@ public class MainPageController {
     @FXML
     private GridPane main;
 
+
+    @FXML
+    public void initialize(){
+        Controller.main=main;
+    }
     @FXML
     void AnalysePage(MouseEvent event) {
 
     }
-
     @FXML
     void Exit(MouseEvent event) {
         Controller.stage.setScene(Controller.startPage);

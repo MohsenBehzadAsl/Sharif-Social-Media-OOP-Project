@@ -66,7 +66,7 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <ImageView fx:id="back" fitHeight="40.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="40.0" fitWidth="42.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/arrowhead_left.png" />
                            </image>
