@@ -15,14 +15,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.function.UnaryOperator;
 
 public class LoginController {
 

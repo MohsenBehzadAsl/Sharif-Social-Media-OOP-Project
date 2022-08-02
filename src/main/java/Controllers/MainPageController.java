@@ -23,6 +23,7 @@ public class MainPageController {
     private GridPane total;
 
 
+
     @FXML
     public void initialize(){
         Controller.main=main;
@@ -56,7 +57,12 @@ public class MainPageController {
 
     }
     @FXML
-    void Home(MouseEvent event) {
+    void Home(MouseEvent event) throws IOException {
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/MyHomePostPage.fxml"));
+        Parent parent=fxmlLoader.load();
+        MyHomePostPageController myHomePostPageController=fxmlLoader.getController();
+        myHomePostPageController.startShowPost();
+        setMain(parent);
 
     }
     @FXML
