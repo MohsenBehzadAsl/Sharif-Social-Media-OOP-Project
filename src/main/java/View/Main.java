@@ -47,9 +47,6 @@ public class Main extends Application {
 //        Scanner in=new Scanner(System.in);
         //ShowStartPage showLoginPage=new ShowStartPage(in);
         //showLoginPage.processor();
-
-
-
        // FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/Login.fxml"));
 //        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
 //        stage.setTitle("Hello!");

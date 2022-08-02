@@ -29,7 +29,7 @@ public class DataBase {
         DataBase.comments = comments;
     }
 
-    public static String password="94361382182.h";
+    public static String password="Mohammad1381";
 
     public DataBase(){
         if (users==null){

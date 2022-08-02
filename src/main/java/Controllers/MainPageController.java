@@ -1,6 +1,7 @@
 package Controllers;
 
 import View.Controller;
+import View.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -89,7 +90,13 @@ public class MainPageController {
 
     }
     @FXML
-    void Setting(MouseEvent event) {
+    void Setting(MouseEvent event) throws IOException {
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Setting.fxml"));
+        Parent parent=fxmlLoader.load();
+        main.getChildren().clear();
+        main.getRowConstraints().removeAll();
+        main.getColumnConstraints().removeAll();
+        main.add(parent,0,0);
 
     }
 
