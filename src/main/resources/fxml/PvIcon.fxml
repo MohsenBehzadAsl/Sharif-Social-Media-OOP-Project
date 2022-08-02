@@ -24,7 +24,7 @@
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Circle fill="#ffd662" radius="32.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="photo" fill="#ffd662" radius="32.0" stroke="BLACK" strokeType="INSIDE" />
          </children>
       </HBox>
       <GridPane GridPane.columnIndex="1">
@@ -37,7 +37,7 @@
           <RowConstraints minHeight="10.0" percentHeight="40.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label prefHeight="35.0" prefWidth="143.0" text="name" textFill="WHITE">
+            <Label fx:id="name" prefHeight="35.0" prefWidth="130.0" text="name" textFill="WHITE">
                <font>
                   <Font name="Bell MT Bold" size="28.0" />
                </font>
@@ -45,12 +45,12 @@
                   <Insets />
                </GridPane.margin>
             </Label>
-            <Label prefHeight="18.0" prefWidth="225.0" text="Id :" textFill="WHITE" GridPane.rowIndex="1">
+            <Label fx:id="id" prefHeight="18.0" prefWidth="225.0" text="Id :" textFill="WHITE" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <Label prefHeight="43.0" prefWidth="184.0" text="Last Content" textFill="WHITE" GridPane.rowIndex="2">
+            <Label fx:id="lastContent" prefHeight="43.0" prefWidth="184.0" text="Last Content" textFill="WHITE" GridPane.rowIndex="2">
                <font>
                   <Font name="Bell MT" size="17.0" />
                </font>
@@ -67,7 +67,7 @@
                   <Image url="@../images/mail.png" />
                </image>
             </ImageView>
-            <Label text="not read" textFill="WHITE" />
+            <Label fx:id="notread" text="not read" textFill="WHITE" />
          </children>
       </VBox>
    </children>

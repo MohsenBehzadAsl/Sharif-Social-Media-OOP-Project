@@ -111,7 +111,7 @@ public class DataBase {
         preparedStatement.setString(1, user.getId());
         preparedStatement.executeUpdate();
     }
-    public ArrayList<User> getUsers() {
+    public static ArrayList<User> getUsers() {
 
         return users;
     }
