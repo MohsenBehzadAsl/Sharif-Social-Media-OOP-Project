@@ -47,7 +47,7 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <ImageView fitHeight="60.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="60.0" fitWidth="44.0" onMouseClicked="#Home" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/home.png" />
                                        </image>
@@ -85,7 +85,7 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <ImageView fitHeight="60.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="60.0" fitWidth="44.0" onMouseClicked="#MainPage" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/home-2-line.png" />
                                        </image>
@@ -130,7 +130,7 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <ImageView fitHeight="60.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="60.0" fitWidth="44.0" onMouseClicked="#Group" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/group.png" />
                                        </image>
@@ -165,7 +165,7 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <ImageView fitHeight="60.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="60.0" fitWidth="44.0" onMouseClicked="#Pv" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/user.png" />
                                        </image>
@@ -200,7 +200,7 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <ImageView fitHeight="60.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="60.0" fitWidth="44.0" onMouseClicked="#Explore" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/network.png" />
                                        </image>
@@ -235,7 +235,7 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <ImageView fitHeight="60.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="60.0" fitWidth="44.0" onMouseClicked="#Followers" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/home-2-line.png" />
                                        </image>
@@ -270,7 +270,7 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <ImageView fitHeight="60.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="60.0" fitWidth="44.0" onMouseClicked="#Followings" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/home-2-line.png" />
                                        </image>
@@ -305,7 +305,7 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <ImageView fitHeight="60.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="60.0" fitWidth="44.0" onMouseClicked="#Setting" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/gear.png" />
                                        </image>
@@ -340,7 +340,7 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <ImageView fitHeight="60.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="60.0" fitWidth="44.0" onMouseClicked="#SaveMessage" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/bookmark.png" />
                                        </image>
@@ -375,7 +375,7 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <ImageView fitHeight="60.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="60.0" fitWidth="44.0" onMouseClicked="#AnalysePage" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/analyze_mail.png" />
                                        </image>
@@ -414,7 +414,7 @@
             </HBox>
             <HBox fx:id="LogOutButton" alignment="CENTER" prefHeight="69.0" prefWidth="113.0" style="-fx-background-color: Red;" GridPane.rowIndex="2">
                <children>
-                  <ImageView fitHeight="36.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="36.0" fitWidth="48.0" onMouseClicked="#Exit" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/public_access.png" />
                      </image>
