@@ -5,6 +5,7 @@ import component.Message;
 import component.Pv;
 import component.User;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -14,8 +15,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class PvPageController {
@@ -52,7 +56,7 @@ public class PvPageController {
     private GridPane totalGrid;
 
     @FXML
-    public void initialize(){
+    public void initialize() throws IOException {
         Controller.stage.setMinWidth(755);
         Controller.stage.widthProperty().addListener((obs, oldVal, newVal) -> {
             if (Controller.stage.getWidth()<990) {
@@ -67,7 +71,10 @@ public class PvPageController {
                 totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
                 totalGrid.getColumnConstraints().get(1).setPercentWidth(70);
             }
-        });    }
+        });
+        updatePvs();
+    }
+
 
     @FXML
     void BlockUser(MouseEvent event) {
@@ -116,8 +123,10 @@ public class PvPageController {
     }
 
     @FXML
-    void sendMessage(MouseEvent event) {
+    void sendMessage(MouseEvent event) throws IOException {
 
+
+        updatePvs();
     }
 
     @FXML
@@ -132,18 +141,25 @@ public class PvPageController {
     public void back(MouseEvent mouseEvent) {
         Controller.main.getChildren().clear();
     }
-    public void updatePvs(){
+    public void updatePvs() throws IOException {
         User user=Controller.user;
-        ArrayList<Pv> pvs=new ArrayList<>();
-        ArrayList<LocalDateTime> lastMessages=new ArrayList<>();
-        HashMap<LocalDateTime,Pv> linked=new HashMap<>();
-        for (int i=0;i<user.getPvs().size();i++){
-            pvs.add(user.getPvs().get(i));
-            lastMessages.add(user.getPvs().get(i).getMessages().get(user.getPvs().get(i).getMessages().size()-1).getDate());
-            linked.put(lastMessages.get(i),pvs.get(i));
+        ArrayList<Pv> pvs=user.getPvs();
+        Collections.sort(pvs, new Comparator<Pv>() {
+            @Override
+            public int compare(Pv o1, Pv o2) {
+                if (o1.getMessages().get(o1.getMessages().size()-1).getDate().isAfter(o2.getMessages().get(o2.getMessages().size()-1).getDate())) {
+                    return -1;
+                }
+                return 1;
+            }
+        });
+        for (int i=0;i<pvs.size();i++){
+            FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/PvIcon.fxml"));
+            Parent parent=fxmlLoader.load();
+            PvIconController pvIconController=fxmlLoader.getController();
+            pvIconController.set(pvs.get(i));
+            addPvIcon(parent);
         }
-
-
     }
     public void addPvIcon(Parent pv){
         pvsVbox.getChildren().add(pv);
