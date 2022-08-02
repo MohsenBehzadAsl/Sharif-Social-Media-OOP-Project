@@ -3,6 +3,7 @@ package Controllers;
 import View.Controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -54,10 +55,18 @@ public class MainPageController {
     @FXML
     void Pv(MouseEvent event) throws IOException {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/PvsPage.fxml"));
-        Scene scene=fxmlLoader.load();
+        Parent parent=fxmlLoader.load();
         PvPageController pvPageController=fxmlLoader.getController();
-        Controller.stage.setScene(scene);
+        setMain(parent);
     }
+
+    private void setMain(Parent parent) {
+        main.getChildren().clear();
+        main.getColumnConstraints().removeAll();
+        main.getRowConstraints().removeAll();
+        main.add(parent,0,0);
+    }
+
     @FXML
     void SaveMessage(MouseEvent event) {
 

@@ -15,8 +15,8 @@
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainPageController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="80.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="85.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -38,7 +38,7 @@
                      <children>
                         <HBox alignment="CENTER" prefHeight="65.0" prefWidth="151.0" style="-fx-background-color: orange;">
                            <children>
-                              <GridPane>
+                              <GridPane alignment="CENTER">
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0" prefWidth="100.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -60,12 +60,18 @@
                                     </ImageView>
                                     <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                                        <children>
-                                          <Label prefHeight="40.0" prefWidth="84.0" text="Home" textAlignment="CENTER">
+                                          <Label prefHeight="40.0" prefWidth="51.0" text="Home" textAlignment="CENTER">
                                              <font>
-                                                <Font name="Bell MT Bold" size="27.0" />
+                                                <Font name="Bell MT Bold" size="18.0" />
                                              </font>
+                                             <padding>
+                                                <Insets left="4.0" />
+                                             </padding>
                                           </Label>
                                        </children>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
                                     </VBox>
                                  </children>
                                  <HBox.margin>
@@ -108,8 +114,11 @@
                                              <children>
                                                 <Label prefHeight="34.0" prefWidth="190.0" text="Main Page">
                                                    <font>
-                                                      <Font name="Bell MT Bold" size="26.0" />
+                                                      <Font name="Bell MT Bold" size="18.0" />
                                                    </font>
+                                                   <padding>
+                                                      <Insets left="5.0" />
+                                                   </padding>
                                                 </Label>
                                              </children>
                                           </HBox>
@@ -145,8 +154,11 @@
                                        <children>
                                           <Label prefHeight="40.0" prefWidth="84.0" text="Group" textAlignment="CENTER">
                                              <font>
-                                                <Font name="Bell MT Bold" size="27.0" />
+                                                <Font name="Bell MT Bold" size="18.0" />
                                              </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
                                           </Label>
                                        </children>
                                     </VBox>
@@ -180,8 +192,11 @@
                                        <children>
                                           <Label prefHeight="40.0" prefWidth="84.0" text="Pv" textAlignment="CENTER">
                                              <font>
-                                                <Font name="Bell MT Bold" size="27.0" />
+                                                <Font name="Bell MT Bold" size="18.0" />
                                              </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
                                           </Label>
                                        </children>
                                     </VBox>
@@ -215,8 +230,11 @@
                                        <children>
                                           <Label prefHeight="40.0" prefWidth="97.0" text="Explore" textAlignment="CENTER">
                                              <font>
-                                                <Font name="Bell MT Bold" size="27.0" />
+                                                <Font name="Bell MT Bold" size="18.0" />
                                              </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
                                           </Label>
                                        </children>
                                     </VBox>
@@ -250,8 +268,11 @@
                                        <children>
                                           <Label prefHeight="40.0" prefWidth="129.0" text="Followers" textAlignment="CENTER">
                                              <font>
-                                                <Font name="Bell MT Bold" size="27.0" />
+                                                <Font name="Bell MT Bold" size="18.0" />
                                              </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
                                           </Label>
                                        </children>
                                     </VBox>
@@ -285,8 +306,11 @@
                                        <children>
                                           <Label prefHeight="40.0" prefWidth="137.0" text="Followings" textAlignment="CENTER">
                                              <font>
-                                                <Font name="Bell MT Bold" size="27.0" />
+                                                <Font name="Bell MT Bold" size="18.0" />
                                              </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
                                           </Label>
                                        </children>
                                     </VBox>
@@ -320,8 +344,11 @@
                                        <children>
                                           <Label prefHeight="40.0" prefWidth="143.0" text="Setting" textAlignment="CENTER">
                                              <font>
-                                                <Font name="Bell MT Bold" size="27.0" />
+                                                <Font name="Bell MT Bold" size="18.0" />
                                              </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
                                           </Label>
                                        </children>
                                     </VBox>
@@ -355,8 +382,11 @@
                                        <children>
                                           <Label prefHeight="40.0" prefWidth="84.0" text="Saved" textAlignment="CENTER">
                                              <font>
-                                                <Font name="Bell MT Bold" size="27.0" />
+                                                <Font name="Bell MT Bold" size="18.0" />
                                              </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
                                           </Label>
                                        </children>
                                     </VBox>
@@ -390,8 +420,11 @@
                                        <children>
                                           <Label prefHeight="40.0" prefWidth="253.0" text="Analyse Page" textAlignment="CENTER">
                                              <font>
-                                                <Font name="Bell MT Bold" size="23.0" />
+                                                <Font name="Bell MT Bold" size="16.0" />
                                              </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
                                           </Label>
                                        </children>
                                     </VBox>
@@ -419,7 +452,7 @@
                         <Image url="@../images/public_access.png" />
                      </image>
                   </ImageView>
-                  <Label text="    LogOut" textFill="WHITE">
+                  <Label text="  LogOut" textFill="WHITE">
                      <font>
                         <Font name="Bell MT Bold" size="28.0" />
                      </font>
@@ -431,7 +464,7 @@
             </HBox>
          </children>
       </GridPane>
-      <GridPane fx:id="main" style="-fx-background-color: Green;" GridPane.columnIndex="1">
+      <GridPane fx:id="main" gridLinesVisible="true" style="-fx-background-color: Green;" GridPane.columnIndex="1">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
