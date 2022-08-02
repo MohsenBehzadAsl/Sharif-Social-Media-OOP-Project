@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class MainPageController {
 
@@ -58,13 +59,12 @@ public class MainPageController {
 
     }
     @FXML
-    void Home(MouseEvent event) throws IOException {
+    void Home(MouseEvent event) throws IOException, SQLException, ClassNotFoundException {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/MyHomePostPage.fxml"));
         Parent parent=fxmlLoader.load();
         MyHomePostPageController myHomePostPageController=fxmlLoader.getController();
         myHomePostPageController.startShowPost();
         setMain(parent);
-
     }
     @FXML
     void MainPage(MouseEvent event) {
