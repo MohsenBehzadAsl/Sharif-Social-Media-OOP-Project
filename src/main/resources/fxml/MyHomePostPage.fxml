@@ -25,7 +25,7 @@
          <children>
             <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
                <content>
-                  <VBox fx:id="down" prefHeight="746.0" prefWidth="929.0" spacing="25.0" style="-fx-background-color: gray;" />
+                  <VBox fx:id="down" prefHeight="778.0" prefWidth="933.0" style="-fx-background-color: blue;" />
                </content>
             </ScrollPane>
          </children>
