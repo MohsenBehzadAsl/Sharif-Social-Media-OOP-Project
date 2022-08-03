@@ -7,8 +7,13 @@ import component.Message;
 import component.Pv;
 import component.User;
 import javafx.animation.RotateTransition;
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -20,6 +25,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -28,12 +34,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.concurrent.Callable;
 
 public class PvPageController {
 
     Boolean selectPv=true;
     Pv pv;
+    private double oldHeight=0;
 
+
+    @FXML
+    private GridPane rightGridPain;
+    @FXML
+    private GridPane messageGridPane;
     @FXML
     private ImageView block;
     @FXML
@@ -46,7 +59,6 @@ public class PvPageController {
     private GridPane searchInPvGridPane;
     @FXML
     private ImageView zarebbin;
-
     @FXML
     private GridPane searchUser;
     @FXML
@@ -70,8 +82,25 @@ public class PvPageController {
     @FXML
     private GridPane totalGrid;
 
+
+
+
     @FXML
     public void initialize() throws IOException {
+
+//        Text textHolder=new Text();
+//        textHolder.textProperty().bind(messageTextArea.textProperty());
+//        textHolder.layoutBoundsProperty().addListener(new ChangeListener<Bounds>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) {
+//                if (oldHeight != newValue.getHeight()) {
+//                    System.out.println("newValue = " + newValue.getHeight());
+//                    oldHeight = newValue.getHeight();
+//                    messageTextArea.setPrefHeight(textHolder.getLayoutBounds().getHeight() + 20); // +20 is for paddings
+//                }
+//            }
+//        });
+//        textHolder.setWrappingWidth(messageTextArea.getWidth() - 10);
         Controller.stage.setMinWidth(755);
         Controller.stage.widthProperty().addListener((obs, oldVal, newVal) -> {
             if (Controller.stage.getWidth()<990) {
@@ -93,14 +122,27 @@ public class PvPageController {
         visibleSearchInPv(false);
 
     }
-
     public void visibleSearchInPv(boolean visible){
-
         searchInPvGridPane.setVisible(visible);
     }
     public void visiblePv(boolean visible){
-
         totalGrid.getChildren().get(1).setVisible(visible);
+        if (visible){
+//            messageTextArea.applyCss();
+            Node text = messageTextArea.lookup(".text");
+            messageTextArea.prefHeightProperty().bind(Bindings.createDoubleBinding(new Callable<Double>(){
+                @Override
+                public Double call() throws Exception {
+                    return text.getBoundsInLocal().getHeight();
+                }
+            }, text.boundsInLocalProperty()).add(20));
+        }
+        messageTextArea.heightProperty().addListener((obs, oldVal, newVal) -> {
+            messageGridPane.setPrefHeight(messageTextArea.getPrefHeight()*100/90);
+            rightGridPain.getRowConstraints().get(3).setPercentHeight(messageTextArea.getPrefHeight()/rightGridPain.getHeight()*100);
+            rightGridPain.getRowConstraints().get(2).setPercentHeight(84-messageTextArea.getPrefHeight()/rightGridPain.getHeight()*100);
+        });
+
     }
     @FXML
     void BlockUser(MouseEvent event) throws SQLException, IOException, ClassNotFoundException {
@@ -179,8 +221,8 @@ public class PvPageController {
         }
     }
     @FXML
-    void selectFollowersNewPv(MouseEvent event) {
-
+    void selectFollowersNewPv(MouseEvent event) throws IOException {
+        showNewUsers(Controller.user.getFollowers());
     }
     @FXML
     void selectPhotoMessage(MouseEvent event) {
@@ -192,11 +234,7 @@ public class PvPageController {
             Message message=new Message(Controller.user,"Text",messageTextArea.getText(),false,false,false);
             pv.addMessage(message);
         }
-        updatePv();
         showPv(Controller.user.getLinkedPvs().get(pv));
-    }
-
-    private void updatePv() {
     }
 
     @FXML
@@ -291,6 +329,7 @@ public class PvPageController {
         MyMessageBoxController myMessageBoxController=fxmlLoader.getController();
         myMessageBoxController.set(message);
         addToReverseVbox(parent);
+        myMessageBoxController.handleResizing();
     }
     public void addToReverseVbox(Parent parent){
         parent.setRotate(180);
