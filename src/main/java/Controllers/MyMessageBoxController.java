@@ -64,6 +64,7 @@ public class MyMessageBoxController {
 
     }
     public void handleResizing(){
+        System.out.println("here");
         ContentTextArea.applyCss();
         Node text=ContentTextArea.lookup(".text");
         ContentTextArea.prefHeightProperty().bind(Bindings.createDoubleBinding(new Callable<Double>(){
