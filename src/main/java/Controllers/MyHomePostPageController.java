@@ -2,26 +2,28 @@ package Controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class MyHomePostPageController {
 
     @FXML
-    public GridPane down;
+    private VBox down;
 
-    public void startShowPost() throws IOException {
-        down.getChildren().clear();
-        down.getRowConstraints().removeAll();
-        down.getColumnConstraints().removeAll();
+    public VBox getDown() {
+        return down;
+    }
 
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Post.fxml"));
-        GridPane gridPane=fxmlLoader.load();
-        down.add(gridPane,0,0);
+    public void setDown(VBox down) {
+        this.down = down;
+    }
 
-
-        PostController postController=fxmlLoader.getController();
-        postController.startPostChoices();
+    public void startShowPost() throws IOException, SQLException, ClassNotFoundException {
+        PostController postController=new PostController();
+        postController.start(down,true);
     }
 }

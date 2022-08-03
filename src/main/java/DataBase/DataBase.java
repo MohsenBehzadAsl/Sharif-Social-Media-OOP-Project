@@ -29,7 +29,7 @@ public class DataBase {
         DataBase.comments = comments;
     }
 
-    public static String password="94361382182.h";
+    public static String password="mohsen0312699670";
 
     public DataBase(){
         if (users==null){
@@ -118,7 +118,7 @@ public class DataBase {
     public ArrayList<String> getUserIDs(){
         return userIDs;
     }
-    public  ArrayList<Post> getPosts() {
+    public static ArrayList<Post> getPosts() {
         return posts;
     }
     public void add(Post post){
