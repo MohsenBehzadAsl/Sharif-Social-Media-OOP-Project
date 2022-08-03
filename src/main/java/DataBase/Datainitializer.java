@@ -36,10 +36,11 @@ public class Datainitializer {
                 "passwordHint varchar (255)," +
                 "gender varchar (255)," +
                 "ansQuestion varchar (255)," +
-                "bio varchar (255)," +
+                "bio varchar (3000)," +
                 "question varchar(255)," +
                 "email varchar(255)," +
                 "addToGroupAbility  varchar(255)," +
+                "profilePhoto varchar(255),"+
                 "PRIMARY KEY (id))");
     }
     public void Datainitialize2(Statement statement) throws SQLException {
@@ -47,7 +48,7 @@ public class Datainitializer {
                 "tweets(senderId varchar(255)NOT NULL,"+
                 "postId varchar(255),"+
                 "format varchar(255),"+
-                "content varchar(255),"+
+                "content varchar(3000),"+
                 "gender varchar(255),"+
                 "sendTime  varchar(255), "+
                 "commentAbility varchar(255),"+
@@ -98,7 +99,7 @@ public class Datainitializer {
         statement.executeUpdate("CREATE TABLE IF NOT EXISTS "+
                 "message(senderId varchar(255) NOT NULL,"+
                 "format varchar(255), "+
-                "content varchar(255),"+
+                "content varchar(3000),"+
                 "gender varchar(255) ,"+
                 "sendTime varchar(255),"+
                 "forward  varchar(255) ,"+
@@ -204,6 +205,7 @@ public class Datainitializer {
             user.setQuestion(resultSet.getString("question"));
             user.setPasswordHint(resultSet.getString("passwordHint"));
             user.setUserName(resultSet.getString("userName"));
+            user.setPhotoNameFromImageFolder(resultSet.getString("profilePhoto"));
             DataBase dataBase=new DataBase();
             dataBase.getUsers().add(user);
             dataBase.getUserIDs().add(user.getId());
