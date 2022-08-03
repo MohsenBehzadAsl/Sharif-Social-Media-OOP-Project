@@ -11,6 +11,21 @@ public class UpdateSqlTable {
    public UpdateSqlTable(){
 
    }
+    public static void setProfilePhotoToTable(User user, String address) throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection= DriverManager.
+                getConnection("jdbc:mysql://localhost:3306/joel"
+                        , "root",
+                        DataBase.password);
+        PreparedStatement preparedStatement =connection.prepareStatement(
+                " UPDATE users " +
+                        "SET profilePhoto = ?" +
+                        "WHERE id = ?"
+        );
+        preparedStatement.setString(1,address);
+        preparedStatement.setString(2, user.getId());
+        preparedStatement.executeUpdate();
+    }
     public static void setBioUserToTable(User user, String bio) throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection connection= DriverManager.

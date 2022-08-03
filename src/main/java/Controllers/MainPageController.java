@@ -47,8 +47,16 @@ public class MainPageController {
 
     }
     @FXML
-    void Followers(MouseEvent event) {
-
+    void Followers(MouseEvent event) throws IOException {
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/ShowFollowers.fxml"));
+        Parent parent=fxmlLoader.load();
+        main.getChildren().clear();
+        main.getRowConstraints().removeAll();
+        main.getColumnConstraints().removeAll();
+        main.add(parent,0,0);
+        FollowersController followersController=fxmlLoader.getController();
+        followersController.update();
+        Controller.followersController=followersController;
     }
     @FXML
     void Followings(MouseEvent event) {
