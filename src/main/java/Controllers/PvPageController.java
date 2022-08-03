@@ -44,6 +44,8 @@ public class PvPageController {
 
 
     @FXML
+    private GridPane leftGridPane;
+    @FXML
     private GridPane rightGridPain;
     @FXML
     private GridPane messageGridPane;
@@ -87,7 +89,7 @@ public class PvPageController {
 
     @FXML
     public void initialize() throws IOException {
-
+        searchInPvGridPane.setDisable(true);
 //        Text textHolder=new Text();
 //        textHolder.textProperty().bind(messageTextArea.textProperty());
 //        textHolder.layoutBoundsProperty().addListener(new ChangeListener<Bounds>() {
@@ -101,6 +103,7 @@ public class PvPageController {
 //            }
 //        });
 //        textHolder.setWrappingWidth(messageTextArea.getWidth() - 10);
+
         Controller.stage.setMinWidth(755);
         Controller.stage.widthProperty().addListener((obs, oldVal, newVal) -> {
             if (Controller.stage.getWidth()<990) {
@@ -119,11 +122,7 @@ public class PvPageController {
         searchUser.setVisible(false);
         updatePvs();
         visiblePv(false);
-        visibleSearchInPv(false);
 
-    }
-    public void visibleSearchInPv(boolean visible){
-        searchInPvGridPane.setVisible(visible);
     }
     public void visiblePv(boolean visible){
         totalGrid.getChildren().get(1).setVisible(visible);
@@ -166,12 +165,15 @@ public class PvPageController {
             selectPv=false;
             totalGrid.getColumnConstraints().get(0).setPercentWidth(100);
             totalGrid.getColumnConstraints().get(1).setPercentWidth(0);
+            leftGridPane.setVisible(true);
         }else if (totalGrid.getColumnConstraints().get(0).getPercentWidth()==0){
             totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
             totalGrid.getColumnConstraints().get(1).setPercentWidth(70);
+            leftGridPane.setVisible(true);
         }else{
             totalGrid.getColumnConstraints().get(0).setPercentWidth(0);
             totalGrid.getColumnConstraints().get(1).setPercentWidth(100);
+            leftGridPane.setVisible(false);
         }
 
     }
@@ -211,6 +213,7 @@ public class PvPageController {
         }
     }
     private void showNewUsers(ArrayList<User> usersFind) throws IOException {
+        pvsVbox.getChildren().removeAll();
         for (int i=0;i<usersFind.size();i++){
             FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/UserIconInPv.fxml"));
             Parent parent=fxmlLoader.load();
@@ -233,31 +236,29 @@ public class PvPageController {
         if (!messageTextArea.getText().isEmpty()){
             Message message=new Message(Controller.user,"Text",messageTextArea.getText(),false,false,false);
             pv.addMessage(message);
+            addMyMessage(message);
+            messageTextArea.setText("");
         }
-        showPv(Controller.user.getLinkedPvs().get(pv));
+        updatePvs();
     }
-
     @FXML
     void searchWordInPv(MouseEvent event) {
     }
     @FXML
     void visibleSearchInPv(MouseEvent event) {
         if (zarebbin.getRotate()==0) {
-            visibleSearchInPv(true);
             RotateTransition rotateTransition=new RotateTransition();
             rotateTransition.setNode(zarebbin);
             rotateTransition.setToAngle(45);
             rotateTransition.play();
+            searchInPvGridPane.setDisable(false);
         }else {
-            visibleSearchInPv(false);
+            searchInPvGridPane.setDisable(true);
             RotateTransition rotateTransition=new RotateTransition();
             rotateTransition.setNode(zarebbin);
             rotateTransition.setToAngle(0);
             rotateTransition.play();
         }
-    }
-    public void selectNewPv(){
-
     }
     public void back(MouseEvent mouseEvent) {
         Controller.main.getChildren().clear();
@@ -265,15 +266,20 @@ public class PvPageController {
     public void updatePvs() throws IOException {
         User user=Controller.user;
         ArrayList<Pv> pvs=user.getPvs();
-//        Collections.sort(pvs, new Comparator<Pv>() {
-//            @Override
-//            public int compare(Pv o1, Pv o2) {
-//                if (o1.getMessages().get(o1.getMessages().size()-1).getDate().isAfter(o2.getMessages().get(o2.getMessages().size()-1).getDate())) {
-//                    return -1;
-//                }
-//                return 1;
-//            }
-//        });
+        Collections.sort(pvs, new Comparator<Pv>() {
+            @Override
+            public int compare(Pv o1, Pv o2) {
+                if (o1.getMessages().size()==0){
+                    return -1;
+                }else if (o2.getMessages().size()==0){
+                    return 1;
+                }
+                if (o1.getMessages().get(o1.getMessages().size()-1).getDate().isAfter(o2.getMessages().get(o2.getMessages().size()-1).getDate())) {
+                    return -1;
+                }
+                return 1;
+            }
+        });
         for (int i=0;i<pvs.size();i++){
             FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/PvIcon.fxml"));
             Parent parent=fxmlLoader.load();
@@ -307,6 +313,10 @@ public class PvPageController {
         showMessageOfPv(pv);
     }
     private void showMessageOfPv(Pv pv) throws IOException {
+        reverseVboxForSendMessage.getChildren().clear();
+        reverseVboxForSendMessage.getChildren().removeAll();
+        System.out.println("1213");
+        System.out.println(pv.getMessages().size());
         for (int i=0;i<pv.getMessages().size();i++){
             if (i==0){
                 addDayInPv(pv.getMessages().get(0).getDate());
