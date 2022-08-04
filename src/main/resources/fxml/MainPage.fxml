@@ -253,9 +253,9 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <ImageView fitHeight="60.0" fitWidth="44.0" onMouseClicked="#Followers" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="60.0" fitWidth="44.0" onMouseClicked="#followerFollowingPage" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../images/home-2-line.png" />
+                                          <Image url="@../images/info.png" />
                                        </image>
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
@@ -266,45 +266,7 @@
                                     </ImageView>
                                     <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                                        <children>
-                                          <Label prefHeight="40.0" prefWidth="129.0" text="Followers" textAlignment="CENTER">
-                                             <font>
-                                                <Font name="Bell MT Bold" size="18.0" />
-                                             </font>
-                                             <padding>
-                                                <Insets left="5.0" />
-                                             </padding>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </GridPane>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="65.0" prefWidth="151.0" style="-fx-background-color: orange;">
-                           <children>
-                              <GridPane>
-                                 <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0" prefWidth="100.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                 </rowConstraints>
-                                 <children>
-                                    <ImageView fitHeight="60.0" fitWidth="44.0" onMouseClicked="#Followings" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../images/home-2-line.png" />
-                                       </image>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                       <GridPane.margin>
-                                          <Insets left="5.0" />
-                                       </GridPane.margin>
-                                    </ImageView>
-                                    <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
-                                       <children>
-                                          <Label prefHeight="40.0" prefWidth="137.0" text="Followings" textAlignment="CENTER">
+                                          <Label prefHeight="40.0" prefWidth="137.0" text="Near" textAlignment="CENTER">
                                              <font>
                                                 <Font name="Bell MT Bold" size="18.0" />
                                              </font>
