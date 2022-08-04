@@ -85,6 +85,9 @@
                            <padding>
                               <Insets bottom="1.0" left="10.0" />
                            </padding>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Label>
                      </children>
                      <opaqueInsets>

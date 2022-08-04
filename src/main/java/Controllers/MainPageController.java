@@ -120,4 +120,15 @@ public class MainPageController {
 
     }
 
+    public void followerFollowingPage(MouseEvent mouseEvent) throws IOException {
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/FolloweFollowingPage.fxml"));
+        Parent parent=fxmlLoader.load();
+        FollowerFollowingPageController followerFollowingPageController=fxmlLoader.getController();
+        main.getChildren().clear();
+        main.getRowConstraints().removeAll();
+        main.getColumnConstraints().removeAll();
+        main.add(parent,0,0);
+        followerFollowingPageController.nowParent=parent;
+        followerFollowingPageController.updateScrollPanes();
+    }
 }

@@ -10,6 +10,7 @@ import javafx.animation.RotateTransition;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
@@ -150,14 +151,20 @@ public class PvPageController {
         arrow.setRotate(180);
         if (visible){
 //            messageTextArea.applyCss();
-            Node text = messageTextArea.lookup(".text");
-            messageTextArea.prefHeightProperty().bind(Bindings.createDoubleBinding(new Callable<Double>(){
-                @Override
-                public Double call() throws Exception {
-                    return text.getBoundsInLocal().getHeight();
-                }
-            }, text.boundsInLocalProperty()).add(20));
+
         }
+        messageTextArea.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Node text = messageTextArea.lookup(".text");
+                messageTextArea.prefHeightProperty().bind(Bindings.createDoubleBinding(new Callable<Double>(){
+                    @Override
+                    public Double call() throws Exception {
+                        return text.getBoundsInLocal().getHeight();
+                    }
+                }, text.boundsInLocalProperty()).add(20));
+            }
+        });
         messageTextArea.heightProperty().addListener((obs, oldVal, newVal) -> {
             messageGridPane.setPrefHeight(messageTextArea.getPrefHeight()*100/90);
             rightGridPain.getRowConstraints().get(4).setPercentHeight(messageTextArea.getPrefHeight()/rightGridPain.getHeight()*100);
