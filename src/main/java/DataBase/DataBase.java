@@ -19,6 +19,13 @@ public class DataBase {
     private static ArrayList<Post> posts;
 
 
+    public static String getPassword() {
+        return password;
+    }
+
+    public static void setPassword(String password) {
+        DataBase.password = password;
+    }
 
     private static ArrayList<Comment> comments = new ArrayList<>();
     public static ArrayList<Comment> getComments() {
@@ -29,7 +36,8 @@ public class DataBase {
         DataBase.comments = comments;
     }
 
-    public static String password="94361382182.h";
+    public static String password="mohsen0312699670";
+
 
     public DataBase(){
         if (users==null){
@@ -121,7 +129,7 @@ public class DataBase {
     public static ArrayList<Post> getPosts() {
         return posts;
     }
-    public void add(Post post){
+    public static void add(Post post){
         posts.add(post);
     }
     public ShowHomepage getShowHomepage() {

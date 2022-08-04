@@ -364,15 +364,14 @@ public class User {
             photoNameFromImageFolder=new String();
             int index= ((int) (Math.random()*10))%7;
             photoNameFromImageFolder="sampleProfilePhoto"+index;
+            photoNameFromImageFolder= String.valueOf(Controller.class.getResource("/images/"+photoNameFromImageFolder+".png"));
         }
-        return String.valueOf(Controller.class.getResource("/images/"+photoNameFromImageFolder+".png"));
+        return photoNameFromImageFolder;
     }
 
     public void setPhotoNameFromImageFolder(String photoNameFromImageFolder) {
         this.photoNameFromImageFolder = photoNameFromImageFolder;
     }
-
-
  /*   @Override
     public String toString() {
         return "User{" +

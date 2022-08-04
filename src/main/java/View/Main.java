@@ -32,8 +32,6 @@ public class Main extends Application {
 
     @FXML
     private GridPane right;
-
-
     private static Stage stage;
     @Override
     public void start(Stage stage) throws Exception {
@@ -52,7 +50,6 @@ public class Main extends Application {
 //        stage.setTitle("Hello!");
 //        stage.setScene(scene);
 //        stage.show();
-
         this.stage=stage;
         stage.setMinHeight(636);
         stage.setMinWidth(1095);

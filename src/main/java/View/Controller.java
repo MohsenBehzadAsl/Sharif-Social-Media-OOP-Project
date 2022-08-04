@@ -1,5 +1,6 @@
 package View;
 
+import Controllers.FollowersController;
 import DataBase.DataBase;
 import component.User;
 import javafx.event.EventHandler;
@@ -22,7 +23,7 @@ public class Controller {
     public static Stage stage=new Stage();
     public static Scene startPage;
     public static GridPane main;
-
+    public static FollowersController followersController;
     public static void showHomePage(String id) throws IOException {
         Controller.user= DataBase.getUserWithId(id);
 
