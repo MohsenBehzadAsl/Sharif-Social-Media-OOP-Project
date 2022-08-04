@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -71,9 +72,20 @@ public class MainPageController {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/MyHomePostPage.fxml"));
         Parent parent=fxmlLoader.load();
         MyHomePostPageController myHomePostPageController=fxmlLoader.getController();
-        myHomePostPageController.startShowPost();
         setMain(parent);
+        myHomePostPageController.startShowPost();
+        myHomePostPageController.getUsername().setText(Controller.user.getUserName());
+        myHomePostPageController.getId().setText("@"+Controller.user.getId());
+        myHomePostPageController.getFollowers().setText("Num Of Followers: "+ Controller.user.getFollowers().size());
+        myHomePostPageController.getFollowing().setText("Num Of Following: "+ Controller.user.getFollowings().size());
+        myHomePostPageController.getImageProfile().setImage(new Image(Controller.user.getPhotoNameFromImageFolder()));
+        myHomePostPageController.getAll().getRowConstraints().get(0).setPercentHeight(13.6);
+        myHomePostPageController.getAll().getRowConstraints().get(1).setPercentHeight(86.4);
+        myHomePostPageController.getAll().getRowConstraints().get(2).setPercentHeight(0);
+        myHomePostPageController.getAll().getRowConstraints().get(3).setPercentHeight(0);
+
     }
+
     @FXML
     void MainPage(MouseEvent event) {
 

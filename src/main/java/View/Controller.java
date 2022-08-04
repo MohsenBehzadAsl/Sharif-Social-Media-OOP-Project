@@ -25,7 +25,6 @@ public class Controller {
     public static GridPane main;
     public static FollowersController followersController;
     public static void showHomePage(String id) throws IOException {
-
         Controller.user= DataBase.getUserWithId(id);
 
         Parent pane = FXMLLoader.load(Controller.class.getResource("/fxml/MainPage.fxml"));

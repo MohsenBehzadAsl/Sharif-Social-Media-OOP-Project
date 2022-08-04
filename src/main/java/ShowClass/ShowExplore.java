@@ -435,7 +435,7 @@ public class ShowExplore {
                     //break;
                     //}
                     if (!input.isEmpty()) {
-                        Comment comment2 = new Comment(user, "text", input, true,comment);
+                        Comment comment2 = new Comment(user, "text",input, true,comment);
                         comment.getComments().add(comment2);
                         System.out.println("Your text is commented successfully");
 
@@ -537,7 +537,7 @@ public class ShowExplore {
                     //break;
                     //}
                     if (!input.isEmpty()) {
-                        Comment comment2 = new Comment(user, "text", input, true,comment);
+                        Comment comment2 = new Comment(user, "text",input, true,comment);
                         comment.getComments().add(comment2);
                         System.out.println("Your text is commented successfully");
 
