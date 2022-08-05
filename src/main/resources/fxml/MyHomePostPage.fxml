@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <GridPane fx:id="all" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="947.75" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MyHomePostPageController">
@@ -20,9 +21,10 @@
   </columnConstraints>
   <rowConstraints>
     <RowConstraints minHeight="10.0" percentHeight="13.6" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" percentHeight="36.4" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" percentHeight="24.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" percentHeight="26.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" percentHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" percentHeight="6.4" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" percentHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" percentHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <GridPane style="-fx-background-color: gray;" GridPane.rowIndex="1">
@@ -35,7 +37,7 @@
          <children>
             <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
                <content>
-                  <VBox fx:id="down" prefHeight="1080.0" prefWidth="929.0" style="-fx-background-color: blue;" />
+                  <VBox fx:id="down" prefHeight="785.0" prefWidth="929.0" spacing="25.0" style="-fx-background-color: gray;" />
                </content>
             </ScrollPane>
          </children>
@@ -163,13 +165,9 @@
                         </HBox>
                      </children>
                   </GridPane>
-                  <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: red;">
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: red;">
                      <children>
-                        <ImageView fx:id="imageProfile" fitHeight="97.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/img.png" />
-                           </image>
-                        </ImageView>
+                        <Circle fx:id="imageProfile" fill="DODGERBLUE" radius="39.0" stroke="BLACK" strokeType="INSIDE" />
                      </children>
                   </VBox>
                </children>
@@ -178,34 +176,36 @@
       </GridPane>
       <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
          <content>
-            <VBox prefHeight="565.0" prefWidth="929.0" style="-fx-background-color: yellow;" />
+            <VBox fx:id="add" prefHeight="767.0" prefWidth="929.0" style="-fx-background-color: yellow;" />
          </content>
       </ScrollPane>
-      <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="218.0" prefWidth="948.0" style="-fx-background-color: yellow;" GridPane.rowIndex="2">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="88.0" minHeight="10.0" percentHeight="40.0" prefHeight="88.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="38.0" minHeight="0.0" percentHeight="10.0" prefHeight="0.0" vgrow="SOMETIMES" />
-         </rowConstraints>
+      <GridPane GridPane.rowIndex="4">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" percentHeight="40.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1">
-               <center>
-                  <TextArea fx:id="createPostText" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#clicked" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-               </center>
-            </BorderPane>
-            <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#addPostToDataBase" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: pink;" GridPane.rowIndex="2">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: yellow;">
                <children>
-                  <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="65.0" prefWidth="948.0" text="Add Post">
-                     <font>
-                        <Font name="Bell MT" size="36.0" />
-                     </font>
-                  </Label>
+                  <ImageView fx:id="imageOfPostRectangle" fitHeight="49.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true" />
+                  <Button mnemonicParsing="false" onMouseClicked="#browseImage" style="-fx-background-color: green;" text="browse image" />
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+               <children>
+                  <TextArea fx:id="createPostText" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+               </children></VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: pink;" GridPane.rowIndex="2">
+               <children>
+                  <Label onMouseClicked="#addPostToDataBase" text="Add Post" />
                </children>
             </VBox>
          </children>
       </GridPane>
+      <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: red;" GridPane.rowIndex="2" />
    </children>
 </GridPane>

@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="735.0" prefWidth="892.0" style="-fx-background-color: #003459;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ShowAnotherUserPageController">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="735.0" prefWidth="892.0" style="-fx-background-color: #003459;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ShowAnotherUserPageController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -234,7 +234,7 @@
             </HBox>
             <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                <content>
-                  <VBox prefHeight="874.0" prefWidth="877.0" style="-fx-background-color: #007ea7;" />
+                  <VBox fx:id="postFill" prefHeight="874.0" prefWidth="877.0" spacing="20.0" style="-fx-background-color: gray;" />
                </content>
             </ScrollPane>
          </children>

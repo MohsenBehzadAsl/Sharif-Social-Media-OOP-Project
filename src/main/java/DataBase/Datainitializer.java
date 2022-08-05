@@ -52,7 +52,8 @@ public class Datainitializer {
                 "gender varchar(255),"+
                 "sendTime  varchar(255), "+
                 "commentAbility varchar(255),"+
-                "isComment varchar(255))"
+                "isComment varchar(255), "+
+                "imagePost varchar (255))"
         );
 
     }
@@ -244,6 +245,10 @@ public class Datainitializer {
             post.setDate(LocalDateTime.parse(resultSet2.getString("sendTime")));
             post.setCommentAbility(Boolean.parseBoolean(resultSet2.getString("commentAbility")));
             post.setIsComment(resultSet2.getString("isComment"));
+            if (resultSet2.getString("format").equals("image")){
+                System.out.println(resultSet2.getString("imagePost"));
+                post.setPhotoAddress(resultSet2.getString("imagePost"));
+            }
             dataBase.getPosts().add(post);
         }
         while (resultSet3.next()){

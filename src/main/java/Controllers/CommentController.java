@@ -11,6 +11,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -20,6 +22,18 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class CommentController {
+
+    @FXML
+    private Circle userProfile;
+
+    public Circle getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(Circle userProfile) {
+        this.userProfile = userProfile;
+    }
+
     @FXML
     private ImageView profile;
 
@@ -121,7 +135,7 @@ public class CommentController {
         Parent parent0 = fxmlLoader0.load();
         CommentController commentController0 = fxmlLoader0.getController();
         commentController0.getUsername().setText(comment.getSender().getUserName());
-        commentController0.getProfile().setImage(new Image(comment.getSender().getPhotoNameFromImageFolder()));
+        commentController0.getUserProfile().setFill(new ImagePattern(new Image(comment.getSender().getPhotoNameFromImageFolder())));
         commentController0.getTextArea().setMinHeight(24);
         commentController0.getTextArea().setWrapText(true);
         commentController0.getTextArea().setText(comment.getContent());
@@ -152,10 +166,11 @@ public class CommentController {
                 FXMLLoader fxmlLoader = new FXMLLoader(PostController.class.getResource("/fxml/Comment.fxml"));
                 Parent parent = fxmlLoader.load();
                 CommentController commentController = fxmlLoader.getController();
+                commentController.setPostControllerHelp(this.postControllerHelp);
 
                 commentController.setComment(comments.get(i));
                 commentController.getUsername().setText(comments.get(i).getSender().getUserName());
-                commentController.getProfile().setImage(new Image(comments.get(i).getSender().getPhotoNameFromImageFolder()));
+                commentController.getUserProfile().setFill(new ImagePattern(new Image(comment.getSender().getPhotoNameFromImageFolder())));
 
                 commentController.getTextArea().setMinHeight(24);
                 commentController.getTextArea().setWrapText(true);
