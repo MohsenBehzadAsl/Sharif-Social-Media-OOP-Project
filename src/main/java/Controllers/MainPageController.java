@@ -61,8 +61,12 @@ public class MainPageController {
 
     }
     @FXML
-    void Group(MouseEvent event) {
-
+    void Group(MouseEvent event) throws IOException {
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/GroupPage.fxml"));
+        Parent parent=fxmlLoader.load();
+        GroupPageController groupPageController=fxmlLoader.getController();
+        groupPageController.nowParent=parent;
+        setMain(parent);
     }
     @FXML
     void Home(MouseEvent event) throws IOException, SQLException, ClassNotFoundException {
@@ -109,8 +113,14 @@ public class MainPageController {
     }
 
     @FXML
-    void SaveMessage(MouseEvent event) {
-
+    void SaveMessage(MouseEvent event) throws IOException, SQLException, ClassNotFoundException {
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/PvsPage.fxml"));
+        Parent parent=fxmlLoader.load();
+        PvPageController pvPageController=fxmlLoader.getController();
+        pvPageController.nowParent=parent;
+        setMain(parent);
+        pvPageController.showPv(Controller.user);
+        pvPageController.maximize(null);
     }
     @FXML
     void Setting(MouseEvent event) throws IOException {

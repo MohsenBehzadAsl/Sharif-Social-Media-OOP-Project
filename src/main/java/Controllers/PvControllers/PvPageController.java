@@ -172,7 +172,7 @@ public class PvPageController {
 
     }
     @FXML
-    void BlockUser(MouseEvent event) throws SQLException, IOException, ClassNotFoundException {
+    public void BlockUser(MouseEvent event) throws SQLException, IOException, ClassNotFoundException {
         if (pv.getBlock() && pv.getBlocker()!=Controller.user){
             System.out.println(":[");
         } else if (!pv.getBlock()) {
@@ -186,7 +186,7 @@ public class PvPageController {
         }
     }
     @FXML
-    void VisitPage(MouseEvent event) throws IOException {
+    public void VisitPage(MouseEvent event) throws IOException {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/ShowAnotherUserPage.fxml"));
         Parent parent=fxmlLoader.load();
         ShowAnotherUserPageController showAnotherUserPageController=fxmlLoader.getController();
@@ -199,7 +199,7 @@ public class PvPageController {
         showAnotherUserPageController.set(Controller.user.getLinkedPvs().get(pv));
     }
     @FXML
-    void maximize(MouseEvent event) {
+    public void maximize(MouseEvent event) {
         if (Controller.stage.getWidth()<987){
             selectPv=false;
             totalGrid.getColumnConstraints().get(0).setPercentWidth(100);
@@ -217,7 +217,7 @@ public class PvPageController {
 
     }
     @FXML
-    void newPv(MouseEvent event) throws IOException {
+    public void newPv(MouseEvent event) throws IOException {
         if (plusPv.getRotate()==0){
             RotateTransition rotateTransition=new RotateTransition();
             rotateTransition.setNode(plusPv);
@@ -235,7 +235,7 @@ public class PvPageController {
         }
     }
     @FXML
-    void searchPv(MouseEvent event) throws IOException {
+    public void searchPv(MouseEvent event) throws IOException {
         pvsVbox.getChildren().clear();
         ArrayList<User> usersFind=new ArrayList<>();
         for (int i = 0; i<DataBase.getUsers().size();i++){
@@ -252,6 +252,7 @@ public class PvPageController {
         }
     }
     private void showNewUsers(ArrayList<User> usersFind) throws IOException {
+        pvsVbox.getChildren().clear();
         pvsVbox.getChildren().removeAll();
         for (int i=0;i<usersFind.size();i++){
             FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/UserIconInPv.fxml"));
@@ -263,15 +264,33 @@ public class PvPageController {
         }
     }
     @FXML
-    void selectFollowersNewPv(MouseEvent event) throws IOException {
-        showNewUsers(Controller.user.getFollowers());
+    public void selectFollowersNewPv(MouseEvent event) throws IOException {
+        pvsVbox.getChildren().removeAll();
+        pvsVbox.getChildren().clear();
+        if (plusPv.getRotate()==0){
+            RotateTransition rotateTransition=new RotateTransition();
+            rotateTransition.setNode(plusPv);
+            rotateTransition.setToAngle(45);
+            rotateTransition.play();
+            searchUser.setVisible(true);
+            showNewUsers(Controller.user.getFollowers());
+        }else {
+            RotateTransition rotateTransition=new RotateTransition();
+            rotateTransition.setNode(plusPv);
+            rotateTransition.setToAngle(0);
+            rotateTransition.play();
+            searchUser.setVisible(false);
+            pvsVbox.getChildren().clear();
+            pvsVbox.getChildren().removeAll();
+            updatePvs();
+        }
     }
     @FXML
-    void selectPhotoMessage(MouseEvent event) {
+    public void selectPhotoMessage(MouseEvent event) {
 
     }
     @FXML
-    void sendMessage(MouseEvent event) throws IOException, SQLException, ClassNotFoundException {
+    public void sendMessage(MouseEvent event) throws IOException, SQLException, ClassNotFoundException {
         if (!edit && !reply) {
             if (!messageTextArea.getText().isEmpty()) {
                 Message message = new Message(Controller.user, "Text", messageTextArea.getText(), false, false, false);
@@ -304,7 +323,7 @@ public class PvPageController {
         updatePvs();
     }
     @FXML
-    void searchWordInPv(MouseEvent event) {
+    public void searchWordInPv(MouseEvent event) {
         if(indexOfSearch!=0) {
             reverseVboxForSendMessage.getChildren().get(findMessages.get(indexOfSearch - 1)).setStyle("-fx-border-color: transparent");
         }
@@ -342,7 +361,6 @@ public class PvPageController {
             }
         }
     }
-
     private void settingSearchInpv(ArrayList<Message> messageFind) {
 //        ArrayList<Integer> indexOfFindingMessages=new ArrayList<>();
 //        for (int i=0;i<messageFind.size();i++){
@@ -354,7 +372,7 @@ public class PvPageController {
         System.out.println(Arrays.asList(findMessages).toString());
     }
     @FXML
-    void visibleSearchInPv(MouseEvent event) {
+    public void visibleSearchInPv(MouseEvent event) {
         if (zarebbin.getRotate()==0) {
             RotateTransition rotateTransition=new RotateTransition();
             rotateTransition.setNode(zarebbin);
@@ -379,6 +397,7 @@ public class PvPageController {
         }
     }
     public void back(MouseEvent mouseEvent) {
+
         Controller.main.getChildren().clear();
     }
     public void updatePvs() throws IOException {
@@ -387,7 +406,11 @@ public class PvPageController {
         User user=Controller.user;
         ArrayList<Pv> pvs=new ArrayList<>();
         for (int i=0;i<user.getPvs().size();i++){
-            pvs.add(user.getPvs().get(i));
+            if(user.getPvs().get(i).getMessages().size()==0){
+                user.getPvs().get(i).getUser1().removePv(user.getPvs().get(i));
+            }else {
+                pvs.add(user.getPvs().get(i));
+            }
         }
         Collections.sort(pvs, new Comparator<Pv>() {
             @Override
@@ -512,12 +535,6 @@ public class PvPageController {
         edit=false;
         reply=false;
     }
-    public void setMessageTextArea(TextArea messageTextArea) {
-        this.messageTextArea = messageTextArea;
-    }
-    public TextArea getMessageTextArea() {
-        return messageTextArea;
-    }
     public void nextSearchIndex(MouseEvent mouseEvent) {
         if (indexOfSearch<totalFindSearch){
             if (indexOfSearch!=0){
@@ -546,15 +563,7 @@ public class PvPageController {
             rotateTransition.setToAngle(0);
             rotateTransition.setNode(arrow);
             rotateTransition.play();
-            for (int i=0;i<reverseVboxForSendMessage.getChildren().size();i++){
-                System.out.println("*****");
-                System.out.println(reverseVboxForSendMessage.getChildren().get(i).getLayoutY());
-                System.out.println("******");
-            }
             if (pv.getMessages().size()==Controller.user.getReadMessagePv().get(Controller.user.getPvs().indexOf(pv))){
-                System.out.println("000000000");
-                System.out.println(pv.getMessages().size());
-                System.out.println(Controller.user.getReadMessagePv().get(Controller.user.getPvs().indexOf(pv)));
                 messageScrollPane.setVvalue(0);
             }else {
                 System.out.println(reverseVboxForSendMessage.getChildren().get(pv.getMessages().size() - Controller.user.getReadMessagePv().get(Controller.user.getPvs().indexOf(pv)) - 1).getLayoutY() / reverseVboxForSendMessage.getHeight());
