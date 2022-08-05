@@ -1,5 +1,6 @@
-package Controllers;
+package Controllers.PvControllers;
 
+import Controllers.PvControllers.PvPageController;
 import component.Message;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -74,25 +75,8 @@ public class AnotherMessageController {
             pvPageController.setFormatEditReply("Reply Message :");
             pvPageController.setContentEditReply(message.getContent());
         });
-        MenuItem delete = new MenuItem("Delete");
-        delete.setOnAction(e -> {
-            try {
-                pvPageController.pv.removeMessage(message);
-                pvPageController.showMessageOfPv(pvPageController.pv);
-                pvPageController.updatePvs();
-                pvPageController.closeEditReply(null);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            } catch (ClassNotFoundException ex) {
-                ex.printStackTrace();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        });
-
         ContextMenu menu = new ContextMenu();
         menu.getItems().add(reply);
-        menu.getItems().add(delete);
         messageGrid.setOnContextMenuRequested(e -> {
             menu.show(messageGrid.getScene().getWindow(), e.getScreenX(), e.getScreenY());
         });

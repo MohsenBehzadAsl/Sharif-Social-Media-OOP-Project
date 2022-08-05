@@ -1,5 +1,6 @@
-package Controllers;
+package Controllers.PvControllers;
 
+import Controllers.OtherUserPageControllers.ShowAnotherUserPageController;
 import DataBase.DataBase;
 import Manager.ManagerPv;
 import View.Controller;
@@ -8,12 +9,9 @@ import component.Pv;
 import component.User;
 import javafx.animation.RotateTransition;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -27,7 +25,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -37,8 +34,8 @@ import java.util.concurrent.Callable;
 
 public class PvPageController {
 
-    Boolean selectPv=true;
-    Pv pv;
+    public Boolean selectPv=true;
+    public Pv pv;
     public int indexOfSearch=0;
     public int totalFindSearch=0;
     public ArrayList<Integer> findMessages=new ArrayList<>();
@@ -49,6 +46,8 @@ public class PvPageController {
     public TextArea editMessageTextArea;
     public boolean reply=false;
     public Message replyMessage;
+
+    public Parent nowParent;
 
     @FXML
     private ImageView arrow;
@@ -187,8 +186,17 @@ public class PvPageController {
         }
     }
     @FXML
-    void VisitPage(MouseEvent event) {
-
+    void VisitPage(MouseEvent event) throws IOException {
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/ShowAnotherUserPage.fxml"));
+        Parent parent=fxmlLoader.load();
+        ShowAnotherUserPageController showAnotherUserPageController=fxmlLoader.getController();
+        Controller.main.getChildren().clear();
+        Controller.main.getRowConstraints().removeAll();
+        Controller.main.getColumnConstraints().removeAll();
+        Controller.main.add(parent,0,0);
+        showAnotherUserPageController.nowParent=parent;
+        showAnotherUserPageController.backParent=nowParent;
+        showAnotherUserPageController.set(Controller.user.getLinkedPvs().get(pv));
     }
     @FXML
     void maximize(MouseEvent event) {
@@ -345,7 +353,6 @@ public class PvPageController {
 //        findMessages=indexOfFindingMessages;
         System.out.println(Arrays.asList(findMessages).toString());
     }
-
     @FXML
     void visibleSearchInPv(MouseEvent event) {
         if (zarebbin.getRotate()==0) {
@@ -408,7 +415,6 @@ public class PvPageController {
     public void addPvIcon(Parent pv){
         pvsVbox.getChildren().add(pv);
     }
-
     public void showPv(User userWithId) throws SQLException, ClassNotFoundException, IOException {
 
         if (Controller.user.getPv(userWithId)==null){
@@ -439,7 +445,6 @@ public class PvPageController {
             arrow.setRotate(0);
         }
     }
-
     public void showMessageOfPv(Pv pv) throws IOException {
         reverseVboxForSendMessage.getChildren().clear();
         reverseVboxForSendMessage.getChildren().removeAll();
@@ -475,16 +480,15 @@ public class PvPageController {
         parent.setRotate(180);
         reverseVboxForSendMessage.getChildren().add(0,parent);
     }
-
     public void addAnotherMessage(Message message) throws IOException {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/AnotherMessageBox.fxml"));
         Parent parent=fxmlLoader.load();
         AnotherMessageController anotherMessageController=fxmlLoader.getController();
+        anotherMessageController.pvPageController=this;
         anotherMessageController.set(message);
         addToReverseVbox(parent);
         anotherMessageController.handleResizing();
     }
-
     public void setFormatEditReply(String formatEditReply) {
         this.formatEditReply.setText(formatEditReply);
     }
@@ -536,7 +540,6 @@ public class PvPageController {
         messageScrollPane.setVvalue(reverseVboxForSendMessage.getChildren().get(findMessages.get(indexOfSearch-1)).getLayoutY()/reverseVboxForSendMessage.getHeight());
         reverseVboxForSendMessage.getChildren().get(findMessages.get(indexOfSearch-1)).setStyle("-fx-border-color: Gold");
     }
-
     public void newMessageOrDown(MouseEvent mouseEvent) throws IOException {
         if (arrow.getRotate()==180 && reverseVboxForSendMessage.getChildren().size()>0) {
             RotateTransition rotateTransition=new RotateTransition();
@@ -564,16 +567,16 @@ public class PvPageController {
         updatePvs();
     }
     public void goToMessageForReply(Message message){
-        System.out.println(pv.getMessages().size()-pv.getMessages().indexOf(message)-1);
-        System.out.println(message.getContent());
-        messageScrollPane.setVvalue(reverseVboxForSendMessage.getChildren().get(pv.getMessages().size()-pv.getMessages().indexOf(message)-1).getLayoutY()/reverseVboxForSendMessage.getHeight());
-        reverseVboxForSendMessage.getChildren().get(pv.getMessages().size()-pv.getMessages().indexOf(message)-1).setStyle("-fx-border-color: Gold");
-        Timer myTimer = new Timer();
-        myTimer.schedule(new TimerTask(){
-            @Override
-            public void run() {
-                reverseVboxForSendMessage.getChildren().get(pv.getMessages().size()-pv.getMessages().indexOf(message)-1).setStyle("-fx-border-color: transparent");
-            }
-        }, 3000l);
+        if (pv.getMessages().indexOf(message)>=0) {
+            messageScrollPane.setVvalue(reverseVboxForSendMessage.getChildren().get(pv.getMessages().size() - pv.getMessages().indexOf(message) - 1).getLayoutY() / reverseVboxForSendMessage.getHeight());
+            reverseVboxForSendMessage.getChildren().get(pv.getMessages().size() - pv.getMessages().indexOf(message) - 1).setStyle("-fx-border-color: Gold");
+            Timer myTimer = new Timer();
+            myTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    reverseVboxForSendMessage.getChildren().get(pv.getMessages().size() - pv.getMessages().indexOf(message) - 1).setStyle("-fx-border-color: transparent");
+                }
+            }, 3000l);
+        }
     }
 }

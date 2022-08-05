@@ -1,16 +1,13 @@
-package Controllers;
+package Controllers.PvControllers;
 
 import DataBase.DataBase;
 import View.Controller;
 import component.Pv;
-import component.User;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.ImagePattern;
