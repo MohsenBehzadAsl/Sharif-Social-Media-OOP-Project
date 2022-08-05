@@ -1,9 +1,9 @@
 package Controllers;
 
+import Controllers.OtherUserPageControllers.ShowAnotherUserPageController;
 import DataBase.DataBase;
 import View.Controller;
 import component.Comment;
-import component.Message;
 import component.Post;
 import component.User;
 import javafx.beans.binding.Bindings;

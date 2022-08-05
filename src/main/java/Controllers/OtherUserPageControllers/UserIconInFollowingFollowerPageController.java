@@ -1,5 +1,6 @@
-package Controllers;
+package Controllers.OtherUserPageControllers;
 
+import Controllers.OtherUserPageControllers.ShowAnotherUserPageController;
 import DataBase.DataBase;
 import View.Controller;
 import component.User;
@@ -54,7 +55,6 @@ public class UserIconInFollowingFollowerPageController {
         showAnotherUserPageController.backParent=backParent;
         showAnotherUserPageController.set(DataBase.getUserWithId(id.getText().replaceAll("Id :@","")));
     }
-
     public void setFirst(User user,boolean isFollower){
         this.isFollower=isFollower;
         id.setText(id.getText()+"@"+user.getId());

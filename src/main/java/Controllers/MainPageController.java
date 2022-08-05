@@ -1,17 +1,15 @@
 package Controllers;
 
+import Controllers.PvControllers.PvPageController;
 import View.Controller;
-import View.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -63,22 +61,6 @@ public class MainPageController {
 
     }
     @FXML
-    void Followers(MouseEvent event) throws IOException {
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/ShowFollowers.fxml"));
-        Parent parent=fxmlLoader.load();
-        main.getChildren().clear();
-        main.getRowConstraints().removeAll();
-        main.getColumnConstraints().removeAll();
-        main.add(parent,0,0);
-        FollowersController followersController=fxmlLoader.getController();
-        followersController.update();
-        Controller.followersController=followersController;
-    }
-    @FXML
-    void Followings(MouseEvent event) {
-
-    }
-    @FXML
     void Group(MouseEvent event) {
 
     }
@@ -115,6 +97,7 @@ public class MainPageController {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/PvsPage.fxml"));
         Parent parent=fxmlLoader.load();
         PvPageController pvPageController=fxmlLoader.getController();
+        pvPageController.nowParent=parent;
         setMain(parent);
     }
 

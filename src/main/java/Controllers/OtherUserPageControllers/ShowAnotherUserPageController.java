@@ -1,5 +1,8 @@
-package Controllers;
+package Controllers.OtherUserPageControllers;
 
+import Controllers.OtherUserPageControllers.FollowerOrFollowingPopUpController;
+import Controllers.PostController;
+import Controllers.PvControllers.PvPageController;
 import DataBase.DataBase;
 import View.Controller;
 import component.Post;
@@ -8,14 +11,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -44,7 +48,6 @@ public class ShowAnotherUserPageController {
     private Label myFollowingsLabel;
     @FXML
     private Label name;
-
     @FXML
     private VBox postFill;
 
@@ -55,7 +58,6 @@ public class ShowAnotherUserPageController {
         Controller.main.getRowConstraints().removeAll();
         Controller.main.add(backParent,0,0);
     }
-
     @FXML
     void followOrUnfollow(ActionEvent event) {
         if (Controller.user.getFollowings().contains(user)){
@@ -73,7 +75,6 @@ public class ShowAnotherUserPageController {
         myFollowersLabel.setText(""+user.getFollowers().size());
         myFollowingsLabel.setText(""+user.getFollowings().size());
     }
-
     @FXML
     void sendMessage(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/PvsPage.fxml"));
@@ -84,18 +85,48 @@ public class ShowAnotherUserPageController {
         Controller.main.getRowConstraints().removeAll();
         Controller.main.add(parent,0,0);
         pvPageController.showPv(user);
+        pvPageController.nowParent=parent;
     }
-
     @FXML
-    void showFollowersOFUser(ActionEvent event) {
-
+    void showFollowersOFUser(ActionEvent event) throws IOException {
+        if (user.getFollowers().size()>0) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/FollowerOrFollowingPopUp.fxml"));
+            Parent parent = fxmlLoader.load();
+            FollowerOrFollowingPopUpController followerOrFollowingPopUpController = fxmlLoader.getController();
+            Scene scene = new Scene(parent, 450, 400);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setX(Controller.stage.getX()+Controller.stage.getWidth()/2-450/2);
+            stage.setY(Controller.stage.getY()+Controller.stage.getHeight()/2-400/2);
+            stage.setResizable(false);
+            followerOrFollowingPopUpController.isFollowing = false;
+            followerOrFollowingPopUpController.user = user;
+            followerOrFollowingPopUpController.backParent = nowParent;
+            followerOrFollowingPopUpController.popUp=stage;
+            followerOrFollowingPopUpController.update();
+            stage.show();
+        }
     }
-
     @FXML
-    void showFollowingOfUser(ActionEvent event) {
-
+    void showFollowingOfUser(ActionEvent event) throws IOException {
+        if (user.getFollowings().size()>0) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/FollowerOrFollowingPopUp.fxml"));
+            Parent parent = fxmlLoader.load();
+            FollowerOrFollowingPopUpController followerOrFollowingPopUpController = fxmlLoader.getController();
+            Scene scene = new Scene(parent, 450, 400);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setX(Controller.stage.getX() + Controller.stage.getWidth() / 2 - 450/2);
+            stage.setY(Controller.stage.getY() + Controller.stage.getHeight() / 2 - 400/2);
+            followerOrFollowingPopUpController.isFollowing = true;
+            followerOrFollowingPopUpController.user = user;
+            followerOrFollowingPopUpController.backParent = nowParent;
+            followerOrFollowingPopUpController.popUp=stage;
+            followerOrFollowingPopUpController.update();
+            stage.show();
+        }
     }
-
     public void set(User userWithId) {
         this.user=userWithId;
         System.out.println("hello");
@@ -112,7 +143,6 @@ public class ShowAnotherUserPageController {
         }
 
     }
-
     public void start(User sender) throws SQLException, IOException, ClassNotFoundException {
         name.setText(sender.getUserName());
         id.setText(sender.getId());
@@ -122,7 +152,6 @@ public class ShowAnotherUserPageController {
         image.setFill(new ImagePattern(new Image(sender.getPhotoNameFromImageFolder())));
         showPosts(sender);
     }
-
     private void showPosts(User sender) throws SQLException, ClassNotFoundException, IOException {
 
         ArrayList<Post> posts=new ArrayList<>();

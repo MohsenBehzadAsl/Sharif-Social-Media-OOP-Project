@@ -1,10 +1,9 @@
 package Controllers;
 
+import Controllers.OtherUserPageControllers.UserIconInFollowingFollowerPageController;
 import View.Controller;
 import component.User;
 import javafx.animation.RotateTransition;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Popup;
 
 import java.io.IOException;
 import java.util.ArrayList;
