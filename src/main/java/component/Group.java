@@ -2,6 +2,7 @@ package component;
 
 import DataBase.DataBase;
 import DataBase.UpdateSqlTable;
+import View.Controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,7 +15,7 @@ public class Group {
     private String sqlId;
 
 
-
+    private String PhotoNameFromImageFolder;
     private LinkedHashMap<User,Boolean> linkedMembers=new LinkedHashMap<User,Boolean>(); // Boolean-->ban  true==ban
     private ArrayList<User> members=new ArrayList<>();
     private ArrayList<User> admins=new ArrayList<User>();
@@ -210,5 +211,18 @@ public void addGroupToTable(Group group,String name,String bio,boolean banGroup)
 
     public void setMembers(ArrayList<User> members) {
         this.members = members;
+    }
+
+    public String getPhotoNameFromImageFolder() {
+        if (PhotoNameFromImageFolder==null){
+            PhotoNameFromImageFolder=new String();
+            int index= ((int) (Math.random()*10))%7;
+            PhotoNameFromImageFolder="sampleProfilePhoto"+index;
+            PhotoNameFromImageFolder= String.valueOf(Controller.class.getResource("/images/"+PhotoNameFromImageFolder+".png"));
+        }
+       return PhotoNameFromImageFolder;
+    }
+    public void setPhotoNameFromImageFolder(String PhotoNameFromImageFolder){
+        this.PhotoNameFromImageFolder=PhotoNameFromImageFolder;
     }
 }

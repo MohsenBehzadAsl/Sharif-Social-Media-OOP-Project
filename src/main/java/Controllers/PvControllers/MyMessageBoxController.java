@@ -1,8 +1,10 @@
 package Controllers.PvControllers;
 
+import Controllers.GroupPageController;
 import Controllers.PvControllers.PvPageController;
 import component.Message;
 import javafx.beans.binding.Bindings;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -18,7 +20,11 @@ import java.util.concurrent.Callable;
 public class MyMessageBoxController {
 
     public Message message;
+
     public PvPageController pvPageController;
+
+    public GroupPageController groupPageController;
+
     @FXML
     private GridPane messageGrid;
     @FXML
@@ -128,13 +134,30 @@ public class MyMessageBoxController {
     public void handleResizing(){
         System.out.println("here");
         ContentTextArea.applyCss();
-        Node text=ContentTextArea.lookup(".text");
-        ContentTextArea.prefHeightProperty().bind(Bindings.createDoubleBinding(new Callable<Double>(){
+        ContentTextArea.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public Double call() throws Exception {
-                return text.getBoundsInLocal().getHeight();
+            public void handle(MouseEvent mouseEvent) {
+                Node text=ContentTextArea.lookup(".text");
+                ContentTextArea.prefHeightProperty().bind(Bindings.createDoubleBinding(new Callable<Double>(){
+                    @Override
+                    public Double call() throws Exception {
+                        return text.getBoundsInLocal().getHeight();
+                    }
+                }, text.boundsInLocalProperty()).add(20));
             }
-        }, text.boundsInLocalProperty()).add(20));
+        });
+        try {
+            Node text=ContentTextArea.lookup(".text");
+            ContentTextArea.prefHeightProperty().bind(Bindings.createDoubleBinding(new Callable<Double>(){
+                @Override
+                public Double call() throws Exception {
+                    return text.getBoundsInLocal().getHeight();
+                }
+            }, text.boundsInLocalProperty()).add(20));
+        }catch (Exception E){
+            System.out.println(E);
+        }
+
         ContentTextArea.heightProperty().addListener((obs, oldVal, newVal) -> {
             if(total.getHeight()<=230) {
                 total.setPrefHeight(ContentTextArea.getPrefHeight() *100/64);
