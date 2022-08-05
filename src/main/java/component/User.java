@@ -366,6 +366,7 @@ public class User {
             photoNameFromImageFolder="sampleProfilePhoto"+index;
             photoNameFromImageFolder= String.valueOf(Controller.class.getResource("/images/"+photoNameFromImageFolder+".png"));
         }
+        System.out.println(photoNameFromImageFolder);
         return photoNameFromImageFolder;
     }
 

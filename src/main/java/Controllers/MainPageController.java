@@ -10,6 +10,8 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -21,6 +23,14 @@ public class MainPageController {
 
     @FXML
     private GridPane main;
+
+    public GridPane getMain() {
+        return main;
+    }
+
+//    public void setMain(GridPane main) {
+//        this.main = main;
+//    }
 
     @FXML
     private GridPane total;
@@ -44,7 +54,12 @@ public class MainPageController {
         Controller.stage.setScene(Controller.startPage);
     }
     @FXML
-    void Explore(MouseEvent event) {
+    void Explore(MouseEvent event) throws IOException, SQLException, ClassNotFoundException {
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Explore.fxml"));
+        Parent parent=fxmlLoader.load();
+        ExploreController exploreController=fxmlLoader.getController();
+        setMain(parent);exploreController.getWhere().setText("Explore");
+        exploreController.startShowPost();
 
     }
     @FXML
@@ -78,17 +93,22 @@ public class MainPageController {
         myHomePostPageController.getId().setText("@"+Controller.user.getId());
         myHomePostPageController.getFollowers().setText("Num Of Followers: "+ Controller.user.getFollowers().size());
         myHomePostPageController.getFollowing().setText("Num Of Following: "+ Controller.user.getFollowings().size());
-        myHomePostPageController.getImageProfile().setImage(new Image(Controller.user.getPhotoNameFromImageFolder()));
+        myHomePostPageController.getImageProfile().setFill(new ImagePattern(new Image(Controller.user.getPhotoNameFromImageFolder())));
         myHomePostPageController.getAll().getRowConstraints().get(0).setPercentHeight(13.6);
-        myHomePostPageController.getAll().getRowConstraints().get(1).setPercentHeight(86.4);
-        myHomePostPageController.getAll().getRowConstraints().get(2).setPercentHeight(0);
+        myHomePostPageController.getAll().getRowConstraints().get(1).setPercentHeight(80);
+        myHomePostPageController.getAll().getRowConstraints().get(2).setPercentHeight(6.4);
         myHomePostPageController.getAll().getRowConstraints().get(3).setPercentHeight(0);
-
+        myHomePostPageController.getAll().getRowConstraints().get(4).setPercentHeight(0);
     }
 
     @FXML
-    void MainPage(MouseEvent event) {
-
+    void MainPage(MouseEvent event) throws IOException, SQLException, ClassNotFoundException {
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Explore.fxml"));
+        Parent parent=fxmlLoader.load();
+        ExploreController exploreController=fxmlLoader.getController();
+        setMain(parent);
+        exploreController.startShowPost();
+        exploreController.getWhere().setText("Main Page");
     }
     @FXML
     void Pv(MouseEvent event) throws IOException {
@@ -98,7 +118,7 @@ public class MainPageController {
         setMain(parent);
     }
 
-    private void setMain(Parent parent) {
+    public void setMain(Parent parent) {
         main.getChildren().clear();
         main.getColumnConstraints().removeAll();
         main.getRowConstraints().removeAll();

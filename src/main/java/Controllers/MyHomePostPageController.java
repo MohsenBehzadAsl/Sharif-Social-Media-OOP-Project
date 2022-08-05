@@ -16,8 +16,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -29,8 +35,26 @@ import java.util.concurrent.Callable;
 public class MyHomePostPageController {
 
 
+    private String photoAddress;
     @FXML
     private VBox down;
+
+    @FXML
+    private Circle imageProfile ;
+
+    @FXML
+    private Button button;
+
+    public Button getButton() {
+        return button;
+    }
+
+    public void setButton(Button button) {
+        this.button = button;
+    }
+
+    @FXML
+    private ImageView imageOfPostRectangle;
 
     public Label getUsername() {
         return username;
@@ -64,11 +88,11 @@ public class MyHomePostPageController {
         this.following = following;
     }
 
-    public ImageView getImageProfile() {
+    public Circle getImageProfile() {
         return imageProfile;
     }
 
-    public void setImageProfile(ImageView imageProfile) {
+    public void setImageProfile(Circle imageProfile) {
         this.imageProfile = imageProfile;
     }
 
@@ -115,13 +139,13 @@ public class MyHomePostPageController {
     @FXML
     private Label following;
 
-    @FXML
-    private ImageView imageProfile;
+
 
     public PostController postController;
 
     public void startShowPost() throws IOException, SQLException, ClassNotFoundException {
 
+        down.getChildren().clear();
 
         ArrayList<Post> posts=new ArrayList<>();
         for (Post post : DataBase.getPosts()) {
@@ -146,10 +170,13 @@ public class MyHomePostPageController {
                 posts.get(i).addViewToTable(Controller.user,posts.get(i).getPostId(), LocalDateTime.now());
                 posts.get(i).getViews().put(Controller.user, LocalDateTime.now());
 
+
                 FXMLLoader fxmlLoader=new FXMLLoader(PostController.class.getResource("/fxml/Post.fxml"));
                 Parent parent=fxmlLoader.load();
                 postController=fxmlLoader.getController();
                 //Controller.postController=postController;
+
+                postController.setMyHomePostPageController(this);
                 postController.setPost(posts.get(i));
                 postController.getAll().getColumnConstraints().get(0).setPercentWidth(100);
                 postController.getAll().getColumnConstraints().get(1).setPercentWidth(0);
@@ -166,13 +193,16 @@ public class MyHomePostPageController {
 
 
 
+
                 postController.getBanCommentOrFollow().setText("Ban Comment");
                 postController.getBanCommentOrFollow().setFont(Font.font(16));
                 postController.getBanComment().setImage(new Image(getClass().getResource("/images/block.png").toExternalForm()));
                 postController.getDeletOrVisit().setText("Delete");
                 postController.getDeletePost().setImage(new Image(getClass().getResource("/images/trash_can.png").toExternalForm()));
 
+                postController.getUserProfile().setFill(new ImagePattern(new Image(posts.get(i).getSender().getPhotoNameFromImageFolder())));
 
+                //                commentController.getUserProfile().setFill(new ImagePattern(new Image(comment.getSender().getPhotoNameFromImageFolder())));
 
                 if (posts.get(i).getLikes().containsKey(Controller.user)){
                     postController.getLiked().setImage(new Image(getClass().getResource("/images/liked.png").toExternalForm()));
@@ -191,9 +221,30 @@ public class MyHomePostPageController {
                 if (posts.get(i).getFormat().equalsIgnoreCase("text")){
                     postController.getImagePost().getRowConstraints().get(0).setPercentHeight(0);
                     postController.getImagePost().getRowConstraints().get(1).setPercentHeight(100);
+                    postController.getImageOfPostRectangle().setFitHeight(0);
+                    postController.getImageOfPostRectangle().setFitWidth(0);
+                }else{
+                    if (posts.get(i).getContent()==null){
+                        postController.getImagePost().getRowConstraints().get(0).setPercentHeight(100);
+                        postController.getImagePost().getRowConstraints().get(1).setPercentHeight(0);
+                    }else{
+                        postController.getImagePost().getRowConstraints().get(0).setPercentHeight(60);
+                        postController.getImagePost().getRowConstraints().get(1).setPercentHeight(40);
+                    }
+
+                    System.out.println(posts.get(i).getPhotoAddress());
+
+                    postController.getImageOfPostRectangle().setFitHeight(300);
+                    postController.getImageOfPostRectangle().setFitWidth(300);
+                    postController.getImageOfPostRectangle().setPreserveRatio(true);
+                    postController.getImageOfPostRectangle().setImage(new Image(posts.get(i).getPhotoAddress()));
+                    postController.getImageOfPostRectangle().setPreserveRatio(true);
+
+
+
                 }
                 if (posts.get(i).getContent().length()<1000)
-                postController.initializer();
+                    postController.initializer();
 
 
 
@@ -219,13 +270,19 @@ public class MyHomePostPageController {
     }
 
     public void showUserRecommendation(MouseEvent mouseEvent) {
+        all.getRowConstraints().get(0).setPercentHeight(13.6);
+        all.getRowConstraints().get(1).setPercentHeight(50);
+        all.getRowConstraints().get(2).setPercentHeight(0);
+        all.getRowConstraints().get(4).setPercentHeight(0);
+        all.getRowConstraints().get(3).setPercentHeight(36.4);
 
     }
 
     public void addPost(MouseEvent mouseEvent) throws IOException {
         all.getRowConstraints().get(0).setPercentHeight(13.6);
         all.getRowConstraints().get(1).setPercentHeight(0);
-        all.getRowConstraints().get(2).setPercentHeight(86.4);
+        all.getRowConstraints().get(2).setPercentHeight(0);
+        all.getRowConstraints().get(4).setPercentHeight(86.4);
         all.getRowConstraints().get(3).setPercentHeight(0);
 
 
@@ -237,7 +294,7 @@ public class MyHomePostPageController {
     }
 
     public void visibleCreatPost(boolean visible){
-
+        //button.setVisible(true);
         createPostText.setMinHeight(24);
         createPostText.setWrapText(true);
         System.out.println("**********");
@@ -254,17 +311,61 @@ public class MyHomePostPageController {
     }
 
     public void addPostToDataBase(MouseEvent mouseEvent) throws SQLException, ClassNotFoundException, IOException {
-        if (!createPostText.getText().isEmpty()){
-            System.out.println("****");
-            Post post=new Post(Controller.user,"text",createPostText.getText(),true);
-            Controller.user.getPosts().add(post);
-            DataBase.add(post);
-            all.getRowConstraints().get(0).setPercentHeight(13.6);
-            all.getRowConstraints().get(1).setPercentHeight(86.4);
-            all.getRowConstraints().get(2).setPercentHeight(0);
-            all.getRowConstraints().get(3).setPercentHeight(0);
+
+        System.out.println("/////////////////////");
+        all.getRowConstraints().get(0).setPercentHeight(13.6);
+        all.getRowConstraints().get(1).setPercentHeight(80);
+        all.getRowConstraints().get(2).setPercentHeight(6.4);
+        all.getRowConstraints().get(3).setPercentHeight(0);
+        all.getRowConstraints().get(4).setPercentHeight(0);
+
+
+
+        //button.setVisible(false);
+
+        if (!createPostText.getText().isEmpty() || photoAddress!=null){
+            if (photoAddress==null) {
+                System.out.println("****");
+                Post post = new Post(Controller.user, "text", createPostText.getText(), true);
+                Controller.user.getPosts().add(post);
+                DataBase.add(post);
+
+            }else{
+                Post post = new Post(Controller.user, "image", createPostText.getText(),photoAddress, true);
+                Controller.user.getPosts().add(post);
+                DataBase.add(post);
+            }
+            imageOfPostRectangle.setVisible(false);
+
+
+
+
             down.getChildren().clear();
             startShowPost();
+        }
+    }
+
+    public void browseImage(MouseEvent mouseEvent) {
+        FileChooser fileChooser=new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("All Images", "*.*"),
+                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+                new FileChooser.ExtensionFilter("PNG", "*.png")
+        );
+
+        Stage stage=(Stage) all.getScene().getWindow();
+        File file=  fileChooser.showOpenDialog(stage);
+        if(file!=null){
+            Image image = new Image(file.toURI().toString());
+            //Controller.user.setPhotoNameFromImageFolder(file.toURI().toString());
+            //myImageView.setImage(image);
+            photoAddress=file.toURI().toString();
+            imageOfPostRectangle.setFitHeight(500);
+            imageOfPostRectangle.setFitWidth(500);
+            imageOfPostRectangle.setPreserveRatio(true);
+            imageOfPostRectangle.setImage(new Image(photoAddress));
+
+
         }
     }
 }

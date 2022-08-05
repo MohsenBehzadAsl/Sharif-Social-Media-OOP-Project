@@ -11,6 +11,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -18,19 +23,49 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
-
+import javafx.stage.Stage;
+import DataBase.UpdateSqlTable;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.concurrent.Callable;
 
 public class PostController {
 
+
+    public MyHomePostPageController getMyHomePostPageController() {
+        return myHomePostPageController;
+    }
+
+    public void setMyHomePostPageController(MyHomePostPageController myHomePostPageController) {
+        this.myHomePostPageController = myHomePostPageController;
+    }
+
+    public MyHomePostPageController myHomePostPageController;
+
+    private LinkedHashMap<String,Integer> helpToPlot1=new LinkedHashMap<>();
+    private LinkedHashMap<String,Integer> helpToPlot2=new LinkedHashMap<>();
+
+    public LinkedHashMap<String, Integer> getHelpToPlot1() {
+        return helpToPlot1;
+    }
+
+    public void setHelpToPlot1(LinkedHashMap<String, Integer> helpToPlot1) {
+        this.helpToPlot1 = helpToPlot1;
+    }
+
+    public LinkedHashMap<String, Integer> getHelpToPlot2() {
+        return helpToPlot2;
+    }
+
+    public void setHelpToPlot2(LinkedHashMap<String, Integer> helpToPlot2) {
+        this.helpToPlot2 = helpToPlot2;
+    }
 
     public TextArea getTextArea() {
         return textArea;
@@ -43,6 +78,7 @@ public class PostController {
     @FXML
     private GridPane imagePost;
 
+
     public GridPane getImagePost() {
         return imagePost;
     }
@@ -50,6 +86,8 @@ public class PostController {
     public void setImagePost(GridPane imagePost) {
         this.imagePost = imagePost;
     }
+
+
 
     public CommentController commentController;
 
@@ -59,6 +97,18 @@ public class PostController {
 
     public void setCommentController(CommentController commentController) {
         this.commentController = commentController;
+    }
+
+
+    @FXML
+    private Circle userProfile;
+
+    public Circle getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(Circle userProfile) {
+        this.userProfile = userProfile;
     }
 
     @FXML
@@ -84,6 +134,9 @@ public class PostController {
 
     @FXML
     private ImageView liked;
+
+    @FXML
+    private ImageView allShowAnalyse;
 
     public GridPane getLeft() {
         return left;
@@ -153,6 +206,17 @@ public class PostController {
     @FXML
     private VBox showLists;
 
+    @FXML
+    private ImageView imageOfPostRectangle;
+
+    public ImageView getImageOfPostRectangle() {
+        return imageOfPostRectangle;
+    }
+
+    public void setImageOfPostRectangle(ImageView imageOfPostRectangle) {
+        this.imageOfPostRectangle = imageOfPostRectangle;
+    }
+
     public VBox getMainComment() {
         return mainComment;
     }
@@ -190,6 +254,9 @@ public class PostController {
 
     @FXML
     private GridPane analyzePost;
+
+    @FXML
+    private ImageView sender;
 
     @FXML
     private Label deletOrVisit1;
@@ -304,6 +371,7 @@ public class PostController {
             }
         }else{
 
+
             Comment comment = (Comment) post;
             this.post=comment.getCommentOfPost();
 
@@ -407,18 +475,79 @@ public class PostController {
 
     public void setDeletOrVisit(Label deletOrVisit) {
         this.deletOrVisit = deletOrVisit;
+
+
     }
 
-    public void visitPage(MouseEvent mouseEvent) {
+    public void visitPage(MouseEvent mouseEvent) throws SQLException, ClassNotFoundException, IOException {
+        if (deletOrVisit.getText().equals("Delete")){
+            boolean flag=true;
+            while (flag){
+                if (post.getIsComment().equals("post")) {
+                    UpdateSqlTable.deletePostFromTable(post);
+                    DataBase.getPosts().remove(post);
+                    flag=false;
+                }else{
+                    Comment comment = (Comment) post;
+                    this.post=comment.getCommentOfPost();
+                }
+            }
+            myHomePostPageController.startShowPost();
+        }else{
+            FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/ShowAnotherUserPage.fxml"));
+            Parent parent=fxmlLoader.load();
+            ShowAnotherUserPageController showAnotherUserPageController=fxmlLoader.getController();
+            Controller.mainPageController.setMain(parent);
+            showAnotherUserPageController.start(post.getSender());
+        }
     }
 
-    public void follow(MouseEvent mouseEvent) {
+
+    public void follow(MouseEvent mouseEvent) throws SQLException, ClassNotFoundException {
+        if (banCommentOrFollow.getText().endsWith("Comment")){
+            if (post.getCommentAbility()) {
+                //UpdateSqlTable.setCommentAbilityPostTable(post,false);
+                banCommentOrFollow.setText("UnBan Comment");
+                banCommentOrFollow.setFont(Font.font(13));
+                post.setCommentAbility(false);
+                messageTextArea.setDisable(true);
+            }else{
+                //UpdateSqlTable.setCommentAbilityPostTable(post,true);
+                banCommentOrFollow.setText("Ban Comment");
+                banCommentOrFollow.setFont(Font.font(16));
+                post.setCommentAbility(true);
+                messageTextArea.setDisable(false);
+            }
+        }else{
+            if (!Controller.user.getFollowings().contains(post.getSender()) ) {
+                if ( !Controller.user.equals(post.getSender())){
+                    User.addFollowerAndFollowingToTable(Controller.user,post.getSender());
+                    Controller.user.addFollowing(post.getSender());
+                    post.getSender().addFollower(Controller.user);
+                    banCommentOrFollow.setText("Unfollow");
+                    //showUserRecommendation = true;
+                }
+            }else{
+                User.removeFollowerAndFollowingFromTable(Controller.user,post.getSender());
+                Controller.user.getFollowings().remove(post.getSender());
+                post.getSender().getFollowers().remove(Controller.user);
+                banCommentOrFollow.setText("Follow");
+                //showUserRecommendation=false;
+            }
+        }
     }
 
     public void showLikedUsers(MouseEvent mouseEvent) throws IOException {
+
+        allShowAnalyse.setVisible(false);
+
+
         helpInListener.getRowConstraints().get(0).setPercentHeight(8);
-        helpInListener.getRowConstraints().get(1).setPercentHeight(92);
-        helpInListener.getRowConstraints().get(2).setPercentHeight(0);
+        helpInListener.getRowConstraints().get(1).setPercentHeight(0);
+        helpInListener.getRowConstraints().get(2).setPercentHeight(92);
+        messageTextArea.setVisible(false);sender.setVisible(false);
+        helpInListener.getRowConstraints().get(3).setPercentHeight(0);
+
 
 
         commentShown=false;
@@ -435,7 +564,7 @@ public class PostController {
         }
 
 
-        showLists.getChildren().clear();
+        showLists.getChildren().clear();showLists.setSpacing(20);
         List<User> users = new ArrayList(post.getLikes().keySet());
 
         if (users.size() == 0) {
@@ -453,7 +582,7 @@ public class PostController {
                 otherUsersController.getUserName().setFont(Font.font(16));
 
 
-                otherUsersController.getUserProfile().setImage(new Image(users.get(i).getPhotoNameFromImageFolder()));
+                //otherUsersController.getUserProfile().setImage(new Image(users.get(i).getPhotoNameFromImageFolder()));
 
 
 
@@ -464,9 +593,15 @@ public class PostController {
     }
 
     public void showViewdUsers(MouseEvent mouseEvent) throws IOException {
+
+        allShowAnalyse.setVisible(false);
+
+
         helpInListener.getRowConstraints().get(0).setPercentHeight(8);
-        helpInListener.getRowConstraints().get(1).setPercentHeight(92);
-        helpInListener.getRowConstraints().get(2).setPercentHeight(0);
+        helpInListener.getRowConstraints().get(1).setPercentHeight(0);
+        helpInListener.getRowConstraints().get(2).setPercentHeight(92);
+        messageTextArea.setVisible(false);sender.setVisible(false);
+        helpInListener.getRowConstraints().get(3).setPercentHeight(0);
 
         commentShown=false;
         where.setText("Viewd Users");
@@ -482,7 +617,7 @@ public class PostController {
         }
 
 
-        showLists.getChildren().clear();
+        showLists.getChildren().clear();showLists.setSpacing(20);
         List<User> users = new ArrayList(post.getViews().keySet());
 
         if (users.size() == 0) {
@@ -561,10 +696,9 @@ public class PostController {
 
     private void showCommentII() throws SQLException, ClassNotFoundException, IOException {
 
+        allShowAnalyse.setVisible(false);
 
-
-
-
+        messageTextArea.setVisible(true);sender.setVisible(true);
 
 
         visibleComment(true);
@@ -595,7 +729,7 @@ public class PostController {
         }
 
 
-        showLists.getChildren().clear();
+        showLists.getChildren().clear();showLists.setSpacing(20);
         ArrayList<Comment> comments = new ArrayList<>();
         comments = post.getComments();
         if (comments.size() == 0) {
@@ -618,11 +752,13 @@ public class PostController {
                 FXMLLoader fxmlLoader = new FXMLLoader(PostController.class.getResource("/fxml/Comment.fxml"));
                 Parent parent = fxmlLoader.load();
                 commentController = fxmlLoader.getController();
+
+
                 commentController.setPostControllerHelp(this);
 
                 commentController.setComment(comments.get(i));
                 commentController.getUsername().setText(comments.get(i).getSender().getUserName());
-                commentController.getProfile().setImage(new Image(comments.get(i).getSender().getPhotoNameFromImageFolder()));
+                commentController.getUserProfile().setFill(new ImagePattern(new Image(comments.get(i).getSender().getPhotoNameFromImageFolder())));
 
                 commentController.getTextArea().setMinHeight(24);
                 commentController.getTextArea().setWrapText(true);
@@ -664,6 +800,196 @@ public class PostController {
                 helpInListener.getRowConstraints().get(2).setPercentHeight(58 - messageTextArea.getPrefHeight() / helpInListener.getHeight() * 100);
             }
         });
+
+    }
+
+    public void analyzePost(MouseEvent mouseEvent) throws IOException {
+
+        allShowAnalyse.setVisible(true);
+
+
+        helpInListener.getRowConstraints().get(0).setPercentHeight(8);
+        helpInListener.getRowConstraints().get(1).setPercentHeight(0);
+        helpInListener.getRowConstraints().get(2).setPercentHeight(92);
+        messageTextArea.setVisible(false);sender.setVisible(false);
+        helpInListener.getRowConstraints().get(3).setPercentHeight(0);
+
+        where.setText("Analyze Post");
+        if (all.getColumnConstraints().get(1).getPercentWidth() == 0) {
+            all.getChildren().get(2).setVisible(false);
+            all.getColumnConstraints().get(1).setPercentWidth(0);
+            all.getColumnConstraints().get(2).setPercentWidth(32);
+            all.getColumnConstraints().get(0).setPercentWidth(68);
+        } else {
+            all.getColumnConstraints().get(2).setPercentWidth(28);
+            all.getColumnConstraints().get(1).setPercentWidth(18);
+            all.getColumnConstraints().get(0).setPercentWidth(54);
+        }
+
+        showLists.getChildren().clear();
+
+        for (int j=0;j<2;j++){
+            System.out.println("@@@@@@@@@@@@@");
+
+
+
+            FXMLLoader fxmlLoader0 = new FXMLLoader(PostController.class.getResource("/fxml/AnalyzePost.fxml"));
+            Parent parent0 = fxmlLoader0.load();
+            AnalyzePost analyzePost = fxmlLoader0.getController();
+            analyzePost.getInbox().getChildren().clear();
+            if (j==0){
+                analyzePost.getWhere().setText("Viewd Users");
+
+
+                LinkedHashMap<User, LocalDateTime> viewsFromPost = post.getViews();
+                List<User> keyList = new ArrayList(viewsFromPost.keySet());
+                List<LocalDateTime> valueList = new ArrayList(viewsFromPost.values());
+                Collections.reverse(keyList);
+                Collections.reverse(valueList);
+                //LinkedHashMap<String,Integer> helpToPlot1=new LinkedHashMap<>();
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+                if (keyList.size() == 0) {
+
+                } else {
+
+                    for (int i = 0; i < keyList.size(); i++) {
+
+                        if (helpToPlot1.containsKey(dtf.format(valueList.get(i)))){
+                            Integer r=helpToPlot1.get(dtf.format(valueList.get(i)));
+                            r++;
+                            helpToPlot1.put(dtf.format(valueList.get(i)),r);
+                        }else{
+                            helpToPlot1.put(dtf.format(valueList.get(i)),1);
+                        }
+
+
+                        FXMLLoader fxmlLoader = new FXMLLoader(PostController.class.getResource("/fxml/OtherUsers.fxml"));
+                        Parent parent = fxmlLoader.load();
+                        OtherUsersController otherUsersController = fxmlLoader.getController();
+                        //otherUsersController = fxmlLoader.getController();
+
+
+
+                        otherUsersController.getUserName().setText(keyList.get(i).getUserName());
+                        otherUsersController.getUserName().setFont(Font.font(16));
+
+
+                        otherUsersController.getUserProfile().setImage(new Image(keyList.get(i).getPhotoNameFromImageFolder()));
+
+
+
+                        analyzePost.getInbox().getChildren().add(parent);
+                    }
+
+                }
+
+                analyzePost.setHelpToPlot1(helpToPlot1);
+
+            }else{
+                analyzePost.getWhere().setText("Liked Users");
+
+
+                LinkedHashMap<User, LocalDateTime> likesToPost = post.getLikes();
+                List<User> keyList2 = new ArrayList(likesToPost.keySet());
+                List<LocalDateTime> valueList2 = new ArrayList(likesToPost.values());
+                Collections.reverse(keyList2);
+                Collections.reverse(valueList2);
+                //LinkedHashMap<String,Integer> helpToPlot2=new LinkedHashMap<>();
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
+                if (keyList2.size() == 0) {
+
+                } else {
+                    for (int i = 0; i < keyList2.size(); i++) {
+
+                        if (helpToPlot2.containsKey(dtf.format(valueList2.get(i)))){
+                            Integer r=helpToPlot2.get(dtf.format(valueList2.get(i)));
+                            r++;
+                            helpToPlot2.put(dtf.format(valueList2.get(i)),r);
+                        }else{
+                            helpToPlot2.put(dtf.format(valueList2.get(i)),1);
+                        }
+
+                        FXMLLoader fxmlLoader = new FXMLLoader(PostController.class.getResource("/fxml/OtherUsers.fxml"));
+                        Parent parent = fxmlLoader.load();
+                        OtherUsersController otherUsersController = fxmlLoader.getController();
+                        //otherUsersController = fxmlLoader.getController();
+
+
+
+                        otherUsersController.getUserName().setText(keyList2.get(i).getUserName());
+                        otherUsersController.getUserName().setFont(Font.font(16));
+
+
+                        otherUsersController.getUserProfile().setImage(new Image(keyList2.get(i).getPhotoNameFromImageFolder()));
+
+
+
+                        analyzePost.getInbox().getChildren().add(parent);
+                    }
+
+                }
+
+                analyzePost.setHelpToPlot1(helpToPlot2);
+
+            }
+
+            showLists.getChildren().add(parent0);
+        }
+        showLists.setSpacing(0);
+
+
+
+
+
+
+
+    }
+
+    public void showAnalyzePlot(MouseEvent mouseEvent) {
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        final BarChart<String,Number> bc = new BarChart<String,Number>(xAxis,yAxis);
+        bc.setTitle("Post Analysis");
+        xAxis.setLabel("Date");
+        yAxis.setLabel("Count");
+
+
+        List<String> keyListOfHelpToPlot1 = new ArrayList(helpToPlot1.keySet());
+        List<Integer> valueListOfHelpToPlot1 = new ArrayList(helpToPlot1.values());
+        List<String> keyListOfHelpToPlot2 = new ArrayList(helpToPlot2.keySet());
+        List<Integer> valueListOfHelpToPlot2 = new ArrayList(helpToPlot2.values());
+
+
+        System.out.println("******");
+
+        XYChart.Series series1 = new XYChart.Series();
+        series1.setName("v");
+
+        //ArrayList<XYChart.Series> allSeries=new ArrayList<>();
+        for (int i=0;i<keyListOfHelpToPlot1.size();i++) {
+            System.out.println("#####");
+            series1.getData().add(new XYChart.Data(keyListOfHelpToPlot1.get(i),valueListOfHelpToPlot1.get(i) ));
+            System.out.println(keyListOfHelpToPlot1.get(i) +" : "+valueListOfHelpToPlot1.get(i));
+
+        }
+
+        XYChart.Series series2 = new XYChart.Series();
+        series2.setName("l");
+        //ArrayList<XYChart.Series> allSeries=new ArrayList<>();
+        for (int i=0;i<keyListOfHelpToPlot2.size();i++) {
+
+            series2.getData().add(new XYChart.Data(keyListOfHelpToPlot2.get(i), valueListOfHelpToPlot2.get(i)));
+            System.out.println(keyListOfHelpToPlot2.get(i) +" : "+valueListOfHelpToPlot2.get(i));
+        }
+
+
+
+        Scene scene  = new Scene(bc,500,375);
+        bc.getData().addAll(series1,series2);
+        Stage stage2=new Stage();
+        stage2.setScene(scene);
+        stage2.show();
 
     }
 }
