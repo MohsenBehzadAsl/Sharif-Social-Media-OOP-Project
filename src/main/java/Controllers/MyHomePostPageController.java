@@ -340,6 +340,11 @@ public class MyHomePostPageController {
 
 
 
+            createPostText.setText("");
+            imageOfPostRectangle.setFitWidth(57);
+            imageOfPostRectangle.setFitHeight(49);
+
+
             down.getChildren().clear();
             startShowPost();
         }
