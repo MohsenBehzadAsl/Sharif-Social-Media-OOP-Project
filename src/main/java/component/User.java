@@ -292,12 +292,12 @@ public class User {
         }
         return Pvs.get(users.indexOf(user2));
     }
-    public void addGroup(ArrayList<User> users , String name, String groupId) throws SQLException, ClassNotFoundException {
-        Group group=new Group(users,this,name,groupId);
-        for (User user : users) {
-            user.groups.add(group);
-        }
-    }
+//    public void addGroup(ArrayList<User> users , String name, String groupId) throws SQLException, ClassNotFoundException {
+//        Group group=new Group(users,this,name,groupId,"23");
+//        for (User user : users) {
+//            user.groups.add(group);
+//        }
+//    }
     public LinkedHashMap<User, LocalDateTime> getViewsFromPage() {
         return viewsFromPage;
     }
@@ -366,7 +366,6 @@ public class User {
             photoNameFromImageFolder="sampleProfilePhoto"+index;
             photoNameFromImageFolder= String.valueOf(Controller.class.getResource("/images/"+photoNameFromImageFolder+".png"));
         }
-        System.out.println(photoNameFromImageFolder);
         return photoNameFromImageFolder;
     }
 

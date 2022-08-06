@@ -2,6 +2,7 @@ package View;
 
 import DataBase.DataBase;
 import DataBase.UserRepository;
+import component.User;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -49,6 +50,7 @@ public class Main extends Application {
 //                User.addFollowerAndFollowingToTable(DataBase.getUsers().get(i),DataBase.getUsers().get(j));
 //            }
 //        }
+
         this.stage=stage;
         stage.setMinHeight(636);
         stage.setMinWidth(1095);

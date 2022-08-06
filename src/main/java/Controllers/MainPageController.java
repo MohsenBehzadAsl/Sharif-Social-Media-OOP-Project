@@ -1,5 +1,6 @@
 package Controllers;
 
+import Controllers.GroupControllers.GroupPageController;
 import Controllers.PvControllers.PvPageController;
 import View.Controller;
 import javafx.fxml.FXML;
@@ -70,8 +71,8 @@ public class MainPageController {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/GroupPage.fxml"));
         Parent parent=fxmlLoader.load();
         GroupPageController groupPageController=fxmlLoader.getController();
-        groupPageController.nowParent=parent;
         setMain(parent);
+        groupPageController.nowParent=parent;
     }
     @FXML
     void Home(MouseEvent event) throws IOException, SQLException, ClassNotFoundException {

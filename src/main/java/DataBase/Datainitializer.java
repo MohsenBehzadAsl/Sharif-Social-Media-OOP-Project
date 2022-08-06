@@ -356,49 +356,90 @@ public class Datainitializer {
                 }
             }
         }
-        while (resultSet7.next()){
-            Group group=new Group();
+        int i=0;
+        ArrayList<Group> groups=new ArrayList<>();
+        while (resultSet7.next()) {
+            i++;
+            System.out.println("*****");
+            Group group = new Group();
             group.setBanGroup(Boolean.valueOf(resultSet7.getString("isBan")));
             group.setName(resultSet7.getString("nameOfGroup"));
             group.setBio(resultSet7.getString("bio"));
             group.setSqlId(resultSet7.getString("sqlId"));
             group.setGroupId(resultSet7.getString("groupId"));
-            group.setBanGroup(Boolean.valueOf(resultSet7.getString("isBan")));
-            while (resultSet8.next()){
-                User user=new User();
-                DataBase dataBase=new DataBase();
-                user.setId(resultSet8.getString("userId"));
-                String gender=resultSet8.getString("isAdminOrOwnerOrNormal");
-                if(resultSet8.getString("groupId").equals(group.getSqlId())) {
-                    if (gender.equalsIgnoreCase("admin")) {
-                        for (User dataBaseUser : dataBase.getUsers()) {
-                            if (dataBaseUser.getId().equals(user.getId())) {
-                                group.getMembers().add(dataBaseUser);
-                                group.getAdmins().add(dataBaseUser);
+            groups.add(group);
+            Group.setIndex(Group.getIndex()+1);
+            //  group.setBanGroup(Boolean.valueOf(resultSet7.getString("isBan")));
 
-                                dataBaseUser.getGroups().add(group);
-                            }
-                        }
-                    }
-                    if (gender.equalsIgnoreCase("owner")) {
+            System.out.println(resultSet7.getString("nameOfGroup"));
+            System.out.println(resultSet7.getString("bio"));
+            System.out.println(resultSet7.getString("sqlId"));
+            System.out.println(resultSet7.getString("groupId"));
+            System.out.println(resultSet7.getString("isBan"));
+        }
+        while (resultSet8.next()) {
+            User user = new User();
+            DataBase dataBase = new DataBase();
+            user.setId(resultSet8.getString("userId"));
+            String genderr = resultSet8.getString("isAdminOrOwnerOrNormal");
+            //  System.out.println("###############");
+            for (int j=0;j<groups.size();j++) {
+                if (resultSet8.getString("groupId").equals(groups.get(j).getSqlId())) {
+                    //     System.out.println("%%%%%="+group.getSqlId());
+                    if (genderr.equalsIgnoreCase("admin")) {
                         for (User dataBaseUser : dataBase.getUsers()) {
                             if (dataBaseUser.getId().equals(user.getId())) {
-                                group.getMembers().add(dataBaseUser);
-                                group.getLinkedMembers().put(dataBaseUser, Boolean.valueOf(resultSet8.getString("isBan")));
-                                group.setOwner(dataBaseUser);
-                                dataBaseUser.getGroups().add(group);
+                                System.out.println("group.getSqlId()=" + groups.get(j).getSqlId());
+                                groups.get(j).getMembers().add(dataBaseUser);
+                                groups.get(j).getLinkedMembers().put(dataBaseUser, Boolean.valueOf(resultSet8.getString("isBan")));
+                                groups.get(j).getAdmins().add(dataBaseUser);
+                                dataBaseUser.getGroups().add(groups.get(j));
                             }
                         }
                     }
-                    if (gender.equalsIgnoreCase("normal")) {
+                    if (genderr.equalsIgnoreCase("owner")) {
                         for (User dataBaseUser : dataBase.getUsers()) {
                             if (dataBaseUser.getId().equals(user.getId())) {
-                                group.getMembers().add(dataBaseUser);
-                                group.getLinkedMembers().put(dataBaseUser, Boolean.valueOf(resultSet8.getString("isBan")));
-                                dataBaseUser.getGroups().add(group);
+                                System.out.println("group.getSqlId()=" + groups.get(j).getSqlId());
+                                groups.get(j).getMembers().add(dataBaseUser);
+                                System.out.println("Owner ="+groups.get(j).getName()+" : "+dataBaseUser.getUserName()+" : "+Boolean.valueOf(resultSet8.getString("isBan")));
+                                groups.get(j).getLinkedMembers().put(dataBaseUser, Boolean.valueOf(resultSet8.getString("isBan")));
+                                groups.get(j).setOwner(dataBaseUser);
+                                dataBaseUser.getGroups().add(groups.get(j));
                             }
                         }
                     }
+                    if (genderr.equalsIgnoreCase("normal")) {
+                        for (User dataBaseUser : dataBase.getUsers()) {
+                            if (dataBaseUser.getId().equals(user.getId())) {
+                                System.out.println("group.getSqlId()=" + groups.get(j).getSqlId());
+                                groups.get(j).getMembers().add(dataBaseUser);
+                                System.out.println("Normal ="+groups.get(j).getName()+" : "+dataBaseUser.getUserName()+" : "+Boolean.valueOf(resultSet8.getString("isBan")));
+                                groups.get(j).getLinkedMembers().put(dataBaseUser, Boolean.valueOf(resultSet8.getString("isBan")));
+                                dataBaseUser.getGroups().add(groups.get(j));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        DataBase dataBase1=new DataBase();
+        for (User user : dataBase1.getUsers()) {
+            System.out.println("yek");
+            for (Group group : user.getGroups()) {
+                System.out.println("do");
+                System.out.println("group.getName()="+group.getName());
+                System.out.println("group.getGroupId()="+group.getGroupId());
+                System.out.println("group.getBio()="+group.getBio());
+                System.out.println("group.getBanGroup()"+group.getBanGroup());
+                System.out.println("group.getSqlId()=" + group.getSqlId());
+                for (User admin : group.getAdmins()) {
+                    System.out.println("admin=" + admin.getId());
+                }
+                System.out.println("owner of group=" + group.getOwner().getId());
+                for (User member : group.getMembers()) {
+                    System.out.println("members of group=" + member.getId());
                 }
             }
         }

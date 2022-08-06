@@ -1,7 +1,6 @@
 package Controllers.PvControllers;
 
-import Controllers.GroupPageController;
-import Controllers.PvControllers.PvPageController;
+import Controllers.GroupControllers.GroupPageController;
 import component.Message;
 import javafx.beans.binding.Bindings;
 import javafx.event.EventHandler;

@@ -529,8 +529,8 @@ public class ShowGroup {
                 break;
             }
         }
-        Group group=new Group(user,name,id);
-        user.addGroup(group);
-        showAGroup(group,user);
+//        Group group=new Group(user,name,id);
+//        user.addGroup(group);
+//        showAGroup(group,user);
     }
 }
