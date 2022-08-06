@@ -89,7 +89,7 @@ public class ShowFollowingPost {
         while (running) {
             if (showUserRecommendation){
                 UserRecommender userRecommender=new UserRecommender();
-                recommendedUsers=userRecommender.findFinalUsersIndivisually(user,dataBase);
+                recommendedUsers=userRecommender.findFinalUsersIndivisually(user);
             }
             Post post=user1.getPosts().get(index - 1);
             ManagerShow.showPostInShowFollowingPost(post,user1,user,showUserRecommendation,recommendedUsers);
@@ -204,7 +204,7 @@ public class ShowFollowingPost {
         while (running) {
             if (showUserRecommendation){
                 UserRecommender userRecommender=new UserRecommender();
-                recommendedUsers=userRecommender.findFinalUsersIndivisually(user,dataBase);
+                recommendedUsers=userRecommender.findFinalUsersIndivisually(user);
             }
             //Comment comment = user1.getPosts().get(index - 1).getComments().get(Integer.parseInt(index2) - 1);
             ManagerShow.showCommentInShowFollowingPost(comment,user1,user,showUserRecommendation,recommendedUsers);
@@ -396,7 +396,7 @@ public class ShowFollowingPost {
 
             if (showUserRecommendation){
                 UserRecommender userRecommender=new UserRecommender();
-                recommendedUsers=userRecommender.findFinalUsersIndivisually(user,dataBase);
+                recommendedUsers=userRecommender.findFinalUsersIndivisually(user);
             }
             showOthersPageHelp(user1,num1,showUserRecommendation,recommendedUsers,posts);
             input=in.nextLine();

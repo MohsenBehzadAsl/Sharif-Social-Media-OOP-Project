@@ -17,6 +17,8 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class UserIconInFollowingFollowerPageController {
 
@@ -43,7 +45,7 @@ public class UserIconInFollowingFollowerPageController {
     private GridPane total;
 
     @FXML
-    void visitPage(MouseEvent event) throws IOException {
+    void visitPage(MouseEvent event) throws IOException, SQLException, ClassNotFoundException {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/ShowAnotherUserPage.fxml"));
         Parent parent=fxmlLoader.load();
         ShowAnotherUserPageController showAnotherUserPageController=fxmlLoader.getController();
@@ -54,6 +56,8 @@ public class UserIconInFollowingFollowerPageController {
         showAnotherUserPageController.nowParent=parent;
         showAnotherUserPageController.backParent=backParent;
         showAnotherUserPageController.set(DataBase.getUserWithId(id.getText().replaceAll("Id :@","")));
+        showAnotherUserPageController.start(DataBase.getUserWithId(id.getText().replaceAll("Id :@","")));
+        DataBase.getUserWithId(id.getText().replaceAll("Id :@","")).getViewsFromPage().put(Controller.user, LocalDateTime.now());
     }
     public void setFirst(User user,boolean isFollower){
         this.isFollower=isFollower;
