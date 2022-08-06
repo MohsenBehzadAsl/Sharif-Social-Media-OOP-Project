@@ -1,5 +1,6 @@
-package Controllers;
+package Controllers.GroupControllers;
 
+import Controllers.GroupControllers.GroupPageController;
 import component.Message;
 
 public class AnotherMessageBoxInGroupController {

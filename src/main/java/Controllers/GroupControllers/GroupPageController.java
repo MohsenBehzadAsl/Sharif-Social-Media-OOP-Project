@@ -1,15 +1,9 @@
-package Controllers;
+package Controllers.GroupControllers;
 
-import Controllers.PvControllers.AnotherMessageController;
-import Controllers.PvControllers.MyMessageBoxController;
-import Controllers.PvControllers.PvIconController;
-import Controllers.PvControllers.UserIconInPvController;
-import DataBase.DataBase;
-import Manager.ManagerPv;
+import Controllers.PvControllers.*;
 import View.Controller;
 import component.Group;
 import component.Message;
-import component.Pv;
 import component.User;
 import javafx.animation.RotateTransition;
 import javafx.beans.binding.Bindings;
@@ -40,6 +34,8 @@ public class GroupPageController {
 
     public Boolean selectGroup=true;
     public Group group;
+    public boolean makeNewGroup=false;
+    public boolean inSetting=false;
 
     public int indexOfSearch=0;
     public int totalFindSearch=0;
@@ -110,22 +106,26 @@ public class GroupPageController {
 
     @FXML
     public void initialize() throws IOException {
+        helpColumn.setVisible(false);
+        totalGrid.getColumnConstraints().get(2).setPercentWidth(0);
         rightGridPain.getRowConstraints().get(2).setPercentHeight(0);
         editReplyGridPane.setVisible(false);
         searchInPvGridPane.setDisable(true);
         Controller.stage.setMinWidth(755);
         Controller.stage.widthProperty().addListener((obs, oldVal, newVal) -> {
-            if (Controller.stage.getWidth()<990) {
-                if (selectGroup) {
-                    totalGrid.getColumnConstraints().get(0).setPercentWidth(0);
-                    totalGrid.getColumnConstraints().get(1).setPercentWidth(100);
-                }else {
-                    totalGrid.getColumnConstraints().get(0).setPercentWidth(100);
-                    totalGrid.getColumnConstraints().get(1).setPercentWidth(0);
+            if (!makeNewGroup && !inSetting) {
+                if (Controller.stage.getWidth() < 990) {
+                    if (selectGroup) {
+                        totalGrid.getColumnConstraints().get(0).setPercentWidth(0);
+                        totalGrid.getColumnConstraints().get(1).setPercentWidth(100);
+                    } else {
+                        totalGrid.getColumnConstraints().get(0).setPercentWidth(100);
+                        totalGrid.getColumnConstraints().get(1).setPercentWidth(0);
+                    }
+                } else if (!selectGroup) {
+                    totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
+                    totalGrid.getColumnConstraints().get(1).setPercentWidth(70);
                 }
-            }else if (!selectGroup){
-                totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
-                totalGrid.getColumnConstraints().get(1).setPercentWidth(70);
             }
         });
         searchUser.setVisible(false);
@@ -160,6 +160,7 @@ public class GroupPageController {
             rotateTransition.setToAngle(45);
             rotateTransition.play();
             showMakeNewGroup(true);
+            makeNewGroup=true;
         }else {
             RotateTransition rotateTransition=new RotateTransition();
             rotateTransition.setNode(plusGroup);
@@ -169,6 +170,7 @@ public class GroupPageController {
             groupsVbox.getChildren().clear();
             showMakeNewGroup(false);
             updateGroups();
+            makeNewGroup=false;
         }
     }
     @FXML
@@ -195,9 +197,9 @@ public class GroupPageController {
         for (int i=0;i<groups.size();i++){
             FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/GroupIconInGroupPage.fxml"));
             Parent parent=fxmlLoader.load();
-            GroupIconInGroupPageController groupPageController=fxmlLoader.getController();
-            groupPageController.pvPageController=this;
-            groupPageController.set(groups.get(i));
+            GroupIconInGroupPageController groupIconInGroupPageController=fxmlLoader.getController();
+            groupIconInGroupPageController.groupPageController=this;
+            groupIconInGroupPageController.set(groups.get(i));
             addGroupIcon(parent);
         }
     }
@@ -270,7 +272,7 @@ public class GroupPageController {
                 closeEditReply(null);
             }
         }
-        Controller.user.getReadMessagePv().set(Controller.user.getPvs().indexOf(group),group.getMessages().size());
+        Controller.user.getReadMessageGroup().set(Controller.user.getGroups().indexOf(group),group.getMessages().size());
         updateGroups();
     }
     public void addMyMessage(Message message) throws IOException {
@@ -391,13 +393,9 @@ public class GroupPageController {
         groupsVbox.getChildren().removeAll();
         User user=Controller.user;
         ArrayList<Group> groups=new ArrayList<>();
+        System.out.println(user.getGroups().size());
         for (int i=0;i<user.getGroups().size();i++){
-            if (user.getGroups().size()==0){
-                user.deleteGroup(user.getGroups().get(i));
-            }
-            else {
-                groups.add(user.getGroups().get(i));
-            }
+            groups.add(user.getGroups().get(i));
         }
         Collections.sort(groups, new Comparator<Group>() {
             @Override
@@ -416,17 +414,18 @@ public class GroupPageController {
         for (int i=0;i<groups.size();i++){
             FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/GroupIconInGroupPage.fxml"));
             Parent parent=fxmlLoader.load();
-            GroupIconInGroupPageController groupPageController=fxmlLoader.getController();
-            groupPageController.pvPageController=this;
-            groupPageController.set(groups.get(i));
+            GroupIconInGroupPageController groupIconInGroupPageController=fxmlLoader.getController();
+            groupIconInGroupPageController.groupPageController=this;
+            groupIconInGroupPageController.set(groups.get(i));
             addGroupIcon(parent);
         }
     }
     public void showGroup (Group group) throws SQLException, ClassNotFoundException, IOException {
         this.group=group;
+        newGroup(null);
         groupName.setText(group.getName());
-        groupPhoto.setFill(new ImagePattern(new Image(group.getPhotoNameFromImageFolder())));
-        groupMembersNumber.setText("[ "+group.getMembers().size()+" ]");
+        groupPhoto.setFill(new ImagePattern(new Image(group.getPhoto())));
+        groupMembersNumber.setText("Num:"+group.getMembers().size());
         if ((group.getBanGroup() && (!group.getAdmins().contains(Controller.user)) && (!(group.getOwner()==Controller.user)) )||(group.getLinkedMembers().get(Controller.user))) {
             if (group.getBanGroup()){
                 messageTextArea.setText("Group In Ban Mode");
@@ -521,20 +520,55 @@ public class GroupPageController {
 
 
 
-    private void showMakeNewGroup(boolean visible) {
-
+    public void showMakeNewGroup(boolean visible) throws IOException {
+        if (visible){
+            helpColumn.setVisible(true);
+            totalGrid.getColumnConstraints().get(1).setPercentWidth(0);
+            totalGrid.getColumnConstraints().get(2).setPercentWidth(70);
+            totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
+            FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/MakeNewGroup.fxml"));
+            Parent parent=fxmlLoader.load();
+            helpColumn.getChildren().add(parent);
+            MakeNewGroupController makeNewGroupController=fxmlLoader.getController();
+            makeNewGroupController.groupPageController=this;
+            makeNewGroupController.start();
+        }else {
+            helpColumn.setVisible(false);
+            totalGrid.getColumnConstraints().get(1).setPercentWidth(70);
+            totalGrid.getColumnConstraints().get(2).setPercentWidth(0);
+            totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
+            helpColumn.getChildren().clear();
+            updateGroups();
+        }
     }
 
 
 
 
     @FXML
-    void Setting(MouseEvent event) {
-
+    void Setting(MouseEvent event) throws IOException {
+        inSetting=true;
+        helpColumn.setVisible(true);
+        totalGrid.getColumnConstraints().get(1).setPercentWidth(0);
+        totalGrid.getColumnConstraints().get(2).setPercentWidth(70);
+        totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/GroupInfoController.fxml"));
+        Parent parent=fxmlLoader.load();
+        helpColumn.getChildren().add(parent);
+        GroupInfoController groupInfoController=fxmlLoader.getController();
+        groupInfoController.groupPageController=this;
+        groupInfoController.group=group;
+        groupInfoController.setFirst();
     }
 
 
-
-
-
+    public void beckFromSetting() throws SQLException, IOException, ClassNotFoundException {
+        inSetting=false;
+        helpColumn.setVisible(false);
+        totalGrid.getColumnConstraints().get(1).setPercentWidth(70);
+        totalGrid.getColumnConstraints().get(2).setPercentWidth(0);
+        totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
+        helpColumn.getChildren().clear();
+        showGroup(group);
+    }
 }

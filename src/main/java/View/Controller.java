@@ -30,6 +30,9 @@ public class Controller {
         Parent parent=fxmlLoader.load();
         mainPageController=fxmlLoader.getController();
         Scene scene = new Scene(parent);
+//        String css=Controller.class.getResource("/CSS/blue.css").toExternalForm();
+//        scene.getStylesheets().add(css);
+
         Controller.stage.setScene(scene);
 
 

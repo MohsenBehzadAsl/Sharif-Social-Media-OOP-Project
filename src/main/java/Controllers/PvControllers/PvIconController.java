@@ -76,7 +76,7 @@ public class PvIconController {
 
     @FXML
     void selectPv(MouseEvent event) throws SQLException, IOException, ClassNotFoundException {
-        if (event.getClickCount()==2){
+        if (event.getClickCount()==1){
             pvPageController.showPv(DataBase.getUserWithId(id.getText().replaceAll("@","")));
         }
     }
