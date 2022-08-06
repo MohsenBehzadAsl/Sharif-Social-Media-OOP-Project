@@ -245,7 +245,7 @@ public class ShowFollowersFollowings {
         while (running){
             if (showUserRecommendation){
                 UserRecommender userRecommender=new UserRecommender();
-                recommendedUsers=userRecommender.findFinalUsersIndivisually(user,dataBase);
+                recommendedUsers=userRecommender.findFinalUsersIndivisually(user);
             }
 
             ArrayList<Post> posts=new ArrayList<>();

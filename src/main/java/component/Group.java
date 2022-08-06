@@ -2,6 +2,7 @@ package component;
 
 import DataBase.DataBase;
 import DataBase.UpdateSqlTable;
+import View.Controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,7 +15,6 @@ public class Group {
     private String sqlId;
 
 
-
     private LinkedHashMap<User,Boolean> linkedMembers=new LinkedHashMap<User,Boolean>(); // Boolean-->ban  true==ban
     private ArrayList<User> members=new ArrayList<>();
     private ArrayList<User> admins=new ArrayList<User>();
@@ -23,15 +23,15 @@ public class Group {
     private ArrayList<Message> messages=new ArrayList<Message>();
     private String name=new String();
     private String bio=new String();
-    private String photo;
+    private String photo=new String();
     private Boolean banGroup=false; //all
 
     public LinkedHashMap<User, Boolean> getLinkedMembers() {
         return linkedMembers;
     }
 
-    public Group(User owner , String name, String groupId) throws SQLException, ClassNotFoundException {
-
+    public Group(User owner , String name, String groupId,String photo) throws SQLException, ClassNotFoundException {
+        owner.addGroup(this);
         sqlId= String.valueOf(index);
         index++;
         this.groupId=groupId;
@@ -40,17 +40,19 @@ public class Group {
         this.members.add(owner);
         this.linkedMembers.put(owner,false);
         this.admins.add(owner);
+        this.photo=photo;
         addGroupMemberToTable(this,owner,"owner");
         addGroupToTable(this,name,bio,banGroup);
     }
 
-    public Group(ArrayList<User> users, User owner,String name,String groupId) throws SQLException, ClassNotFoundException {
+    public Group(ArrayList<User> users, User owner,String name,String groupId,String photo) throws SQLException, ClassNotFoundException {
         for (User user : users) {
             this.linkedMembers.put(user,false);
         }
         this.owner = owner;
         this.groupId=groupId;
         this.name=name;
+        this.photo=photo;
         addGroupToTable(this,name,bio,banGroup);
     }//alan bedard nmikhore
     public Group(){
@@ -101,6 +103,7 @@ public void addGroupToTable(Group group,String name,String bio,boolean banGroup)
     public void addMember(User user) throws SQLException, ClassNotFoundException {
         this.members.add(user);
         this.linkedMembers.put(user,false);
+        user.getReadMessageGroup().add(0);
         user.addGroup(this);
         addGroupMemberToTable(this,user,"normal");
     } //check addToGroup && set banMessage
@@ -114,6 +117,7 @@ public void addGroupToTable(Group group,String name,String bio,boolean banGroup)
         linkedMembers.remove(user);
         members.remove(user);
         admins.remove(user);
+        System.out.println(this);
         user.deleteGroup(this);
         UpdateSqlTable.setRemoveMemberFromTable(this,user);
     } //check admin && check owner
@@ -170,6 +174,13 @@ public void addGroupToTable(Group group,String name,String bio,boolean banGroup)
         this.bio = bio;
     }
     public String getPhoto() {
+        if (photo==""||photo==null||photo.equals(null)||photo.isEmpty()){
+            photo=new String();
+            int index= ((int) (Math.random()*10))%7;
+            photo="sampleProfilePhoto"+index;
+            photo= String.valueOf(Controller.class.getResource("/images/"+photo+".png"));
+            System.out.println(photo);
+        }
         return photo;
     }
     public void setPhoto(String photo) {
@@ -211,4 +222,6 @@ public void addGroupToTable(Group group,String name,String bio,boolean banGroup)
     public void setMembers(ArrayList<User> members) {
         this.members = members;
     }
+
+
 }

@@ -302,7 +302,7 @@ public class UpdateSqlTable {
         PreparedStatement preparedStatement =connection.prepareStatement(
                 " UPDATE groupMembers " +
                         "SET isBan = ?" +
-                        "WHERE sqlId = ?, userId=? "
+                        "WHERE (groupId = ?) AND (userId=?) "
         );
         preparedStatement.setString(1, String.valueOf(isBan));
         preparedStatement.setString(2, group.getSqlId());
@@ -316,7 +316,7 @@ public class UpdateSqlTable {
                         , "root",
                         DataBase.password);
         PreparedStatement preparedStatement =connection.prepareStatement(
-                "DELETE FROM groupMembers WHERE groupId=?,userId=?"
+                "DELETE FROM groupMembers WHERE (groupId=?) AND (userId=?)"
         );
         preparedStatement.setString(1,group.getSqlId());
         preparedStatement.setString(2, user.getId());
@@ -331,7 +331,7 @@ public class UpdateSqlTable {
         PreparedStatement preparedStatement =connection.prepareStatement(
                 " UPDATE groupMembers " +
                         "SET isAdminOrOwnerOrNormal = ?" +
-                        "WHERE sqlId=?,userId=? "
+                        "WHERE (groupId=?) AND (userId=?) "
         );
         preparedStatement.setString(1, isAdminOrOwnerOrNormal);
         preparedStatement.setString(2, group.getSqlId());

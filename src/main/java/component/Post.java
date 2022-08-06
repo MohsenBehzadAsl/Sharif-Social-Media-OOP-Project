@@ -23,6 +23,15 @@ public class Post {
     private LinkedHashMap<User,LocalDateTime> views = new LinkedHashMap<User,LocalDateTime>();
     private LinkedHashMap<User,LocalDateTime> likes = new LinkedHashMap<User,LocalDateTime>();
     private ArrayList<Comment> comments=new ArrayList<Comment>();
+    private String photoAddress=new String();
+
+    public String getPhotoAddress() {
+        return photoAddress;
+    }
+
+    public void setPhotoAddress(String photoAddress) {
+        this.photoAddress = photoAddress;
+    }
 
     public Post(User sender, String format, String content, boolean commentAbility) throws SQLException, ClassNotFoundException {
         this.postId=String.valueOf(i);
@@ -35,6 +44,23 @@ public class Post {
         this.gender=sender.getType();
         addPostToTable(sender,postId,format,content,commentAbility);
     }
+
+    public Post(User sender, String format, String content,String imageAddress, boolean commentAbility) throws SQLException, ClassNotFoundException {
+        this.postId=String.valueOf(i);
+        i++;
+        this.sender = sender;
+        this.format = format;
+        this.content = content;
+        this.commentAbility = commentAbility;
+        this.date=LocalDateTime.now();
+        this.gender=sender.getType();
+        this.photoAddress=imageAddress;
+        //
+        addPostToTable(sender,postId,format,content,commentAbility);
+        //
+    }
+
+
     public Post(User sender, String format, String content, boolean commentAbility,boolean isComment) throws SQLException, ClassNotFoundException {
         this.postId=String.valueOf(i);
         i++;
@@ -54,7 +80,7 @@ public class Post {
                         , "root",
                         DataBase.password);
         PreparedStatement preparedStatement =connection.prepareStatement(
-                " INSERT INTO tweets  (senderId,postId,format,content,gender,sendTime,commentAbility,isComment) VALUES (?,?,?,?,?,?,?,?)"
+                " INSERT INTO tweets  (senderId,postId,format,content,gender,sendTime,commentAbility,isComment,imagePost) VALUES (?,?,?,?,?,?,?,?,?)"
             /*    UPDATE Customers
                 SET ContactName='Juan'
                 WHERE Country='Mexico';*/ /*"insert into users(userName,id,password,passwordHint,gender,question,ansQuestion,addToGroupAbility)" +
@@ -68,6 +94,7 @@ public class Post {
         preparedStatement.setString(6, String.valueOf(LocalDateTime.now()));
         preparedStatement.setString(7, String.valueOf(commentAbility));
         preparedStatement.setString(8,isComment);
+        preparedStatement.setString(9,photoAddress);
         preparedStatement.executeUpdate();
     }
     //addLikeToTable(user,postId,likeTime);
@@ -109,6 +136,11 @@ public class Post {
     public void setCommentAbility(boolean commentAbility) {
         this.commentAbility = commentAbility;
     }
+
+    public boolean getCommentAbility() {
+        return commentAbility;
+    }
+
     public void addLike(User user){
 
     }

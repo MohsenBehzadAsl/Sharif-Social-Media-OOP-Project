@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#selectPv" prefHeight="72.0" prefWidth="241.0" style="-fx-background-color: #000437; -fx-background-radius: 50;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PvIconController">
+<GridPane fx:id="totalGridPane" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#selectPv" prefHeight="72.0" prefWidth="241.0" style="-fx-background-color: #000437; -fx-background-radius: 50;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PvControllers.PvIconController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="29.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -50,7 +51,7 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <Label fx:id="lastContent" prefHeight="43.0" prefWidth="184.0" text="Last Content" textFill="WHITE" GridPane.rowIndex="2">
+            <Label fx:id="lastContent" maxHeight="-Infinity" prefHeight="30.0" prefWidth="107.0" text="Last Content" textFill="WHITE" GridPane.rowIndex="2">
                <font>
                   <Font name="Bell MT" size="17.0" />
                </font>
@@ -71,4 +72,7 @@
          </children>
       </VBox>
    </children>
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
 </GridPane>

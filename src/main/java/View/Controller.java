@@ -1,6 +1,6 @@
 package View;
 
-import Controllers.FollowersController;
+import Controllers.MainPageController;
 import DataBase.DataBase;
 import component.User;
 import javafx.event.EventHandler;
@@ -13,7 +13,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -23,14 +22,21 @@ public class Controller {
     public static Stage stage=new Stage();
     public static Scene startPage;
     public static GridPane main;
-    public static FollowersController followersController;
+    public static MainPageController mainPageController;
     public static void showHomePage(String id) throws IOException {
-
         Controller.user= DataBase.getUserWithId(id);
 
-        Parent pane = FXMLLoader.load(Controller.class.getResource("/fxml/MainPage.fxml"));
-        Scene scene = new Scene(pane);
+        FXMLLoader fxmlLoader=new FXMLLoader(Controller.class.getResource("/fxml/MainPage.fxml"));
+        Parent parent=fxmlLoader.load();
+        mainPageController=fxmlLoader.getController();
+        Scene scene = new Scene(parent);
+//        String css=Controller.class.getResource("/CSS/blue.css").toExternalForm();
+//        scene.getStylesheets().add(css);
+
         Controller.stage.setScene(scene);
+
+
+
     }
     public static boolean find(String sentence, String key) {
         if (key.matches("(^\")(.+)(\"$)")) { //exact search

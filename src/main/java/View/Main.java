@@ -1,23 +1,17 @@
 package View;
 
-import Controllers.ForgotPasswordController;
-import Controllers.SignUpController;
 import DataBase.DataBase;
 import DataBase.UserRepository;
+import component.User;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -50,6 +44,13 @@ public class Main extends Application {
 //        stage.setTitle("Hello!");
 //        stage.setScene(scene);
 //        stage.show();
+
+//        for (int i=0;i<DataBase.getUsers().size();i++){
+//            for (int j=i+1;j<DataBase.getUsers().size();j++){
+//                User.addFollowerAndFollowingToTable(DataBase.getUsers().get(i),DataBase.getUsers().get(j));
+//            }
+//        }
+
         this.stage=stage;
         stage.setMinHeight(636);
         stage.setMinWidth(1095);

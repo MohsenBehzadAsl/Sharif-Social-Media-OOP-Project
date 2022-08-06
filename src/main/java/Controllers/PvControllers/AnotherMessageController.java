@@ -1,22 +1,25 @@
-package Controllers;
+package Controllers.PvControllers;
 
-import View.Controller;
+import Controllers.PvControllers.PvPageController;
 import component.Message;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-import java.text.Format;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.Callable;
 
-public class MyMessageBoxController {
-
+public class AnotherMessageController {
+    public PvPageController pvPageController;
     @FXML
     private GridPane messageGrid;
     @FXML
@@ -45,14 +48,14 @@ public class MyMessageBoxController {
     }
 
     public void set(Message message) {
-        date.setText(message.getDate().toString());
+        date.setText(message.getDate().format(DateTimeFormatter.ofPattern("HH:mm")));
         if (!message.getEdited()){
             edited.setVisible(false);
         }
         if (message.getForward()){
             System.out.println(1);
         }else if (message.getReply()){
-            System.out.println(2);
+            forwardOrReplyLabel.setText("Reply to "+message.getReplyMessage().getSender().getUserName()+" :"+message.getReplyMessage().getContent());
         }else {
             vboxForwardOrReply.setVisible(false);
             forwardOrReplyGridPane.getRowConstraints().get(1).setPercentHeight(0);
@@ -60,7 +63,23 @@ public class MyMessageBoxController {
 
         }
         ContentTextArea.setText(message.getContent());
-        ContentTextArea.autosize();
+
+
+
+        MenuItem reply = new MenuItem("Reply");
+        reply.setOnAction(e -> {
+            pvPageController.reply=true;
+            pvPageController.replyMessage=message;
+            pvPageController.enableEdit();
+            pvPageController.setWhoEditReply(message.getSender().getUserName());
+            pvPageController.setFormatEditReply("Reply Message :");
+            pvPageController.setContentEditReply(message.getContent());
+        });
+        ContextMenu menu = new ContextMenu();
+        menu.getItems().add(reply);
+        messageGrid.setOnContextMenuRequested(e -> {
+            menu.show(messageGrid.getScene().getWindow(), e.getScreenX(), e.getScreenY());
+        });
 
     }
     public void handleResizing(){
@@ -83,6 +102,8 @@ public class MyMessageBoxController {
                 messageGrid.getRowConstraints().get(1).setPercentHeight(100-(53/total.getHeight()+30/total.getHeight())*100);
 
             }
+
+
 //            rightGridPain.getRowConstraints().get(3).setPercentHeight(messageTextArea.getPrefHeight()/rightGridPain.getHeight()*100);
 //            rightGridPain.getRowConstraints().get(2).setPercentHeight(84-messageTextArea.getPrefHeight()/rightGridPain.getHeight()*100);
         });

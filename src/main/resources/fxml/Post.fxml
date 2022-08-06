@@ -4,6 +4,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -11,6 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <GridPane fx:id="all" gridLinesVisible="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="850.0" style="-fx-background-color: blue;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PostController">
@@ -23,19 +25,19 @@
     <RowConstraints minHeight="10.0" percentHeight="100.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <GridPane gridLinesVisible="true" style="-fx-background-color: blue;">
+      <GridPane fx:id="left" gridLinesVisible="true" style="-fx-background-color: blue;">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" percentHeight="18.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" percentHeight="67.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" percentHeight="16.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" percentHeight="15.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <GridPane style="-fx-background-color: blue;">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="17.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="12.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
@@ -44,11 +46,7 @@
                <children>
                   <VBox alignment="CENTER" style="-fx-background-color: red;">
                      <children>
-                        <ImageView fx:id="profileImage" fitHeight="81.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/img.png" />
-                           </image>
-                        </ImageView>
+                        <Circle fx:id="userProfile" fill="DODGERBLUE" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
                      </children>
                   </VBox>
                   <GridPane GridPane.columnIndex="1">
@@ -99,173 +97,161 @@
                   </GridPane>
                </children>
             </GridPane>
-            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: green;" GridPane.rowIndex="1">
-               <children>
-                  <Label prefHeight="362.0" prefWidth="668.0" text="Post Content">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-            <GridPane gridLinesVisible="true" GridPane.rowIndex="2">
+            <GridPane style="-fx-background-color: blue;" GridPane.rowIndex="2">
               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" percentHeight="40.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" percentHeight="60.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <GridPane>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: blue;">
+                     <children>
+                        <Label fx:id="numofLike" prefHeight="75.0" prefWidth="192.0" text="NumOfLikes" textFill="#f5ecec">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: blue;" GridPane.columnIndex="1">
+                     <children>
+                        <Label fx:id="numOfComments" prefHeight="86.0" prefWidth="215.0" text="NumOfComments" textFill="#fcf7f7">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: blue;" GridPane.columnIndex="2">
+                     <children>
+                        <Label fx:id="numOfViews" prefHeight="75.0" prefWidth="152.0" text="NumOfViews" textFill="#fcf3f3" />
+                     </children>
+                  </HBox>
+                  <GridPane alignment="CENTER_LEFT" GridPane.rowIndex="1">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="33.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="39.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="29.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="26.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="74.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: blue;">
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Label fx:id="numofLike" prefHeight="75.0" prefWidth="192.0" text="NumOfLikes" textFill="#f5ecec">
-                                 <padding>
-                                    <Insets left="10.0" />
-                                 </padding>
-                              </Label>
+                              <ImageView fx:id="liked" fitHeight="50.0" fitWidth="34.0" onMouseClicked="#like" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/like.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <VBox.margin>
+                                    <Insets left="2.0" />
+                                 </VBox.margin>
+                              </ImageView>
                            </children>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: blue;" GridPane.columnIndex="1">
+                        </VBox>
+                        <HBox alignment="CENTER_LEFT" onMouseClicked="#like" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                            <children>
-                              <Label fx:id="numOfComments" prefHeight="86.0" prefWidth="215.0" text="NumOfComments" textFill="#fcf7f7">
+                              <Label prefHeight="61.0" prefWidth="94.0" text="Like" textFill="#f8f0f0">
+                                 <font>
+                                    <Font name="Bell MT" size="28.0" />
+                                 </font>
                                  <HBox.margin>
-                                    <Insets left="10.0" />
+                                    <Insets left="4.0" />
                                  </HBox.margin>
                               </Label>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: blue;" GridPane.columnIndex="2">
+                     </children>
+                  </GridPane>
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="26.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Label fx:id="numOfViews" prefHeight="75.0" prefWidth="152.0" text="NumOfViews" textFill="#fcf3f3" />
+                              <ImageView fitHeight="40.0" fitWidth="49.0" onMouseClicked="#comment" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/comment.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </children>
+                        </VBox>
+                        <HBox alignment="CENTER_LEFT" onMouseClicked="#comment" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+                           <children>
+                              <Label prefHeight="61.0" prefWidth="147.0" text="Comment" textFill="#f8f0f0">
+                                 <font>
+                                    <Font name="Bell MT" size="28.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </HBox>
                      </children>
                   </GridPane>
-                  <GridPane GridPane.rowIndex="1">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="35.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
+                  <GridPane alignment="CENTER_RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="26.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
                      <children>
-                        <GridPane>
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="26.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="74.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
+                        <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                                 <children>
-                                    <ImageView fx:id="liked" fitHeight="50.0" fitWidth="34.0" onMouseClicked="#like" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../images/like.png" />
-                                       </image>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                       <VBox.margin>
-                                          <Insets left="2.0" />
-                                       </VBox.margin>
-                                    </ImageView>
-                                 </children>
-                              </VBox>
-                              <HBox alignment="CENTER_LEFT" onMouseClicked="#like" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
-                                 <children>
-                                    <Label prefHeight="61.0" prefWidth="94.0" text="Like" textFill="#f8f0f0">
-                                       <font>
-                                          <Font name="Bell MT" size="28.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets left="4.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                 </children>
-                              </HBox>
+                              <ImageView fitHeight="39.0" fitWidth="48.0" onMouseClicked="#forward" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/forward.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
                            </children>
-                        </GridPane>
-                        <GridPane GridPane.columnIndex="1">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="26.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
+                        </VBox>
+                        <HBox alignment="CENTER_LEFT" onMouseClicked="#forward" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                            <children>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                                 <children>
-                                    <ImageView fitHeight="40.0" fitWidth="49.0" onMouseClicked="#comment" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../images/comment.png" />
-                                       </image>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                    </ImageView>
-                                 </children>
-                              </VBox>
-                              <HBox alignment="CENTER_LEFT" onMouseClicked="#comment" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
-                                 <children>
-                                    <Label prefHeight="61.0" prefWidth="147.0" text="Comment" textFill="#f8f0f0">
-                                       <font>
-                                          <Font name="Bell MT" size="28.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
+                              <Label prefHeight="61.0" prefWidth="147.0" text="Forward" textFill="#f8f0f0">
+                                 <font>
+                                    <Font name="Bell MT" size="28.0" />
+                                 </font>
+                              </Label>
                            </children>
-                        </GridPane>
-                        <GridPane GridPane.columnIndex="2">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="26.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                                 <children>
-                                    <ImageView fitHeight="39.0" fitWidth="48.0" onMouseClicked="#forward" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../images/forward.png" />
-                                       </image>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                    </ImageView>
-                                 </children>
-                              </VBox>
-                              <HBox alignment="CENTER_LEFT" onMouseClicked="#forward" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
-                                 <children>
-                                    <Label prefHeight="61.0" prefWidth="147.0" text="Forward" textFill="#f8f0f0">
-                                       <font>
-                                          <Font name="Bell MT" size="28.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </GridPane>
+                        </HBox>
                      </children>
                   </GridPane>
+               </children>
+            </GridPane>
+            <GridPane fx:id="imagePost" GridPane.rowIndex="1">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" percentHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: red;">
+                     <children>
+                        <ImageView fx:id="imageOfPostRectangle" fitHeight="93.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></VBox>
+                  <TextArea fx:id="textArea" onMouseClicked="#help" prefWidth="200.0" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Bell MT" size="15.0" />
+                     </font></TextArea>
                </children>
             </GridPane>
          </children>
@@ -278,13 +264,15 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+            <GridPane fx:id="helpInListener" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: red;">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" percentHeight="92.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" percentHeight="72.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: gray;">
@@ -305,18 +293,63 @@
                               <Font name="Bell MT" size="25.0" />
                            </font>
                         </Label>
+                        <ImageView fx:id="allShowAnalyse" fitHeight="40.0" fitWidth="50.0" onMouseClicked="#showAnalyzePlot" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/plot.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </ImageView>
                      </children>
                   </HBox>
-                  <ScrollPane fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                  <ScrollPane fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                      <content>
-                        <VBox fx:id="showLists" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="677.0" prefWidth="174.0" style="-fx-background-color: blue;" />
+                        <VBox fx:id="showLists" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="677.0" prefWidth="174.0" spacing="20.0" style="-fx-background-color: gray;" />
                      </content>
                   </ScrollPane>
+                  <GridPane fx:id="messageGridPane" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" prefWidth="193.0" style="-fx-background-color: #ffb703;" GridPane.rowIndex="3">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="80.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" percentHeight="100.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+                           <children>
+                              <ImageView fx:id="sender" fitHeight="25.0" fitWidth="32.0" onMouseClicked="#sendMessage" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/send.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                        <VBox alignment="TOP_CENTER">
+                           <children>
+                              <TextArea fx:id="messageTextArea" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#clicked" prefHeight="31.0" prefWidth="141.0" wrapText="true">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </TextArea>
+                           </children>
+                           <GridPane.margin>
+                              <Insets top="5.0" />
+                           </GridPane.margin>
+                        </VBox>
+                     </children>
+                  </GridPane>
+                  <VBox fx:id="mainComment" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: green;" GridPane.rowIndex="1" />
                </children>
             </GridPane>
          </children>
       </GridPane>
-      <GridPane GridPane.columnIndex="1">
+      <GridPane fx:id="helpShowButtonsInListener" GridPane.columnIndex="1">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
@@ -447,7 +480,7 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: red;">
                      <children>
-                        <ImageView fitHeight="83.0" fitWidth="44.0" onMouseClicked="#visitPage" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="83.0" fitWidth="44.0" onMouseClicked="#analyzePost" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/network.png" />
                            </image>
@@ -459,7 +492,7 @@
                   </VBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: green;" GridPane.columnIndex="1">
                      <children>
-                        <Label fx:id="deletOrVisit1" onMouseClicked="#visitPage" prefHeight="65.0" prefWidth="109.0" text="Analyze Post">
+                        <Label fx:id="deletOrVisit1" onMouseClicked="#analyzePost" prefHeight="65.0" prefWidth="109.0" text="Analyze Post">
                            <font>
                               <Font size="16.0" />
                            </font>
