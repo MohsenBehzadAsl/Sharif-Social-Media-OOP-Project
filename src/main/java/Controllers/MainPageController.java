@@ -44,8 +44,13 @@ public class MainPageController {
         });
     }
     @FXML
-    void AnalysePage(MouseEvent event) {
-
+    void AnalysePage(MouseEvent event) throws IOException, SQLException, ClassNotFoundException {
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/AnalyzePage.fxml"));
+        Parent parent=fxmlLoader.load();
+        AnalyzePageController analyzePageController=fxmlLoader.getController();
+        setMain(parent);
+        analyzePageController.getWhere().setText("Analyze Page");
+        analyzePageController.startShowPost();
     }
     @FXML
     void Exit(MouseEvent event) {

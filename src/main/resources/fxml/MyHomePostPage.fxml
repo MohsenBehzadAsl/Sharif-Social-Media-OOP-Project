@@ -176,7 +176,7 @@
       </GridPane>
       <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
          <content>
-            <VBox fx:id="add" prefHeight="767.0" prefWidth="929.0" style="-fx-background-color: yellow;" />
+            <VBox fx:id="userRecommendation" prefHeight="767.0" prefWidth="929.0" spacing="20.0" style="-fx-background-color: yellow;" />
          </content>
       </ScrollPane>
       <GridPane GridPane.rowIndex="4">

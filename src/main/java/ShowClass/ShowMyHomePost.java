@@ -45,7 +45,7 @@ public class ShowMyHomePost {
 
             ArrayList<User> recommendedUsers=new ArrayList<>();
             UserRecommender userRecommender=new UserRecommender();
-            recommendedUsers=userRecommender.findFinalUsersIndivisually(user,dataBase);
+            recommendedUsers=userRecommender.findFinalUsersIndivisually(user);
             showHomePage(num,recommendedUsers,posts);
             input = in.nextLine();
             if (!input.matches("\\w{1}")) {

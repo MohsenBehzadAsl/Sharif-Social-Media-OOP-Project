@@ -16,37 +16,37 @@ public class UserRecommender {
     List<User> moreLikedUsers=new ArrayList<>();
 
 
-    public ArrayList<User> findFinalUsersIndivisually(User user, DataBase dataBase){
+    public ArrayList<User> findFinalUsersIndivisually(User user){
         friendByFriend=recommendFriendByFriend(user);
-        mostFamouses=recommendMostFamouses(dataBase);
-        businessUsers=recommendBusinessUsers(user,dataBase);
+        mostFamouses=recommendMostFamouses();
+        businessUsers=recommendBusinessUsers(user);
         moreLikedUsers=recommendMoreLikedUsers(user);
 
 
 
         int counter=0;
-        for (int i=0;i<friendByFriend.size() && counter<3 ;i++){
+        for (int i=0;i<friendByFriend.size();i++){
             if ( ! finalUsers.contains(friendByFriend.get(i)) && ! friendByFriend.get(i).equals(user) && ! user.getFollowings().contains(friendByFriend.get(i))){
                 finalUsers.add(friendByFriend.get(i));
                 counter++;
             }
         }
         counter=0;
-        for (int i=0;i<mostFamouses.size() && counter<3 ;i++){
+        for (int i=0;i<mostFamouses.size()  ;i++){
             if ( ! finalUsers.contains(mostFamouses.get(i)) && ! mostFamouses.get(i).equals(user) && ! user.getFollowings().contains(mostFamouses.get(i))){
                 finalUsers.add(mostFamouses.get(i));
                 counter++;
             }
         }
         counter=0;
-        for (int i=0;i<businessUsers.size() && counter<2 ;i++){
+        for (int i=0;i<businessUsers.size();i++){
             if ( ! finalUsers.contains(businessUsers.get(i)) && ! businessUsers.get(i).equals(user)  && ! user.getFollowings().contains(businessUsers.get(i))){
                 finalUsers.add(businessUsers.get(i));
                 counter++;
             }
         }
         counter=0;
-        for (int i=0;i<moreLikedUsers.size() && counter<2 ;i++){
+        for (int i=0;i<moreLikedUsers.size() ;i++){
             if ( ! finalUsers.contains(moreLikedUsers.get(i)) && ! moreLikedUsers.get(i).equals(user) && ! user.getFollowings().contains(moreLikedUsers.get(i))){
                 finalUsers.add(moreLikedUsers.get(i));
                 counter++;
@@ -74,9 +74,9 @@ public class UserRecommender {
 
     }
 
-    private List<User> recommendBusinessUsers(User user, DataBase dataBase) {
+    private List<User> recommendBusinessUsers(User user) {
         ArrayList<User> recommendMostFamouses0=new ArrayList<>();
-        recommendMostFamouses0=dataBase.getUsers();
+        recommendMostFamouses0=DataBase.getUsers();
 
         Map<User,Integer> helpMap = new HashMap<>();
         LinkedHashMap<User, Integer> recommendMostFamouses1 = new LinkedHashMap<>();
@@ -176,9 +176,9 @@ public class UserRecommender {
 
     }
 
-    private List<User> recommendMostFamouses(DataBase dataBase) {
+    private List<User> recommendMostFamouses() {
         ArrayList<User> recommendMostFamouses0=new ArrayList<>();
-        recommendMostFamouses0=dataBase.getUsers();
+        recommendMostFamouses0=DataBase.getUsers();
 
         Map<User,Integer> helpMap = new HashMap<>();
         LinkedHashMap<User, Integer> recommendMostFamouses1 = new LinkedHashMap<>();
