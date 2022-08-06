@@ -556,12 +556,8 @@ public class ShowMyHomePost {
     private void showFollowers(User user1) throws SQLException, ClassNotFoundException {
         boolean running = true;
         while (running) {
-
             List<User> keyList = new ArrayList(user1.getFollowers());
             ManagerShow.showFollowersInMyHomePost2(user,keyList,user1);
-
-
-
             input=in.nextLine();
             if (!input.matches("\\w{1}")) {
                 System.out.println("invalid input");

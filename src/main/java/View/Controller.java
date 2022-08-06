@@ -25,15 +25,17 @@ public class Controller {
     public static MainPageController mainPageController;
     public static void showHomePage(String id) throws IOException {
         Controller.user= DataBase.getUserWithId(id);
-
         FXMLLoader fxmlLoader=new FXMLLoader(Controller.class.getResource("/fxml/MainPage.fxml"));
         Parent parent=fxmlLoader.load();
         mainPageController=fxmlLoader.getController();
         Scene scene = new Scene(parent);
+       String css = Controller.class.getResource("/CSS/theme4.css").toExternalForm();
+        scene.getStylesheets().add(css);
+   /*    String css1 = Controller.class.getResource("/CSS/test.css").toExternalForm();
+    scene.getStylesheets().add(css1);*/
+       /* String css = Controller.class.getResource("/CSS/theme3.css").toExternalForm();
+       scene.getStylesheets().add(css);*/
         Controller.stage.setScene(scene);
-
-
-
     }
     public static boolean find(String sentence, String key) {
         if (key.matches("(^\")(.+)(\"$)")) { //exact search
