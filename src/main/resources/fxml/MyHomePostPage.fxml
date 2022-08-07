@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="all" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="947.75" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MyHomePostPageController">
+<GridPane fx:id="all" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="947.75" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MyHomePostPageController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="100.0" prefWidth="100.0" />
   </columnConstraints>
@@ -27,7 +27,7 @@
       <RowConstraints minHeight="10.0" percentHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <GridPane style="-fx-background-color: gray;" GridPane.rowIndex="1">
+      <GridPane GridPane.rowIndex="1">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
@@ -37,7 +37,7 @@
          <children>
             <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
                <content>
-                  <VBox fx:id="down" prefHeight="785.0" prefWidth="929.0" spacing="25.0" style="-fx-background-color: gray;" />
+                  <VBox fx:id="down" prefHeight="785.0" prefWidth="929.0" spacing="25.0" />
                </content>
             </ScrollPane>
          </children>
@@ -52,7 +52,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: red;">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
                   <ImageView fitHeight="82.0" fitWidth="82.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -70,7 +70,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: red;" GridPane.columnIndex="1">
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                      <children>
                         <ImageView fitHeight="81.0" fitWidth="80.0" onMouseClicked="#addPost" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -79,7 +79,7 @@
                         </ImageView>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: red;">
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <ImageView fitHeight="80.0" fitWidth="78.0" onMouseClicked="#showUserRecommendation" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -109,7 +109,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: green;">
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                            <padding>
                               <Insets left="5.0" />
                            </padding>
@@ -124,7 +124,7 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: green;" GridPane.rowIndex="1">
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
                            <padding>
                               <Insets left="5.0" />
                            </padding>
@@ -139,7 +139,7 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: green;" GridPane.columnIndex="1">
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                            <padding>
                               <Insets left="5.0" />
                            </padding>
@@ -151,7 +151,7 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: green;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <padding>
                               <Insets left="5.0" />
                            </padding>
@@ -165,7 +165,7 @@
                         </HBox>
                      </children>
                   </GridPane>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: red;">
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <Circle fx:id="imageProfile" fill="DODGERBLUE" radius="39.0" stroke="BLACK" strokeType="INSIDE" />
                      </children>
@@ -176,7 +176,7 @@
       </GridPane>
       <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
          <content>
-            <VBox fx:id="add" prefHeight="767.0" prefWidth="929.0" style="-fx-background-color: yellow;" />
+            <VBox fx:id="userRecommendation" prefHeight="767.0" prefWidth="929.0" spacing="20.0" />
          </content>
       </ScrollPane>
       <GridPane GridPane.rowIndex="4">
@@ -189,23 +189,26 @@
           <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: yellow;">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
                   <ImageView fx:id="imageOfPostRectangle" fitHeight="49.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button mnemonicParsing="false" onMouseClicked="#browseImage" style="-fx-background-color: green;" text="browse image" />
+                  <Button mnemonicParsing="false" onMouseClicked="#browseImage" text="browse image" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
                <children>
                   <TextArea fx:id="createPostText" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
                </children></VBox>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: pink;" GridPane.rowIndex="2">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
                <children>
-                  <Label onMouseClicked="#addPostToDataBase" text="Add Post" />
+                  <Label alignment="CENTER" onMouseClicked="#addPostToDataBase" prefHeight="28.0" prefWidth="79.0" style="-fx-background-color: BLUE; -fx-background-radius: 50;" text="Add Post">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
                </children>
             </VBox>
          </children>
       </GridPane>
-      <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: red;" GridPane.rowIndex="2" />
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2" />
    </children>
 </GridPane>

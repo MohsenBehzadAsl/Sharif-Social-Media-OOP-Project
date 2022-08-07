@@ -1,8 +1,11 @@
 package Controllers;
 
+import Controllers.OtherUserPageControllers.UserIconInFollowingFollowerPageController;
 import DataBase.DataBase;
+import Manager.UserRecommender;
 import View.Controller;
 import component.Post;
+import component.User;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,6 +37,10 @@ import java.util.concurrent.Callable;
 
 public class MyHomePostPageController {
 
+
+
+    @FXML
+    private VBox userRecommendation;
 
     private String photoAddress;
     @FXML
@@ -266,15 +273,41 @@ public class MyHomePostPageController {
     }
 
     public void back(MouseEvent mouseEvent) {
-
+        Controller.main.getChildren().clear();
     }
 
-    public void showUserRecommendation(MouseEvent mouseEvent) {
+    public void showUserRecommendation(MouseEvent mouseEvent) throws IOException {
         all.getRowConstraints().get(0).setPercentHeight(13.6);
         all.getRowConstraints().get(1).setPercentHeight(50);
         all.getRowConstraints().get(2).setPercentHeight(0);
         all.getRowConstraints().get(4).setPercentHeight(0);
         all.getRowConstraints().get(3).setPercentHeight(36.4);
+
+
+
+        ArrayList<User> recommendedUsers=new ArrayList<>();
+        UserRecommender userRecommender=new UserRecommender();
+        recommendedUsers=userRecommender.findFinalUsersIndivisually(Controller.user);
+        if (recommendedUsers.size() == 0) {
+
+        } else {
+            userRecommendation.getChildren().clear();
+            for (int i = 0; i < recommendedUsers.size(); i++) {
+                FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/UserRecommendation.fxml"));
+                Parent parent=fxmlLoader.load();
+                UserRecommendationController userRecommendationController=fxmlLoader.getController();
+                userRecommendationController.getName().setText(recommendedUsers.get(i).getUserName());
+                userRecommendationController.getId().setText("@"+recommendedUsers.get(i).getId());
+                userRecommendationController.getImage().setFill(new ImagePattern(new Image(recommendedUsers.get(i).getPhotoNameFromImageFolder())));
+                userRecommendationController.getFollowers().setText("Num of followers : " +  recommendedUsers.get(i).getFollowers().size());
+                userRecommendationController.getFollowings().setText("Num of followings : " +  recommendedUsers.get(i).getFollowings().size());
+                userRecommendationController.getType().setText(recommendedUsers.get(i).getType());
+                userRecommendationController.setUser(recommendedUsers.get(i));
+                userRecommendation.getChildren().add(parent);
+
+            }
+
+        }
 
     }
 
@@ -284,8 +317,6 @@ public class MyHomePostPageController {
         all.getRowConstraints().get(2).setPercentHeight(0);
         all.getRowConstraints().get(4).setPercentHeight(86.4);
         all.getRowConstraints().get(3).setPercentHeight(0);
-
-
         visibleCreatPost(true);
     }
 
@@ -338,6 +369,11 @@ public class MyHomePostPageController {
             imageOfPostRectangle.setVisible(false);
 
 
+
+
+            createPostText.setText("");
+            imageOfPostRectangle.setFitWidth(57);
+            imageOfPostRectangle.setFitHeight(49);
 
 
             down.getChildren().clear();

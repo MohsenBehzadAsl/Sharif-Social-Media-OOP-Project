@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="240.0" style="-fx-background-color: yellow;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CommentController">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="240.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CommentController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     </columnConstraints>
@@ -24,7 +24,7 @@
         <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <GridPane style="-fx-background-color: blue;">
+        <GridPane>
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -33,7 +33,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: green;">
+                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
                   <Circle fx:id="userProfile" fill="DODGERBLUE" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
                </children>
@@ -53,7 +53,7 @@
             </children>
         </GridPane>
         <TextArea fx:id="textArea" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
-        <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: green;" GridPane.rowIndex="2">
+        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
             <children>
                 <GridPane prefHeight="45.0" prefWidth="339.0">
                     <columnConstraints>
@@ -64,7 +64,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: blue;">
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                             <children>
                                 <ImageView fx:id="liked" fitHeight="31.0" fitWidth="58.0" onMouseClicked="#like" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -76,7 +76,7 @@
                                 </ImageView>
                             </children>
                         </VBox>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: blue;" GridPane.columnIndex="1">
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                             <children>
                                 <ImageView fitHeight="31.0" fitWidth="38.0" onMouseClicked="#showComment" pickOnBounds="true" preserveRatio="true">
                                     <image>

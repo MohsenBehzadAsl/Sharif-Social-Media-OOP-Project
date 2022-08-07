@@ -11,13 +11,13 @@ public class AdRecommender {
 
     List<Post> mostFamouses=new ArrayList<>();
     List<Post> moreLikedAds=new ArrayList<>();
-    public ArrayList<Post> findFinalAds(User user, DataBase dataBase){
+    public ArrayList<Post> findFinalAds(User user){
 
-        mostFamouses=recommendMostFamouses(dataBase);
-        moreLikedAds=recommendMoreLikedAds(dataBase,user);
+        mostFamouses=recommendMostFamouses();
+        moreLikedAds=recommendMoreLikedAds(user);
 
         int counter=0;
-        for (int i=0;i<mostFamouses.size() && counter<4 ;i++){
+        for (int i=0;i<mostFamouses.size() ;i++){
             if ( ! finalAds.contains(mostFamouses.get(i)) ){
                 finalAds.add(mostFamouses.get(i));
                 counter++;
@@ -25,7 +25,7 @@ public class AdRecommender {
         }
 
         counter=0;
-        for (int i=0;i<moreLikedAds.size() && counter<6 ;i++){
+        for (int i=0;i<moreLikedAds.size();i++){
             if ( ! finalAds.contains(moreLikedAds.get(i)) ){
                 finalAds.add(moreLikedAds.get(i));
                 counter++;
@@ -35,9 +35,9 @@ public class AdRecommender {
         return finalAds;
     }
 
-    private List<Post> recommendMoreLikedAds(DataBase dataBase, User user) {
+    private List<Post> recommendMoreLikedAds( User user) {
         ArrayList<Post> userIsViewedPost=new ArrayList<>();
-        for (Post post : dataBase.getPosts()) {
+        for (Post post : DataBase.getPosts()) {
             if (post.getType().equals("Business") && post.getViews().containsKey(user)){
                 userIsViewedPost.add(post);
             }
@@ -118,9 +118,9 @@ public class AdRecommender {
     }
 
 
-    private List<Post> recommendMostFamouses(DataBase dataBase) {
+    private List<Post> recommendMostFamouses() {
         ArrayList<Post> recommendMostFamouses0=new ArrayList<>();
-        for (Post post : dataBase.getPosts()) {
+        for (Post post : DataBase.getPosts()) {
             if (post.getType().equals("Business")){
                 recommendMostFamouses0.add(post);
             }

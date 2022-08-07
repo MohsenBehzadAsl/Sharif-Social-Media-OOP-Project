@@ -45,8 +45,13 @@ public class MainPageController {
         });
     }
     @FXML
-    void AnalysePage(MouseEvent event) {
-
+    void AnalysePage(MouseEvent event) throws IOException, SQLException, ClassNotFoundException {
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/AnalyzePage.fxml"));
+        Parent parent=fxmlLoader.load();
+        AnalyzePageController analyzePageController=fxmlLoader.getController();
+        setMain(parent);
+        analyzePageController.getWhere().setText("Analyze Page");
+        analyzePageController.startShowPost();
     }
     @FXML
     void Exit(MouseEvent event) {
@@ -80,7 +85,7 @@ public class MainPageController {
         myHomePostPageController.getId().setText("@"+Controller.user.getId());
         myHomePostPageController.getFollowers().setText("Num Of Followers: "+ Controller.user.getFollowers().size());
         myHomePostPageController.getFollowing().setText("Num Of Following: "+ Controller.user.getFollowings().size());
-        myHomePostPageController.getImageProfile().setFill(new ImagePattern(new Image(Controller.user.getPhotoNameFromImageFolder())));
+      //  myHomePostPageController.getImageProfile().setFill(new ImagePattern(new Image(Controller.user.getPhotoNameFromImageFolder())));
         myHomePostPageController.getAll().getRowConstraints().get(0).setPercentHeight(13.6);
         myHomePostPageController.getAll().getRowConstraints().get(1).setPercentHeight(80);
         myHomePostPageController.getAll().getRowConstraints().get(2).setPercentHeight(6.4);

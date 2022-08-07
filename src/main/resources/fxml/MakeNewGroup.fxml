@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="624.4" style="-fx-background-color: #00a8e8;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.GroupControllers.MakeNewGroupController">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="624.4" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.GroupControllers.MakeNewGroupController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -89,7 +89,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
                            <children>
-                              <Button mnemonicParsing="false" onMouseClicked="#changePhoto" prefHeight="30.0" prefWidth="123.0" style="-fx-background-color: #ffb703; -fx-background-radius: 50;" text="Change Photo" textAlignment="CENTER">
+                              <Button mnemonicParsing="false" onMouseClicked="#changePhoto" prefHeight="30.0" prefWidth="123.0" style="-fx-background-radius: 50;" text="Change Photo" textAlignment="CENTER">
                                  <font>
                                     <Font name="Bell MT Bold" size="15.0" />
                                  </font>
@@ -157,7 +157,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <Label alignment="CENTER" prefHeight="238.0" prefWidth="760.0" style="-fx-background-color: #013dc4; -fx-background-radius: 50;" text="Add Followers To Group :" textFill="WHITE">
+                  <Label alignment="CENTER" prefHeight="238.0" prefWidth="760.0" style="-fx-background-radius: 50; -fx-background-color: YELLOW;" text="Add Followers To Group :" textFill="WHITE">
                      <font>
                         <Font name="Bell MT Bold" size="19.0" />
                      </font>
@@ -166,7 +166,7 @@
             </HBox>
             <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <content>
-                  <VBox fx:id="FollowersList" alignment="TOP_CENTER" prefHeight="634.0" prefWidth="359.0" spacing="7.0" style="-fx-background-color: #007ea7;">
+                  <VBox fx:id="FollowersList" alignment="TOP_CENTER" prefHeight="634.0" prefWidth="359.0" spacing="7.0">
                      <opaqueInsets>
                         <Insets top="5.0" />
                      </opaqueInsets>
@@ -189,7 +189,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <Button mnemonicParsing="false" onMouseClicked="#makeGroup" prefHeight="50.0" prefWidth="137.0" style="-fx-background-color: Green; -fx-background-radius: 50;" text="Make Group">
+                  <Button mnemonicParsing="false" onMouseClicked="#makeGroup" prefHeight="50.0" prefWidth="137.0" style="-fx-background-radius: 50;" text="Make Group">
                      <font>
                         <Font name="Bell MT Bold" size="18.0" />
                      </font>

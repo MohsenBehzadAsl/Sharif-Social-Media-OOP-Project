@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="totalGrid" gridLinesVisible="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="735.0" prefWidth="892.0" style="-fx-background-color: #013dc4;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.GroupControllers.GroupPageController">
+<GridPane fx:id="totalGrid" gridLinesVisible="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="735.0" prefWidth="892.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.GroupControllers.GroupPageController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="70.0" prefWidth="100.0" />
@@ -26,7 +26,7 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <GridPane fx:id="leftGridPane" style="-fx-background-color: black;">
+      <GridPane fx:id="leftGridPane">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
@@ -37,9 +37,9 @@
             <RowConstraints minHeight="10.0" percentHeight="7.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="446.0" style="-fx-background-color: purple;" GridPane.rowIndex="2">
+            <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="446.0" GridPane.rowIndex="2">
                <content>
-                  <VBox fx:id="groupsVbox" alignment="TOP_CENTER" prefHeight="679.0" prefWidth="288.0" spacing="10.0" style="-fx-background-color: #007ea7;">
+                  <VBox fx:id="groupsVbox" alignment="TOP_CENTER" prefHeight="679.0" prefWidth="288.0" spacing="10.0">
                      <opaqueInsets>
                         <Insets right="20.0" />
                      </opaqueInsets>
@@ -55,7 +55,7 @@
                   <Insets right="2.0" />
                </padding>
             </ScrollPane>
-            <GridPane style="-fx-background-color: #003459;">
+            <GridPane style="-fx-background-color: BLUE;">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="80.0" prefWidth="100.0" />
@@ -96,7 +96,7 @@
                   </HBox>
                </children>
             </GridPane>
-            <GridPane style="-fx-background-color: #003459;" GridPane.rowIndex="3">
+            <GridPane style="-fx-background-color: BLUE;" GridPane.rowIndex="3">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="21.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="60.0" prefWidth="100.0" />
@@ -130,7 +130,7 @@
                         </ImageView>
                      </children>
                   </HBox>
-                  <GridPane fx:id="searchUser" style="-fx-background-color: #003459;" GridPane.columnIndex="1">
+                  <GridPane fx:id="searchUser" GridPane.columnIndex="1">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="218.20001220703125" minWidth="10.0" percentWidth="21.0" prefWidth="104.59998321533203" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="341.40001678466797" minWidth="10.0" percentWidth="90.0" prefWidth="341.40001678466797" />
@@ -151,7 +151,7 @@
                               </ImageView>
                            </children>
                         </HBox>
-                        <TextField fx:id="searchNameTextField" prefHeight="26.0" prefWidth="144.0" promptText="Search Id" style="-fx-background-color: #007ea7;" GridPane.columnIndex="1">
+                        <TextField fx:id="searchNameTextField" prefHeight="26.0" prefWidth="144.0" promptText="Search Id" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
@@ -176,7 +176,7 @@
          <children>
             <ScrollPane fx:id="messageScrollPane" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" rotate="180.0" vbarPolicy="ALWAYS" GridPane.rowIndex="3">
                <content>
-                  <VBox fx:id="reverseVboxForSendMessage" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="729.0" prefWidth="610.0" spacing="10.0" style="-fx-background-color: #013dc4;">
+                  <VBox fx:id="reverseVboxForSendMessage" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="729.0" prefWidth="610.0" spacing="10.0">
                      <padding>
                         <Insets bottom="10.0" />
                      </padding>
@@ -186,7 +186,7 @@
                   <Insets />
                </GridPane.margin>
             </ScrollPane>
-            <GridPane style="-fx-background-color: #ffb703;">
+            <GridPane>
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="9.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" prefWidth="100.0" />
@@ -300,7 +300,7 @@
                   </GridPane>
                </children>
             </GridPane>
-            <GridPane fx:id="messageGridPane" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" style="-fx-background-color: #ffb703;" GridPane.rowIndex="4">
+            <GridPane fx:id="messageGridPane" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" GridPane.rowIndex="4">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="80.0" prefWidth="100.0" />
@@ -345,7 +345,7 @@
                   </VBox>
                </children>
             </GridPane>
-            <GridPane fx:id="searchInPvGridPane" style="-fx-background-color: #00a8e8;" GridPane.rowIndex="1">
+            <GridPane fx:id="searchInPvGridPane" GridPane.rowIndex="1">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="218.20001220703125" minWidth="10.0" percentWidth="16.0" prefWidth="104.59998321533203" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="341.40001678466797" minWidth="10.0" percentWidth="85.0" prefWidth="341.40001678466797" />
@@ -395,14 +395,14 @@
                         <Label fx:id="searchTotalFind" prefHeight="18.0" prefWidth="38.0" text="(0)" textAlignment="CENTER" />
                      </children>
                   </HBox>
-                  <TextField fx:id="searchInGroupTextField" prefHeight="26.0" prefWidth="213.0" promptText="Search" style="-fx-background-color: #007ea7;" GridPane.columnIndex="1">
+                  <TextField fx:id="searchInGroupTextField" prefHeight="26.0" prefWidth="213.0" promptText="Search" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets left="10.0" right="10.0" />
                      </GridPane.margin>
                   </TextField>
                </children>
             </GridPane>
-            <GridPane fx:id="editReplyGridPane" style="-fx-background-color: #00a8e8;" GridPane.rowIndex="2">
+            <GridPane fx:id="editReplyGridPane" GridPane.rowIndex="2">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="23.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -447,7 +447,7 @@
             </GridPane>
          </children>
       </GridPane>
-      <GridPane fx:id="helpColumn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" style="-fx-background-color: gray;" GridPane.columnIndex="2">
+      <GridPane fx:id="helpColumn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" GridPane.columnIndex="2">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>

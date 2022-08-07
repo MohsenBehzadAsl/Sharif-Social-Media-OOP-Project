@@ -22,16 +22,18 @@ public class Controller {
     public static Stage stage=new Stage();
     public static Scene startPage;
     public static GridPane main;
+    public static Scene scene;
     public static MainPageController mainPageController;
     public static void showHomePage(String id) throws IOException {
         Controller.user= DataBase.getUserWithId(id);
 
-        FXMLLoader fxmlLoader=new FXMLLoader(Controller.class.getResource("/fxml/MainPage.fxml"));
-        Parent parent=fxmlLoader.load();
-        mainPageController=fxmlLoader.getController();
-        Scene scene = new Scene(parent);
-//        String css=Controller.class.getResource("/CSS/blue.css").toExternalForm();
-//        scene.getStylesheets().add(css);
+         FXMLLoader fxmlLoader=new FXMLLoader(Controller.class.getResource("/fxml/MainPage.fxml"));
+         Parent parent=fxmlLoader.load();
+         mainPageController=fxmlLoader.getController();
+         scene = new Scene(parent);
+         String css=Controller.class.getResource("/CSS/DARK.css").toExternalForm();
+         scene.getStylesheets().add(css);
+       // AquaFx.style();
 
         Controller.stage.setScene(scene);
 

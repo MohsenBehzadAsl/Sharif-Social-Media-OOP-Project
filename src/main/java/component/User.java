@@ -258,6 +258,20 @@ public class User {
         preparedStatement.executeUpdate();
         preparedStatement1.executeUpdate();
     }
+    public void addViewsFromPageToTable(User viewer,User viewed,LocalDateTime sendTime) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection= DriverManager.
+                getConnection("jdbc:mysql://localhost:3306/joel"
+                        , "root",
+                        DataBase.password);
+        PreparedStatement preparedStatement =connection.prepareStatement(
+                " INSERT INTO  viewsFromPage (viewerId,viewedId,viewTime) VALUES (?,?,?)"
+        );
+        preparedStatement.setString(1,viewer.getId());
+        preparedStatement.setString(2, viewed.getId());
+        preparedStatement.setString(3, String.valueOf(LocalDateTime.now()));
+        preparedStatement.executeUpdate();
+    }
     public void addReadMessageGroup(Group group) throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection connection= DriverManager.
