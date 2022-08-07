@@ -1,0 +1,6 @@
+.root {
+    -root-fill:#FFFFFFFF;
+}
+.button:hover{
+    -fx-text-fill:  -root-fill;
+}

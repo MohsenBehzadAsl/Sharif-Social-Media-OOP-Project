@@ -283,9 +283,10 @@ public class User {
         );
         preparedStatement.setString(1,this.getId());
         preparedStatement.setString(2, group.getGroupId());
-        preparedStatement.setString(3, String.valueOf(this.readMessageGroup.get(this.getReadMessagePv().size())));
+        preparedStatement.setString(3, String.valueOf(this.readMessageGroup.get(this.getReadMessagePv().size())-1));
         preparedStatement.executeUpdate();
     }
+
     public ArrayList<Group> getGroups() {
 
         return groups;
