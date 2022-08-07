@@ -114,23 +114,19 @@ public class AnalyzePageController {
                 }else{
                     helpToPlot1.put(dtf.format(valueList.get(i)),1);
                 }
-
-
                 FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/ViewUserInAnalyzePage.fxml"));
                 Parent parent=fxmlLoader.load();
                 ViewUserInAnalyzePageController viewUserInAnalyzePageController=fxmlLoader.getController();
                 viewUserInAnalyzePageController.getName().setText(keyList.get(i).getUserName());
                 viewUserInAnalyzePageController.getId().setText("@"+keyList.get(i).getId());
-                viewUserInAnalyzePageController.getImage().setFill(new ImagePattern(new Image(keyList.get(i).getPhotoNameFromImageFolder())));
+            //  viewUserInAnalyzePageController.getImage().setFill(new ImagePattern(new Image(keyList.get(i).getPhotoNameFromImageFolder())));
                 viewUserInAnalyzePageController.getFollowers().setText("Num of followers : " +  keyList.get(i).getFollowers().size());
                 viewUserInAnalyzePageController.getFollowings().setText("Num of followings : " +  keyList.get(i).getFollowings().size());
                 viewUserInAnalyzePageController.getType().setText(keyList.get(i).getType());
                 viewUserInAnalyzePageController.setUser(keyList.get(i));
                 viewUserInAnalyzePageController.getViewDate().setText(dtf.format(valueList.get(i)));
                 fill.getChildren().add(parent);
-
             }
-
         }
     }
 }

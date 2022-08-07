@@ -25,6 +25,7 @@ public class Datainitializer {
         Datainitialize10(connection.createStatement());
         Datainitialize11(connection.createStatement());
         Datainitialize12(connection.createStatement());
+        Datainitialize13(connection.createStatement());
     }
 
     public void Datainitialize1(Statement statement) throws SQLException {
@@ -141,8 +142,6 @@ public class Datainitializer {
                 "nameOfGroup varchar(255),"+
                 "bio varchar(255),"+
                 "isBan varchar(255))");
-
-
     }
     public void Datainitialize11(Statement statement) throws SQLException {
         statement.executeUpdate("CREATE TABLE IF NOT EXISTS "+
@@ -155,6 +154,12 @@ public class Datainitializer {
                 "readMessageGroup(userId varchar(255) NOT NULL,"+
                 "groupId varchar(255),"+
                 "readMessage varchar(255))");
+    }
+    public void Datainitialize13(Statement statement) throws SQLException {
+        statement.executeUpdate("CREATE TABLE IF NOT EXISTS "+
+                "viewsFromPage(viewerId varchar(255) NOT NULL,"+
+                "viewedId varchar(255),"+
+                "viewTime varchar(255))");
     }
     public void initializeuser(Connection connection) throws SQLException, ClassNotFoundException {
         //   System.out.printf("hiiiiiii");
@@ -196,6 +201,9 @@ public class Datainitializer {
         );
         ResultSet resultSet12 = connection.createStatement().executeQuery(
                 "SELECT * FROM readMessageGroup"
+        );
+        ResultSet resultSet13 = connection.createStatement().executeQuery(
+                "SELECT * FROM viewsFromPage"
         );
         while (resultSet.next()){
             User user=new User();
@@ -531,6 +539,28 @@ public class Datainitializer {
                 }
             }
         }
+        while (resultSet13.next()){
+            User user=new User();
+            User user1=new User();
+            DataBase dataBase=new DataBase();
+            user.setId(resultSet13.getString("viewerId"));
+            user1.setId(resultSet13.getString("viewedId"));
+            for (User user2 : DataBase.getUsers()) {
+                if(user2.getId().equals(user.getId())){
+                    for (User user3 : DataBase.getUsers()) {
+                        if(user3.getId().equals(user1.getId())){
+                            user3.getViewsFromPage().put(user2, LocalDateTime.parse(resultSet13.getString("viewTime")));
+                        }
+                    }
+                }
+            }
+        }
+
+    /*    statement.executeUpdate("CREATE TABLE IF NOT EXISTS "+
+                "viewsFromPage(viewerId varchar(255) NOT NULL,"+
+                "viewedId varchar(255),"+
+                "viewTime varchar(255))");
+    }*/
     }
     public Message getMessageWithId(String id){
         Message message1=null;

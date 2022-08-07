@@ -36,7 +36,7 @@ public class DataBase {
         DataBase.comments = comments;
     }
 
-    public static String password="mohsen0312699670";
+    public static String password="Mohammad1381";
 
 
     public DataBase(){

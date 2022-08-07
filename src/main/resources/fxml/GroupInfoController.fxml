@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="624.4" style="-fx-background-color: #007ea7;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.GroupControllers.GroupInfoController">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="624.4" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.GroupControllers.GroupInfoController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -92,7 +92,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
                            <children>
-                              <Button fx:id="changePhoto" mnemonicParsing="false" onMouseClicked="#changePhoto" prefHeight="35.0" prefWidth="128.0" style="-fx-background-color: #ffb703;" text="Change Photo">
+                              <Button fx:id="changePhoto" mnemonicParsing="false" onMouseClicked="#changePhoto" prefHeight="35.0" prefWidth="128.0" text="Change Photo">
                                  <font>
                                     <Font name="Bell MT Bold" size="16.0" />
                                  </font>
@@ -172,9 +172,9 @@
                         </Label>
                      </children>
                   </HBox>
-                  <TextField fx:id="nameTextField" prefHeight="32.0" prefWidth="220.0" style="-fx-background-color: #013dc4; -fx-background-radius: 50;" GridPane.columnIndex="1" />
-                  <TextField fx:id="idTextField" prefHeight="32.0" prefWidth="220.0" style="-fx-background-color: #013dc4; -fx-background-radius: 50;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="owner" editable="false" prefHeight="32.0" prefWidth="220.0" style="-fx-background-color: #013dc4; -fx-background-radius: 50;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="nameTextField" prefHeight="32.0" prefWidth="220.0" style="-fx-background-radius: 50;" GridPane.columnIndex="1" />
+                  <TextField fx:id="idTextField" prefHeight="32.0" prefWidth="220.0" style="-fx-background-radius: 50;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="owner" editable="false" prefHeight="32.0" prefWidth="220.0" style="-fx-background-radius: 50;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <HBox alignment="CENTER" GridPane.rowIndex="3">
                      <children>
                         <Label fx:id="nMembers" prefHeight="167.0" prefWidth="334.0" text="N_Members :" textFill="WHITE">
@@ -198,7 +198,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <children>
-                        <Button fx:id="banGroupButton" mnemonicParsing="false" onMouseClicked="#banGroupClicked" prefHeight="46.0" prefWidth="121.0" style="-fx-background-color: Red; -fx-background-radius: 50;" text="Ban Group">
+                        <Button fx:id="banGroupButton" mnemonicParsing="false" onMouseClicked="#banGroupClicked" prefHeight="46.0" prefWidth="121.0" style="-fx-background-radius: 50;" text="Ban Group">
                            <font>
                               <Font name="Bell MT Bold" size="17.0" />
                            </font>
@@ -221,15 +221,15 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #003459;" />
-            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #003459;" GridPane.columnIndex="1" />
-            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #003459;" GridPane.columnIndex="2" />
+            <HBox prefHeight="100.0" prefWidth="200.0" />
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" />
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" />
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #003459;" />
+                  <HBox prefHeight="100.0" prefWidth="200.0" />
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #003459;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label alignment="CENTER" prefHeight="167.0" prefWidth="334.0" text="Members" textFill="WHITE" GridPane.rowIndex="1">
                <font>
                   <Font name="Bell MT Bold" size="21.0" />
@@ -242,12 +242,12 @@
             </Label>
             <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                <content>
-                  <VBox fx:id="MembersVbox" prefHeight="460.0" prefWidth="291.0" spacing="7.0" style="-fx-background-color: #013dc4;" />
+                  <VBox fx:id="MembersVbox" prefHeight="460.0" prefWidth="291.0" spacing="7.0" />
                </content>
             </ScrollPane>
             <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <content>
-                  <VBox fx:id="followersAddMember" prefHeight="468.0" prefWidth="291.0" spacing="7.0" style="-fx-background-color: #01aaa1;" />
+                  <VBox fx:id="followersAddMember" prefHeight="468.0" prefWidth="291.0" spacing="7.0" />
                </content>
             </ScrollPane>
          </children>

@@ -338,21 +338,64 @@ public class UpdateSqlTable {
         preparedStatement.setString(3, user.getId());
         preparedStatement.executeUpdate();
     }
-    public static void readMessageLeaveFromGroup(Group group,User user){//taghir tedad payam ha pas
-
-
-    
-
+    public static void readMessageLeaveFromGroup(Group group,User user) throws ClassNotFoundException, SQLException {//taghir tedad payam ha pas
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection= DriverManager.
+                getConnection("jdbc:mysql://localhost:3306/joel"
+                        , "root",
+                        DataBase.password);
+        PreparedStatement preparedStatement =connection.prepareStatement(
+                "DELETE FROM readMessageGroup WHERE (groupId=?) AND (userId=?)"
+        );
+        preparedStatement.setString(1,group.getSqlId());
+        preparedStatement.setString(2, user.getId());
+        preparedStatement.executeUpdate();
     }
-    public static void readMessageDeletePv(Pv pv){//taghirr tedad payam ha
+    public static void readMessageDeletePv(Pv pv) throws ClassNotFoundException, SQLException {//taghirr tedad payam ha
 
 
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection= DriverManager.
+                getConnection("jdbc:mysql://localhost:3306/joel"
+                        , "root",
+                        DataBase.password);
+        PreparedStatement preparedStatement =connection.prepareStatement(
+                "DELETE FROM readMessagePv WHERE pvId=?"
+        );
+        preparedStatement.setString(1, pv.getPvId());
+        preparedStatement.executeUpdate();
     }
-    public static void setReadMessagePv(Pv pv,User user){
-
+    public static void setReadMessagePv(Pv pv,User user) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection= DriverManager.
+                getConnection("jdbc:mysql://localhost:3306/joel"
+                        , "root",
+                        DataBase.password);
+        PreparedStatement preparedStatement =connection.prepareStatement(
+                " UPDATE readMessagePv " +
+                        "SET readMessage = ?" +
+                        "WHERE (pvId=?) AND (userId=?) "
+        );
+        preparedStatement.setString(1, String.valueOf(user.getReadMessagePv().get(user.getPvs().indexOf(pv))));
+        preparedStatement.setString(2, pv.getPvId());
+        preparedStatement.setString(3, user.getId());
+        preparedStatement.executeUpdate();
     }
-    public static void setReadMessageGroup(Group group,User user){
-
+    public static void setReadMessageGroup(Group group,User user) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection= DriverManager.
+                getConnection("jdbc:mysql://localhost:3306/joel"
+                        , "root",
+                        DataBase.password);
+        PreparedStatement preparedStatement =connection.prepareStatement(
+                " UPDATE readMessageGroup " +
+                        "SET readMessage = ?" +
+                        "WHERE (groupId=?) AND (userId=?) "
+        );
+        preparedStatement.setString(1, String.valueOf(user.getReadMessageGroup().get(user.getGroups().indexOf(group))));
+        preparedStatement.setString(2, group.getSqlId());
+        preparedStatement.setString(3, user.getId());
+        preparedStatement.executeUpdate();
     }
     public static void deleteMessage(Message message) throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");

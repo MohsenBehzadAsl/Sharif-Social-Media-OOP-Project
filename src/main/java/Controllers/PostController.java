@@ -501,6 +501,7 @@ public class PostController {
             showAnotherUserPageController.set(post.getSender());
             showAnotherUserPageController.start(post.getSender());
             post.getSender().getViewsFromPage().put(Controller.user,LocalDateTime.now());
+            post.getSender().addViewsFromPageToTable(Controller.user,post.getSender(),LocalDateTime.now());
         }
     }
 
