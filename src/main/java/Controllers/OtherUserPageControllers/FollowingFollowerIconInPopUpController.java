@@ -16,6 +16,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class FollowingFollowerIconInPopUpController{
 
@@ -64,7 +65,7 @@ public class FollowingFollowerIconInPopUpController{
     }
 
     @FXML
-    void visitPage(MouseEvent event) throws IOException {
+    void visitPage(MouseEvent event) throws IOException, SQLException, ClassNotFoundException {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/ShowAnotherUserPage.fxml"));
         Parent parent=fxmlLoader.load();
         ShowAnotherUserPageController showAnotherUserPageController=fxmlLoader.getController();
@@ -75,6 +76,7 @@ public class FollowingFollowerIconInPopUpController{
         showAnotherUserPageController.nowParent=parent;
         showAnotherUserPageController.backParent=backParent;
         showAnotherUserPageController.set(DataBase.getUserWithId(id.getText().replaceAll("Id :@","")));
+        showAnotherUserPageController.start(DataBase.getUserWithId(id.getText().replaceAll("Id :@","")));
         popUp.close();
     }
 

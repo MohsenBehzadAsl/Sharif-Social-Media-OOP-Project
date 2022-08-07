@@ -41,7 +41,7 @@ public class ShowExplore {
 
 
             AdRecommender adRecommender = new AdRecommender();
-            recommendedAds=adRecommender.findFinalAds(user,dataBase);
+            recommendedAds=adRecommender.findFinalAds(user);
             showExplorePage(num,recommendedAds,posts);
             input = in.nextLine();
             if (!input.matches("\\w{1}")) {
@@ -104,7 +104,7 @@ public class ShowExplore {
         while (running) {
             if (showUserRecommendation){
                 UserRecommender userRecommender=new UserRecommender();
-                recommendedUsers=userRecommender.findFinalUsersIndivisually(user,dataBase);
+                recommendedUsers=userRecommender.findFinalUsersIndivisually(user);
             }
             Post post=recommendedAds.get(Integer.parseInt(index) - 1);
             User user2=recommendedAds.get(Integer.parseInt(index) - 1).getSender();
@@ -223,7 +223,7 @@ public class ShowExplore {
         while (running) {
             if (showUserRecommendation){
                 UserRecommender userRecommender=new UserRecommender();
-                recommendedUsers=userRecommender.findFinalUsersIndivisually(user,dataBase);
+                recommendedUsers=userRecommender.findFinalUsersIndivisually(user);
             }
             Post post=posts.get(Integer.parseInt(index) - 1);
             User user2=post.getSender();
@@ -414,7 +414,7 @@ public class ShowExplore {
         while (running) {
             if (showUserRecommendation){
                 UserRecommender userRecommender=new UserRecommender();
-                recommendedUsers=userRecommender.findFinalUsersIndivisually(user,dataBase);
+                recommendedUsers=userRecommender.findFinalUsersIndivisually(user);
             }
             User user2= comment.getSender();
             //Comment comment = dataBase.getPosts().get(Integer.parseInt(index) - 1).getComments().get(Integer.parseInt(index2) - 1);
@@ -673,7 +673,7 @@ public class ShowExplore {
 
             if (showUserRecommendation){
                 UserRecommender userRecommender=new UserRecommender();
-                recommendedUsers=userRecommender.findFinalUsersIndivisually(user,dataBase);
+                recommendedUsers=userRecommender.findFinalUsersIndivisually(user);
             }
             showOthersPageHelp(user1,num1,showUserRecommendation,recommendedUsers,posts);
             input=in.nextLine();

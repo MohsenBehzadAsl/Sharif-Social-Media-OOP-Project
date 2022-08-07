@@ -498,7 +498,10 @@ public class PostController {
             Parent parent=fxmlLoader.load();
             ShowAnotherUserPageController showAnotherUserPageController=fxmlLoader.getController();
             Controller.mainPageController.setMain(parent);
+            showAnotherUserPageController.set(post.getSender());
             showAnotherUserPageController.start(post.getSender());
+            post.getSender().getViewsFromPage().put(Controller.user,LocalDateTime.now());
+            post.getSender().addViewsFromPageToTable(Controller.user,post.getSender(),LocalDateTime.now());
         }
     }
 

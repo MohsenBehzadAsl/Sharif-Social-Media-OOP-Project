@@ -6,11 +6,11 @@ import component.User;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -19,82 +19,99 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class SettingController implements Initializable {
+
+
+    @FXML
+    private ChoiceBox<String> myChangeInformationChoiceBox;
+
+
+    @FXML
+    private Button myChangeProfileButton;
     @FXML
     private ImageView myImageView;
 
     @FXML
-    private Button myButton;
+    private Label myLabel;
 
     @FXML
-    private ChoiceBox<String> myChoiceBox;
+    private Button mySubmitButton;
 
-    @FXML
-    private Label myLabel1;
-
-    @FXML
-    private Label myLabel2;
     @FXML
     private TextField myTextField;
     @FXML
     private GridPane myGridPane;
     @FXML
-    void change(ActionEvent event) throws SQLException, ClassNotFoundException {
+    private ToggleGroup background;
+    @FXML
+    private ToggleGroup item;
+    @FXML
+    private RadioButton myNoneRadioButton;
+    @FXML
+    private RadioButton myPinkRadioButton;
+    @FXML
+    private RadioButton mySilverRadioButton;
+    @FXML
+    private RadioButton mySkyRadioButton;
+    @FXML
+    private RadioButton myDarkRadioButton;
+    @FXML
+    void submit(ActionEvent event) throws SQLException, ClassNotFoundException {
         value=myTextField.getText();
-        myLabel1.setText("ENTER NEW .....");
+        myLabel.setText("ENTER NEW .....");
       //  myLabel2.setText("..... CHANGED SUCCESSFULLY");
-        System.out.println(myChoiceBox.getValue());
-        if(myChoiceBox.getValue().equals("USERNAME")){
+      //  System.out.println(myChoiceBox.getValue());
+        if(myChangeInformationChoiceBox.getValue().equals("USERNAME")){
             System.out.println("88888888888888888");
             user.setUserName(value);
-            myLabel2.setText("USERNAME CHANGED SUCCESSFULLY");
+            myLabel.setText("USERNAME CHANGED SUCCESSFULLY");
             UpdateSqlTable.setUserNameToTable(user,value);
         }
-        if(myChoiceBox.getValue().equals("ID")){
+        if(myChangeInformationChoiceBox.getValue().equals("ID")){
             user.setId(value);
-            myLabel2.setText("ID CHANGED SUCCESSFULLY");
+            myLabel.setText("ID CHANGED SUCCESSFULLY");
             //UpdateSqlTable.setIdToTable();
         }
-        if(myChoiceBox.getValue().equals("PASSWORD")){
+        if(myChangeInformationChoiceBox.getValue().equals("PASSWORD")){
             user.setPassword(value);
-            myLabel2.setText("PASSWORD CHANGED SUCCESSFULLY");
+            myLabel.setText("PASSWORD CHANGED SUCCESSFULLY");
             UpdateSqlTable.setPasswordToTable(user,value);
-        }if(myChoiceBox.getValue().equals("PASSWORD HINT")){
+        }if(myChangeInformationChoiceBox.getValue().equals("PASSWORD HINT")){
             user.setPasswordHint(value);
-            myLabel2.setText("PASSWORD HINT CHANGED SUCCESSFULLY");
+            myLabel.setText("PASSWORD HINT CHANGED SUCCESSFULLY");
             UpdateSqlTable.setPasswordHintToTable(user,value);
-        }if(myChoiceBox.getValue().equals("PASSWORD QUESTION")){
+        }if(myChangeInformationChoiceBox.getValue().equals("PASSWORD QUESTION")){
             user.setQuestion(value);
-            myLabel2.setText("PASSWORD QUESTION CHANGED SUCCESSFULLY");
+            myLabel.setText("PASSWORD QUESTION CHANGED SUCCESSFULLY");
             UpdateSqlTable.setPasswordQuestionToTable(user,value);
-        }if(myChoiceBox.getValue().equals("QUESTION ANSWER")){
+        }if(myChangeInformationChoiceBox.getValue().equals("QUESTION ANSWER")){
             user.setAnsQuestion(value);
-            myLabel2.setText("QUESTION ANSWER CHANGED SUCCESSFULLY");
+            myLabel.setText("QUESTION ANSWER CHANGED SUCCESSFULLY");
             UpdateSqlTable.setAnswerOfPasswordQuestionToTable(user,value);
-        }if(myChoiceBox.getValue().equals("BIO")){
+        }if(myChangeInformationChoiceBox.getValue().equals("BIO")){
 
             user.setBio(value);
-            myLabel2.setText("BIO CHANGED SUCCESSFULLY");
+            myLabel.setText("BIO CHANGED SUCCESSFULLY");
             UpdateSqlTable.setBioUserToTable(user,value);
-        }if(myChoiceBox.getValue().equals("TYPE")){
-
+        }if(myChangeInformationChoiceBox.getValue().equals("TYPE")){
             user.setGender(value);
             UpdateSqlTable.setGenderToTable(user,value);
-            myLabel2.setText("TYPE CHANGED SUCCESSFULLY");
+            myLabel.setText("TYPE CHANGED SUCCESSFULLY");
         }
-        if(myChoiceBox.getValue().equals("ADD TO GROUP ABILITY")){
+        if(myChangeInformationChoiceBox.getValue().equals("ADD TO GROUP ABILITY")){
             user.setAddToGroupAbility(Boolean.valueOf(value));
             UpdateSqlTable.setAddToGroupAbilityToTable(user, Boolean.parseBoolean(value));
-            myLabel2.setText("ADD TO GROUP ABILITY CHANGED SUCCESSFULLY");
+            myLabel.setText("ADD TO GROUP ABILITY CHANGED SUCCESSFULLY");
         }
-        if(myChoiceBox.getValue().equals("CHANGE PROFILE PHOTO")){
+        if(myChangeInformationChoiceBox.getValue().equals("CHANGE PROFILE PHOTO")){
             user.setPhotoNameFromImageFolder(value);
             UpdateSqlTable.setProfilePhotoToTable(user,value);
-            myLabel2.setText("PROFILE PHOTO CHANGED SUCCESSFULLY");
+            myLabel.setText("PROFILE PHOTO CHANGED SUCCESSFULLY");
         }
     }
     private User user= Controller.user;
@@ -102,32 +119,37 @@ public class SettingController implements Initializable {
     @FXML
     void getText(ActionEvent event) throws SQLException, ClassNotFoundException {
          value=myTextField.getText();
-
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        myChoiceBox.getItems().add("USERNAME");
-        myChoiceBox.getItems().add("ID");
-        myChoiceBox.getItems().add("PASSWORD");
-        myChoiceBox.getItems().add("PASSWORD HINT");
-        myChoiceBox.getItems().add("PASSWORD QUESTION");
-        myChoiceBox.getItems().add("QUESTION ANSWER");
-        myChoiceBox.getItems().add("BIO");
-        myChoiceBox.getItems().add("TYPE");
-        myChoiceBox.getItems().add("ADD TO GROUP ABILITY");
-        myChoiceBox.getItems().add("CHANGE PROFILE PHOTO");
-        myChoiceBox.setOnAction(this::getValue);
+        myChangeInformationChoiceBox.getItems().add("USERNAME");
+        myChangeInformationChoiceBox.getItems().add("ID");
+        myChangeInformationChoiceBox.getItems().add("PASSWORD");
+        myChangeInformationChoiceBox.getItems().add("PASSWORD HINT");
+        myChangeInformationChoiceBox.getItems().add("PASSWORD QUESTION");
+        myChangeInformationChoiceBox.getItems().add("QUESTION ANSWER");
+        myChangeInformationChoiceBox.getItems().add("BIO");
+        myChangeInformationChoiceBox.getItems().add("TYPE");
+        myChangeInformationChoiceBox.getItems().add("ADD TO GROUP ABILITY");
+        myChangeInformationChoiceBox.getItems().add("CHANGE PROFILE PHOTO");
+       /* myChangeItemChoiceBox.getItems().add("SILVER");
+        myChangeItemChoiceBox.getItems().add("PINK");
+        myChangeBackgroundChoiceBox.getItems().add("SKY");
+        myChangeBackgroundChoiceBox.getItems().add("DARK");
+        myChangeBackgroundChoiceBox.setOnAction(this::background);*/
+        myChangeInformationChoiceBox.setOnAction(this::information);
+        /*myChangeItemChoiceBox.setOnAction(this::item);*/
     }
-    private void getValue(Event event) {
-        String temp=myChoiceBox.getValue();
-        if(temp.equals("CHANGE PROFILE PHOTO")){
+    public void information(Event event){
+        myLabel.setText("CHANGE "+myChangeInformationChoiceBox.getValue());
+    }
+    public void setMyChangeProfileButton(ActionEvent actionEvent) {
             FileChooser fileChooser=new FileChooser();
             fileChooser.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter("All Images", "*.*"),
                     new FileChooser.ExtensionFilter("JPG", "*.jpg"),
                     new FileChooser.ExtensionFilter("PNG", "*.png")
             );
-            //final DirectoryChooser directoryChooser=new DirectoryChooser();
             Stage stage=(Stage) myGridPane.getScene().getWindow();
             File file=  fileChooser.showOpenDialog(stage);
             if(file!=null){
@@ -135,14 +157,212 @@ public class SettingController implements Initializable {
                 Image image = new Image(file.toURI().toString());
                 user.setPhotoNameFromImageFolder(file.toURI().toString());
                 myImageView.setImage(image);
+                myLabel.setText("PROFILE PHOTO CHANGED SUCCESSFULLY");
             }
-            myLabel1.setText("ADDRESS OF NEW PHOTO");
-        }
-        else {
-            myLabel1.setText("ENTER NEW "+temp);
+    }
+    public void getBackground(ActionEvent actionEvent){
+        if(myDarkRadioButton.isSelected()){
+            Controller.scene.getStylesheets().clear();
+            Controller.scene.getStylesheets().removeAll();
+            if(myNoneRadioButton.isSelected()){
+                Controller.scene.getStylesheets().clear();
+                Controller.scene.getStylesheets().removeAll();
+                String css=Controller.class.getResource("/CSS/DARK.css").toExternalForm();
+                Controller.scene.getStylesheets().add(css);
+            } else if (mySilverRadioButton.isSelected()) {
+                Controller.scene.getStylesheets().clear();
+                Controller.scene.getStylesheets().removeAll();
+                String css=Controller.class.getResource("/CSS/DARK.css").toExternalForm();
+                String css1=Controller.class.getResource("/CSS/SILVER.css").toExternalForm();
+                Controller.scene.getStylesheets().add(css);
+                Controller.scene.getStylesheets().add(css1);
+            } else if (myPinkRadioButton.isSelected()) {
+                Controller.scene.getStylesheets().clear();
+                Controller.scene.getStylesheets().removeAll();
+                String css=Controller.class.getResource("/CSS/DARK.css").toExternalForm();
+                String css1=Controller.class.getResource("/CSS/PINK.css").toExternalForm();
+                Controller.scene.getStylesheets().add(css);
+                Controller.scene.getStylesheets().add(css1);
+            }
+        } else if (mySkyRadioButton.isSelected()) {
+            Controller.scene.getStylesheets().clear();
+            Controller.scene.getStylesheets().removeAll();
+            if(myNoneRadioButton.isSelected()){
+                String css=Controller.class.getResource("/CSS/SKY.css").toExternalForm();
+                Controller.scene.getStylesheets().add(css);
+            } else if (mySilverRadioButton.isSelected()) {
+                Controller.scene.getStylesheets().clear();
+                Controller.scene.getStylesheets().removeAll();
+                String css=Controller.class.getResource("/CSS/SKY.css").toExternalForm();
+                String css1=Controller.class.getResource("/CSS/SILVER.css").toExternalForm();
+                Controller.scene.getStylesheets().add(css);
+                Controller.scene.getStylesheets().add(css1);
+            } else if (myPinkRadioButton.isSelected()) {
+                Controller.scene.getStylesheets().clear();
+                Controller.scene.getStylesheets().removeAll();
+                String css=Controller.class.getResource("/CSS/SKY.css").toExternalForm();
+                String css1=Controller.class.getResource("/CSS/SILVER.css").toExternalForm();
+                Controller.scene.getStylesheets().add(css);
+                Controller.scene.getStylesheets().add(css1);
+            }
         }
     }
 
+    public void getItem(ActionEvent actionEvent){
+        if(myNoneRadioButton.isSelected()){
+            Controller.scene.getStylesheets().clear();
+            Controller.scene.getStylesheets().removeAll();
+            if(myDarkRadioButton.isSelected()){
+                Controller.scene.getStylesheets().clear();
+                Controller.scene.getStylesheets().removeAll();
+                String css=Controller.class.getResource("/CSS/DARK.css").toExternalForm();
+                Controller. scene.getStylesheets().add(css);
+            } else if (mySkyRadioButton.isSelected()) {
+                Controller.scene.getStylesheets().clear();
+                Controller.scene.getStylesheets().removeAll();
+                String css=Controller.class.getResource("/CSS/SKY.css").toExternalForm();
+                Controller. scene.getStylesheets().add(css);
+            }
+        } else if(mySilverRadioButton.isSelected()){
+            Controller.scene.getStylesheets().clear();
+            Controller.scene.getStylesheets().removeAll();
+            if(myDarkRadioButton.isSelected()){
+                Controller.scene.getStylesheets().clear();
+                Controller.scene.getStylesheets().removeAll();
+                String css=Controller.class.getResource("/CSS/DARK.css").toExternalForm();
+                String css1=Controller.class.getResource("/CSS/SILVER.css").toExternalForm();
+                Controller. scene.getStylesheets().add(css);
+                Controller.scene.getStylesheets().add(css1);
+            } else if (mySkyRadioButton.isSelected()) {
+                Controller.scene.getStylesheets().clear();
+                Controller.scene.getStylesheets().removeAll();
+                String css=Controller.class.getResource("/CSS/SKY.css").toExternalForm();
+                String css1=Controller.class.getResource("/CSS/SILVER.css").toExternalForm();
+                Controller. scene.getStylesheets().add(css);
+                Controller. scene.getStylesheets().add(css1);
+            }
+        } else if (myPinkRadioButton.isSelected()) {
+            Controller.scene.getStylesheets().clear();
+            Controller.scene.getStylesheets().removeAll();
+            if(myDarkRadioButton.isSelected()){
+                Controller.scene.getStylesheets().clear();
+                Controller.scene.getStylesheets().removeAll();
+                String css=Controller.class.getResource("/CSS/DARK.css").toExternalForm();
+                String css1=Controller.class.getResource("/CSS/PINK.css").toExternalForm();
+                Controller. scene.getStylesheets().add(css);
+                Controller.scene.getStylesheets().add(css1);
+            } else if (mySkyRadioButton.isSelected()) {
+                Controller.scene.getStylesheets().clear();
+                Controller.scene.getStylesheets().removeAll();
+                String css=Controller.class.getResource("/CSS/SKY.css").toExternalForm();
+                String css1=Controller.class.getResource("/CSS/PINK.css").toExternalForm();
+                Controller. scene.getStylesheets().add(css);
+                Controller. scene.getStylesheets().add(css1);
+            }
+        }
+
+
+
+
+
+
+
+    }
+
+
+
+  /*  public void background(Event event)  {
+        if(myChangeBackgroundChoiceBox.getValue().equals("SKY")){
+            String css=Controller.class.getResource("/CSS/SKY.css").toExternalForm();
+            if(myChangeItemChoiceBox.getValue()==null){
+            }
+            else if(!(myChangeItemChoiceBox.getValue().equals("SILVER"))){
+                Controller.scene.getStylesheets().clear();
+                Controller.scene.getStylesheets().removeAll();
+                String css1=Controller.class.getResource("/CSS/PINK.css").toExternalForm();
+               Controller. scene.getStylesheets().add(css);
+               Controller. scene.getStylesheets().add(css1);
+            }
+            else if(!(myChangeItemChoiceBox.getValue().equals("PINK"))){
+                Controller.scene.getStylesheets().clear();
+                Controller.scene.getStylesheets().removeAll();
+
+                String css1=Controller.class.getResource("/CSS/SILVER.css").toExternalForm();
+              Controller.  scene.getStylesheets().add(css);
+                Controller.scene.getStylesheets().add(css1);
+            }
+        }
+        else if(myChangeBackgroundChoiceBox.getValue().equals("DARK")){
+
+            String css=Controller.class.getResource("/CSS/DARK.css").toExternalForm();
+
+            if(myChangeItemChoiceBox.getValue()==null){
+
+            }
+            else if(!(myChangeItemChoiceBox.getValue().equals("SILVER"))){
+                Controller.scene.getStylesheets().clear();
+                Controller. scene.getStylesheets().removeAll();
+                String css1=Controller.class.getResource("/CSS/PINK.css").toExternalForm();
+                Controller.scene.getStylesheets().add(css);
+                Controller.scene.getStylesheets().add(css1);
+            }
+            else if(!(myChangeItemChoiceBox.getValue().equals("PINK"))){
+                Controller.scene.getStylesheets().clear();
+                Controller. scene.getStylesheets().removeAll();
+                String css1=Controller.class.getResource("/CSS/SILVER.css").toExternalForm();
+                Controller.scene.getStylesheets().add(css);
+                Controller.scene.getStylesheets().add(css1);
+            }
+        }
+    }*/
+  /*  public void item(Event event)  {
+        if(myChangeItemChoiceBox.getValue().equals("SILVER")){
+
+            String css=Controller.class.getResource("/CSS/SILVER.css").toExternalForm();
+
+            if(myChangeBackgroundChoiceBox.getValue()==null){
+
+            }
+           else if(myChangeBackgroundChoiceBox.getValue().equals("SKY")){
+                Controller.scene.getStylesheets().clear();
+                Controller. scene.getStylesheets().removeAll();
+                String css1=Controller.class.getResource("/CSS/SKY.css").toExternalForm();
+                Controller.scene.getStylesheets().add(css1);
+                Controller.scene.getStylesheets().add(css);
+            }
+            else if(myChangeBackgroundChoiceBox.getValue().equals("DARK")){
+                Controller.scene.getStylesheets().clear();
+                Controller. scene.getStylesheets().removeAll();
+                String css1=Controller.class.getResource("/CSS/DARK.css").toExternalForm();
+                Controller.scene.getStylesheets().add(css1);
+                Controller.scene.getStylesheets().add(css);
+            }
+        }
+        else if(myChangeItemChoiceBox.getValue().equals("PINK")){
+
+            String css=Controller.class.getResource("/CSS/DARK.css").toExternalForm();
+
+            if(myChangeBackgroundChoiceBox.getValue()==null){
+
+            }
+           else if(myChangeBackgroundChoiceBox.getValue().equals("SKY")){
+                Controller.scene.getStylesheets().clear();
+                Controller.scene.getStylesheets().removeAll();
+
+                String css1=Controller.class.getResource("/CSS/SKY.css").toExternalForm();
+                Controller.scene.getStylesheets().add(css1);
+                Controller.scene.getStylesheets().add(css);
+            }
+            else if(myChangeBackgroundChoiceBox.getValue().equals("DARK")){
+                Controller.scene.getStylesheets().clear();
+                Controller.scene.getStylesheets().removeAll();
+                String css1=Controller.class.getResource("/CSS/DARK.css").toExternalForm();
+                Controller.scene.getStylesheets().add(css1);
+                Controller.scene.getStylesheets().add(css);
+            }
+        }
+    }
+*/
     public User getUser() {
         return user;
     }

@@ -3,7 +3,9 @@ package Controllers.OtherUserPageControllers;
 import Controllers.OtherUserPageControllers.FollowerOrFollowingPopUpController;
 import Controllers.PostController;
 import Controllers.PvControllers.PvPageController;
+import Controllers.UserRecommendationController;
 import DataBase.DataBase;
+import Manager.UserRecommender;
 import View.Controller;
 import component.Post;
 import component.User;
@@ -16,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -34,6 +37,10 @@ public class ShowAnotherUserPageController {
     public Parent backParent=null;
     public Parent nowParent=null;
 
+    @FXML
+    private VBox userRecommendation;
+    @FXML
+    private GridPane all;
     @FXML
     private Button followOrUnFollow;
     @FXML
@@ -59,13 +66,19 @@ public class ShowAnotherUserPageController {
         Controller.main.add(backParent,0,0);
     }
     @FXML
-    void followOrUnfollow(ActionEvent event) {
+    void followOrUnfollow(ActionEvent event) throws IOException {
         if (Controller.user.getFollowings().contains(user)){
             Controller.user.getFollowings().remove(user);
             user.getFollowers().remove(Controller.user);
+            all.getRowConstraints().get(3).setPercentHeight(5);
+            all.getRowConstraints().get(4).setPercentHeight(68);
         }else {
             Controller.user.getFollowings().add(user);
             user.getFollowers().add(Controller.user);
+            all.getRowConstraints().get(3).setPercentHeight(25);
+            all.getRowConstraints().get(4).setPercentHeight(48);
+            showUserRecommendationHelp();
+
         }
         if (Controller.user.getFollowings().contains(user)){
             followOrUnFollow.setText("UnFollow");
@@ -75,6 +88,35 @@ public class ShowAnotherUserPageController {
         myFollowersLabel.setText(""+user.getFollowers().size());
         myFollowingsLabel.setText(""+user.getFollowings().size());
     }
+
+
+    public void showUserRecommendationHelp() throws IOException {
+        ArrayList<User> recommendedUsers=new ArrayList<>();
+        UserRecommender userRecommender=new UserRecommender();
+        recommendedUsers=userRecommender.findFinalUsersIndivisually(Controller.user);
+        if (recommendedUsers.size() == 0) {
+
+        } else {
+            userRecommendation.getChildren().clear();
+            for (int i = 0; i < recommendedUsers.size(); i++) {
+                FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/UserRecommendation.fxml"));
+                Parent parent=fxmlLoader.load();
+                UserRecommendationController userRecommendationController=fxmlLoader.getController();
+                userRecommendationController.getName().setText(recommendedUsers.get(i).getUserName());
+                userRecommendationController.getId().setText("@"+recommendedUsers.get(i).getId());
+                userRecommendationController.getImage().setFill(new ImagePattern(new Image(recommendedUsers.get(i).getPhotoNameFromImageFolder())));
+                userRecommendationController.getFollowers().setText("Num of followers : " +  recommendedUsers.get(i).getFollowers().size());
+                userRecommendationController.getFollowings().setText("Num of followings : " +  recommendedUsers.get(i).getFollowings().size());
+                userRecommendationController.getType().setText(recommendedUsers.get(i).getType());
+                userRecommendationController.setUser(recommendedUsers.get(i));
+                userRecommendation.getChildren().add(parent);
+
+            }
+
+        }
+
+    }
+
     @FXML
     void sendMessage(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/PvsPage.fxml"));
@@ -188,7 +230,7 @@ public class ShowAnotherUserPageController {
                 postController.getAll().getColumnConstraints().get(0).setPercentWidth(100);
                 postController.getAll().getColumnConstraints().get(1).setPercentWidth(0);
                 postController.getAll().getColumnConstraints().get(2).setPercentWidth(0);
-                postController.getUsername().setText(Controller.user.getUserName());
+                postController.getUsername().setText(posts.get(i).getSender().getUserName());
                 postController.getNumOfViews().setText("Num Of Views : "+String.valueOf(posts.get(i).getViews().size()));
                 postController.getNumofLike().setText("Num Of Likes : "+String.valueOf(posts.get(i).getLikes().size()));
                 postController.getNumOfComments().setText("Num Of Comments : "+String.valueOf(posts.get(i).getComments().size()));
