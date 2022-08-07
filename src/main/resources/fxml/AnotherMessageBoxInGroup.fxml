@@ -1,14 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controllers.GroupControllers.AnotherMessageBoxInGroupController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<GridPane fx:id="total" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="0.0" prefHeight="85.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.GroupControllers.AnotherMessageBoxInGroupController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <children>
+      <GridPane fx:id="messageBoxWithPhoto" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="21.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+              <GridPane fx:id="messageGrid" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="142.0" prefWidth="240.0" style="-fx-background-color: skyblue; -fx-background-radius: 10;" GridPane.columnIndex="1">
+                  <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                      <RowConstraints minHeight="10.0" percentHeight="23.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" percentHeight="64.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" percentHeight="13.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                  <children>
+                      <HBox alignment="CENTER_RIGHT" maxHeight="30.0" minHeight="13.6" prefHeight="13.6" prefWidth="200.0" spacing="35.0" GridPane.rowIndex="2">
+                          <children>
+                              <Label fx:id="edited" text="Edited">
+                                  <font>
+                                      <Font size="9.0" />
+                                  </font>
+                              </Label>
+                              <Label fx:id="date" maxHeight="50.0" text="Date">
+                                  <padding>
+                                      <Insets right="35.0" />
+                                  </padding>
+                                  <font>
+                                      <Font size="9.0" />
+                                  </font>
+                              </Label>
+                          </children>
+                          <opaqueInsets>
+                              <Insets />
+                          </opaqueInsets>
+                      </HBox>
+                      <TextArea fx:id="ContentTextArea" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="54.0" prefWidth="241.0" style="-fx-background-color: #000437; -fx-border-color: Red;" text="&#10;" wrapText="true" GridPane.rowIndex="1">
+                          <font>
+                              <Font name="Bell MT" size="20.0" />
+                          </font>
+                          <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                          </cursor>
+                      </TextArea>
+                      <GridPane maxHeight="80.0" prefHeight="0.0" prefWidth="240.0">
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                      </GridPane>
+                      <GridPane fx:id="forwardOrReplyGridPane" alignment="CENTER" maxHeight="100.0" minHeight="0.0" minWidth="0.0" prefHeight="40.0" prefWidth="240.0">
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints maxHeight="9.333329105377196" minHeight="6.133337402343749" percentHeight="31.0" prefHeight="9.333329105377196" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="9.333329105377196" minHeight="10.0" percentHeight="69.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                          <children>
+                        <Label fx:id="sender" prefHeight="0.0" prefWidth="238.0" text="Label ">
+                           <font>
+                              <Font name="Bell MT Bold" size="13.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                              <VBox fx:id="vboxForwardOrReply" alignment="CENTER_LEFT" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: Red; -fx-background-radius: 4;" GridPane.rowIndex="1">
+                                  <children>
+                                      <Label fx:id="forwardOrReplyLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#forwardOrReplyClicked" prefHeight="0.0" prefWidth="238.0" text="Label">
+                                          <font>
+                                              <Font size="9.0" />
+                                          </font>
+                                          <padding>
+                                              <Insets bottom="1.0" left="10.0" />
+                                          </padding>
+                                          <cursor>
+                                              <Cursor fx:constant="HAND" />
+                                          </cursor>
+                                      </Label>
+                                  </children>
+                                  <opaqueInsets>
+                                      <Insets />
+                                  </opaqueInsets>
+                              </VBox>
+                          </children>
+                      </GridPane>
+                  </children>
+              </GridPane>
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Circle fx:id="image" fill="DODGERBLUE" radius="28.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+         </children>
+      </GridPane>
+    </children>
+</GridPane>

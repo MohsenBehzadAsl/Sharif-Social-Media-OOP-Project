@@ -198,7 +198,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <children>
-                        <Button fx:id="banGroupButton" mnemonicParsing="false" onMouseClicked="#banGroupClicked" prefHeight="46.0" prefWidth="121.0" style="-fx-background-color: Red; -fx-background-radius: 50;" text="Ban Group">
+                        <Button fx:id="banGroupButton" mnemonicParsing="false" onMouseClicked="#banGroupClicked" prefHeight="46.0" prefWidth="178.0" style="-fx-background-color: Red; -fx-background-radius: 50;" text="Ban Group">
                            <font>
                               <Font name="Bell MT Bold" size="17.0" />
                            </font>
@@ -242,12 +242,12 @@
             </Label>
             <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                <content>
-                  <VBox fx:id="MembersVbox" prefHeight="460.0" prefWidth="291.0" spacing="7.0" style="-fx-background-color: #013dc4;" />
+                  <VBox fx:id="MembersVbox" alignment="TOP_CENTER" prefHeight="460.0" prefWidth="291.0" spacing="7.0" style="-fx-background-color: #013dc4;" />
                </content>
             </ScrollPane>
             <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <content>
-                  <VBox fx:id="followersAddMember" prefHeight="468.0" prefWidth="291.0" spacing="7.0" style="-fx-background-color: #01aaa1;" />
+                  <VBox fx:id="followersAddMember" alignment="TOP_CENTER" prefHeight="468.0" prefWidth="291.0" spacing="7.0" style="-fx-background-color: #01aaa1;" />
                </content>
             </ScrollPane>
          </children>

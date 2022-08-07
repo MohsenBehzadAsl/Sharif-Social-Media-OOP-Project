@@ -87,7 +87,7 @@ public class GroupPageController {
     @FXML
     private GridPane searchInPvGridPane;
     @FXML
-    private TextField searchInPvTextField;
+    private TextField searchInGroupTextField;
     @FXML
     private Label searchIndex;
     @FXML
@@ -325,32 +325,32 @@ public class GroupPageController {
         indexOfSearch=0;
         searchIndex.setText("(0)");
         System.out.println(findMessages.size());
-        if(searchInPvTextField.getText().isEmpty()){
-            searchInPvTextField.setStyle("-fx-background-color: red");
-            searchInPvTextField.setText("");
-            searchInPvTextField.setPromptText("it's empty :[");
+        if(searchInGroupTextField.getText().isEmpty()){
+            searchInGroupTextField.setStyle("-fx-background-color: red");
+            searchInGroupTextField.setText("");
+            searchInGroupTextField.setPromptText("it's empty :[");
             searchTotalFind.setText("(0)");
             searchIndex.setText("(0)");
             totalFindSearch=0;
         }else {
-            searchInPvTextField.setStyle("-fx-background-color: white");
+            searchInGroupTextField.setStyle("-fx-background-color: white");
             ArrayList<Message> messageFind=new ArrayList<>();
             for (int i = group.getMessages().size()-1; i>=0;i--){
-                if (Controller.find(group.getMessages().get(i).getContent(),searchInPvTextField.getText())){
+                if (Controller.find(group.getMessages().get(i).getContent(),searchInGroupTextField.getText())){
                     messageFind.add(group.getMessages().get(i));
                     findMessages.add(group.getMessages().size()-1-i);
                 }
             }
             if (messageFind.size()==0){
                 System.out.println(":(((");
-                searchInPvTextField.setStyle("-fx-background-color: red");
-                searchInPvTextField.setText("");
-                searchInPvTextField.setPromptText("not Found :[");
+                searchInGroupTextField.setStyle("-fx-background-color: red");
+                searchInGroupTextField.setText("");
+                searchInGroupTextField.setPromptText("not Found :[");
                 searchTotalFind.setText("(0)");
                 searchIndex.setText("(0)");
                 totalFindSearch=0;
             }else {
-                searchInPvTextField.setStyle("-fx-background-color: Green");
+                searchInGroupTextField.setStyle("-fx-background-color: Green");
                 settingSearchInGroup(messageFind);
             }
         }
@@ -375,8 +375,8 @@ public class GroupPageController {
             searchIndex.setText("(0)");
             searchTotalFind.setText("(0)");
             findMessages.clear();
-            searchInPvTextField.setText("");
-            searchInPvTextField.setStyle("-fx-background-color: White");
+            searchInGroupTextField.setText("");
+            searchInGroupTextField.setStyle("-fx-background-color: White");
             searchInPvGridPane.setDisable(true);
             RotateTransition rotateTransition=new RotateTransition();
             rotateTransition.setNode(zarebbin);
@@ -422,7 +422,9 @@ public class GroupPageController {
     }
     public void showGroup (Group group) throws SQLException, ClassNotFoundException, IOException {
         this.group=group;
-        newGroup(null);
+        totalGrid.getColumnConstraints().get(1).setPercentWidth(70);
+        totalGrid.getColumnConstraints().get(2).setPercentWidth(0);
+        totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
         groupName.setText(group.getName());
         groupPhoto.setFill(new ImagePattern(new Image(group.getPhoto())));
         groupMembersNumber.setText("Num:"+group.getMembers().size());
@@ -570,5 +572,12 @@ public class GroupPageController {
         totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
         helpColumn.getChildren().clear();
         showGroup(group);
+    }
+
+    public void closeInfo() throws SQLException, IOException, ClassNotFoundException {
+        totalGrid.getColumnConstraints().get(2).setPercentWidth(0);
+        totalGrid.getColumnConstraints().get(1).setPercentWidth(70);
+        showGroup(group);
+        helpColumn.setVisible(false);
     }
 }

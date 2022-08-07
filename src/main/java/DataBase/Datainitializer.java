@@ -317,6 +317,7 @@ public class Datainitializer {
         }
         while (resultSet6.next()){
             Pv pv=new Pv();
+            Pv.setIndex(Pv.getIndex()+1);
             User user1=new User();
             User user2=new User();
             User user3=new User();
@@ -347,9 +348,11 @@ public class Datainitializer {
                     for (User dataBaseUser : dataBase.getUsers()) {
                         if(dataBaseUser.getId().equals(user2.getId())){
                             user.getLinkedPvs().put(pv,dataBaseUser);
-                            dataBaseUser.getLinkedPvs().put(pv,user);
                             user.getPvs().add(pv);
-                            dataBaseUser.getPvs().add(pv);
+                            if(!user.equals(dataBaseUser)) {
+                                dataBaseUser.getLinkedPvs().put(pv, user);
+                                dataBaseUser.getPvs().add(pv);
+                            }
                         }
                     }
 
@@ -447,6 +450,7 @@ public class Datainitializer {
             User user=new User();
             User user2=new User();
             Message message=new Message();
+            Message.setIndex(Message.getIndex()+1);
             DataBase dataBase=new DataBase();
             user.setId(resultSet9.getString("senderId"));
             for (User dataBaseUser : dataBase.getUsers()) {
@@ -480,7 +484,6 @@ public class Datainitializer {
                 }
                 else {
                     message.setReply(false);
-                    //bayad reply boolean v reply id as in message delete she
                 }
             }
             if(message.getIsPvOrGroup().equals("pv")){

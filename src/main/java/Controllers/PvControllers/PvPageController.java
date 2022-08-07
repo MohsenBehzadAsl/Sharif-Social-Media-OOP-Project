@@ -31,6 +31,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.Callable;
+import DataBase.UpdateSqlTable;
 
 public class PvPageController {
 
@@ -294,10 +295,15 @@ public class PvPageController {
         if (!edit && !reply) {
             if (!messageTextArea.getText().isEmpty()) {
                 Message message = new Message(Controller.user, "Text", messageTextArea.getText(), false, false, false);
+                message.setIsPvOrGroup("pv",pv.getPvId());
                 pv.addMessage(message);
                 addMyMessage(message);
                 messageTextArea.setText("");
+                message.addMessageToTable(Controller.user,message.getFormat(),message.getContent(),Controller.user.getGender(),message.getLocalDateTime(),message.getForward(),
+                message.getForwardFrom(),message.getEdited(),message.getReply(),message.getIsMessage(),message.getReplyOfMessageId(),message.getMessageId(),
+                        message.getIsPvOrGroup(),message.getPvOrGroupId());
             }
+
             updatePvs();
         }else if (edit){
             if (!messageTextArea.getText().isEmpty()) {
@@ -307,16 +313,21 @@ public class PvPageController {
                 editMessageTextArea.setText(messageTextArea.getText());
                 messageTextArea.setText("");
                 closeEditReply(null);
+                UpdateSqlTable.editMessage(editMessage);
                 showMessageOfPv(pv);
             }
         }else if (reply){
             if (!messageTextArea.getText().isEmpty()) {
                 Message message = new Message(Controller.user, "Text", messageTextArea.getText(), false, false, true);
+                message.setIsPvOrGroup("pv",pv.getPvId());
                 message.setReplyMessage(replyMessage);
                 pv.addMessage(message);
                 addMyMessage(message);
                 messageTextArea.setText("");
                 closeEditReply(null);
+                message.addMessageToTable(Controller.user,message.getFormat(),message.getContent(),Controller.user.getGender(),message.getLocalDateTime(),message.getForward(),
+                        message.getForwardFrom(),message.getEdited(),message.getReply(),message.getIsMessage(),message.getReplyOfMessageId(),message.getMessageId(),
+                        message.getIsPvOrGroup(),message.getPvOrGroupId());
             }
         }
         Controller.user.getReadMessagePv().set(Controller.user.getPvs().indexOf(pv),pv.getMessages().size());
@@ -341,7 +352,12 @@ public class PvPageController {
         }else {
             searchInPvTextField.setStyle("-fx-background-color: white");
             ArrayList<Message> messageFind=new ArrayList<>();
+            System.out.println("****");
+            System.out.println(pv.getMessages().size());
+            System.out.println("****");
             for (int i = pv.getMessages().size()-1; i>=0;i--){
+                System.out.println(pv.getMessages().get(i).getContent());
+                System.out.println("___");
                 if (Controller.find(pv.getMessages().get(i).getContent(),searchInPvTextField.getText())){
                     messageFind.add(pv.getMessages().get(i));
                     findMessages.add(pv.getMessages().size()-1-i);
@@ -406,11 +422,7 @@ public class PvPageController {
         User user=Controller.user;
         ArrayList<Pv> pvs=new ArrayList<>();
         for (int i=0;i<user.getPvs().size();i++){
-            if(user.getPvs().get(i).getMessages().size()==0){
-                user.getPvs().get(i).getUser1().removePv(user.getPvs().get(i));
-            }else {
-                pvs.add(user.getPvs().get(i));
-            }
+            pvs.add(user.getPvs().get(i));
         }
         Collections.sort(pvs, new Comparator<Pv>() {
             @Override

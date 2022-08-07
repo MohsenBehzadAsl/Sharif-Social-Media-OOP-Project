@@ -55,7 +55,8 @@ public class GroupInfoController {
     @FXML
     void back(MouseEvent event) throws SQLException, IOException, ClassNotFoundException {
         updateInfoOfGroup();
-        groupPageController.beckFromSetting();
+        groupPageController.closeInfo();
+
     }
 
     private void updateInfoOfGroup() {
@@ -66,20 +67,22 @@ public class GroupInfoController {
 
     @FXML
     void banGroupClicked(MouseEvent event) throws SQLException, ClassNotFoundException {
-        if (group.getBanGroup()){
-            String style="";
-            style+="-fx-background-color: Red;";
-            style+="-fx-background-radius: 50;";
-            banGroupButton.setStyle(style);
-            banGroupButton.setText("UnBan Group");
-            group.setBanGroup(false);
-        }else {
-            String style="";
-            style+="-fx-background-color: Green;";
-            style+="-fx-background-radius: 50;";
-            banGroupButton.setStyle(style);
-            banGroupButton.setText("Ban Group");
-            group.setBanGroup(true);
+        if(Controller.user==group.getOwner()) {
+            if (group.getBanGroup()) {
+                String style = "";
+                style += "-fx-background-color: Green;";
+                style += "-fx-background-radius: 50;";
+                banGroupButton.setStyle(style);
+                banGroupButton.setText("UnBan Group");
+                group.setBanGroup(false);
+            } else {
+                String style = "";
+                style += "-fx-background-color: Red;";
+                style += "-fx-background-radius: 50;";
+                banGroupButton.setStyle(style);
+                banGroupButton.setText("Ban Group");
+                group.setBanGroup(true);
+            }
         }
     }
 
@@ -100,15 +103,15 @@ public class GroupInfoController {
     }
 
     public void setFirst() throws IOException {
-        if (group.getBanGroup()){
+        if (!group.getBanGroup()){
             String style="";
-            style+="-fx-background-color: Red;";
+            style+="-fx-background-color: Green;";
             style+="-fx-background-radius: 50;";
             banGroupButton.setStyle(style);
             banGroupButton.setText("UnBan Group");
         }else {
             String style="";
-            style+="-fx-background-color: Green;";
+            style+="-fx-background-color: Red;";
             style+="-fx-background-radius: 50;";
             banGroupButton.setStyle(style);
             banGroupButton.setText("Ban Group");
@@ -120,25 +123,32 @@ public class GroupInfoController {
         owner.setText(group.getOwner().getUserName());
         nMembers.setText(nMembers.getText()+" "+group.getMembers().size());
         nMessages.setText(nMessages.getText()+" "+group.getMessages().size());
-        if (!group.getAdmins().contains(Controller.user)){
+        if (!group.getAdmins().contains(Controller.user)&&group.getOwner()!=Controller.user){
             idTextField.setEditable(false);
             nameTextField.setEditable(false);
             bioTextArea.setEditable(false);
             changePhoto.setVisible(false);
         }
+        idTextField.setText(group.getGroupId());
+        nameTextField.setText(group.getName());
+        bioTextArea.setText(group.getBio());
     }
     public void updateFollowers() throws IOException {
-        followersAddMember.getChildren().clear();
-        followersAddMember.getChildren().removeAll();
-        for (int i=0;i<group.getMembers().size();i++){
-            FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/MemberIcon.fxml"));
-            Parent parent=fxmlLoader.load();
-            followersAddMember.getChildren().add(parent);
-            MemberIconController memberIconController=fxmlLoader.getController();
-            memberIconController.member=group.getMembers().get(i);
-            memberIconController.group=group;
-            memberIconController.groupInfoController=this;
-            memberIconController.setFirst();
+        if (Controller.user==group.getOwner()||group.getAdmins().contains(Controller.user)) {
+            followersAddMember.getChildren().clear();
+            followersAddMember.getChildren().removeAll();
+            for (int i = 0; i < Controller.user.getFollowers().size(); i++) {
+                if ((!group.getMembers().contains(Controller.user.getFollowers().get(i))) && (Controller.user.getFollowers().get(i).getAddToGroupAbility())) {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/FollowerIconInAddMember.fxml"));
+                    Parent parent = fxmlLoader.load();
+                    followersAddMember.getChildren().add(parent);
+                    FollowerIconInAddMemberController followerIconInAddMemberController = fxmlLoader.getController();
+                    followerIconInAddMemberController.user = Controller.user.getFollowers().get(i);
+                    followerIconInAddMemberController.members = group.getMembers();
+                    followerIconInAddMemberController.groupInfoController = this;
+                    followerIconInAddMemberController.setFirst(Controller.user.getFollowers().get(i));
+                }
+            }
         }
     }
     public void updateMembers() throws IOException {
@@ -152,6 +162,7 @@ public class GroupInfoController {
             memberIconController.backParent=groupPageController.nowParent;
             memberIconController.member=group.getMembers().get(i);
             memberIconController.group=group;
+            memberIconController.groupInfoController=this;
             memberIconController.setFirst();
         }
     }
