@@ -1,4 +1,4 @@
-package Controllers;
+package Controllers.SettingControllers;
 
 import View.Controller;
 import javafx.css.CssParser;

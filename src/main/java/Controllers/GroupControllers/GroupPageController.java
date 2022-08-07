@@ -87,7 +87,7 @@ public class GroupPageController {
     @FXML
     private GridPane searchInPvGridPane;
     @FXML
-    private TextField searchInPvTextField;
+    private TextField searchInGroupTextField;
     @FXML
     private Label searchIndex;
     @FXML
@@ -106,6 +106,11 @@ public class GroupPageController {
 
     @FXML
     public void initialize() throws IOException {
+        if (Controller.stage.getWidth()<990){
+            totalGrid.getColumnConstraints().get(0).setPercentWidth(100);
+            totalGrid.getColumnConstraints().get(1).setPercentWidth(0);
+            totalGrid.getColumnConstraints().get(2).setPercentWidth(0);
+        }
         helpColumn.setVisible(false);
         totalGrid.getColumnConstraints().get(2).setPercentWidth(0);
         rightGridPain.getRowConstraints().get(2).setPercentHeight(0);
@@ -118,13 +123,17 @@ public class GroupPageController {
                     if (selectGroup) {
                         totalGrid.getColumnConstraints().get(0).setPercentWidth(0);
                         totalGrid.getColumnConstraints().get(1).setPercentWidth(100);
+                        leftGridPane.setVisible(false);
                     } else {
                         totalGrid.getColumnConstraints().get(0).setPercentWidth(100);
                         totalGrid.getColumnConstraints().get(1).setPercentWidth(0);
+                        leftGridPane.setVisible(true);
                     }
                 } else if (!selectGroup) {
                     totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
                     totalGrid.getColumnConstraints().get(1).setPercentWidth(70);
+                    leftGridPane.setVisible(true);
+
                 }
             }
         });
@@ -280,6 +289,8 @@ public class GroupPageController {
         Parent parent=fxmlLoader.load();
         MyMessageBoxController myMessageBoxController=fxmlLoader.getController();
         myMessageBoxController.groupPageController=this;
+        myMessageBoxController.nowParent=nowParent;
+        myMessageBoxController.isInPv=false;
         myMessageBoxController.set(message);
         addToReverseVbox(parent);
         myMessageBoxController.handleResizing();
@@ -313,6 +324,7 @@ public class GroupPageController {
         AnotherMessageBoxInGroupController anotherMessageBoxInGroupController=fxmlLoader.getController();
         anotherMessageBoxInGroupController.groupPageController=this;
         anotherMessageBoxInGroupController.set(message);
+        anotherMessageBoxInGroupController.nowParent=nowParent;
         addToReverseVbox(parent);
         anotherMessageBoxInGroupController.handleResizing();
     }
@@ -325,32 +337,32 @@ public class GroupPageController {
         indexOfSearch=0;
         searchIndex.setText("(0)");
         System.out.println(findMessages.size());
-        if(searchInPvTextField.getText().isEmpty()){
-            searchInPvTextField.setStyle("-fx-background-color: red");
-            searchInPvTextField.setText("");
-            searchInPvTextField.setPromptText("it's empty :[");
+        if(searchInGroupTextField.getText().isEmpty()){
+            searchInGroupTextField.setStyle("-fx-background-color: red");
+            searchInGroupTextField.setText("");
+            searchInGroupTextField.setPromptText("it's empty :[");
             searchTotalFind.setText("(0)");
             searchIndex.setText("(0)");
             totalFindSearch=0;
         }else {
-            searchInPvTextField.setStyle("-fx-background-color: white");
+            searchInGroupTextField.setStyle("-fx-background-color: white");
             ArrayList<Message> messageFind=new ArrayList<>();
             for (int i = group.getMessages().size()-1; i>=0;i--){
-                if (Controller.find(group.getMessages().get(i).getContent(),searchInPvTextField.getText())){
+                if (Controller.find(group.getMessages().get(i).getContent(),searchInGroupTextField.getText())){
                     messageFind.add(group.getMessages().get(i));
                     findMessages.add(group.getMessages().size()-1-i);
                 }
             }
             if (messageFind.size()==0){
                 System.out.println(":(((");
-                searchInPvTextField.setStyle("-fx-background-color: red");
-                searchInPvTextField.setText("");
-                searchInPvTextField.setPromptText("not Found :[");
+                searchInGroupTextField.setStyle("-fx-background-color: red");
+                searchInGroupTextField.setText("");
+                searchInGroupTextField.setPromptText("not Found :[");
                 searchTotalFind.setText("(0)");
                 searchIndex.setText("(0)");
                 totalFindSearch=0;
             }else {
-                searchInPvTextField.setStyle("-fx-background-color: Green");
+                searchInGroupTextField.setStyle("-fx-background-color: Green");
                 settingSearchInGroup(messageFind);
             }
         }
@@ -375,8 +387,8 @@ public class GroupPageController {
             searchIndex.setText("(0)");
             searchTotalFind.setText("(0)");
             findMessages.clear();
-            searchInPvTextField.setText("");
-            searchInPvTextField.setStyle("-fx-background-color: White");
+            searchInGroupTextField.setText("");
+            searchInGroupTextField.setStyle("-fx-background-color: White");
             searchInPvGridPane.setDisable(true);
             RotateTransition rotateTransition=new RotateTransition();
             rotateTransition.setNode(zarebbin);
@@ -422,7 +434,19 @@ public class GroupPageController {
     }
     public void showGroup (Group group) throws SQLException, ClassNotFoundException, IOException {
         this.group=group;
-        newGroup(null);
+        if (Controller.stage.getWidth() < 990){
+            totalGrid.getColumnConstraints().get(1).setPercentWidth(100);
+            totalGrid.getColumnConstraints().get(2).setPercentWidth(0);
+            totalGrid.getColumnConstraints().get(0).setPercentWidth(0);
+            leftGridPane.setVisible(false);
+            helpColumn.setVisible(false);
+        }else {
+            totalGrid.getColumnConstraints().get(1).setPercentWidth(70);
+            totalGrid.getColumnConstraints().get(2).setPercentWidth(0);
+            totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
+            leftGridPane.setVisible(true);
+            helpColumn.setVisible(false);
+        }
         groupName.setText(group.getName());
         groupPhoto.setFill(new ImagePattern(new Image(group.getPhoto())));
         groupMembersNumber.setText("Num:"+group.getMembers().size());
@@ -528,12 +552,15 @@ public class GroupPageController {
             totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
             FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/MakeNewGroup.fxml"));
             Parent parent=fxmlLoader.load();
+            helpColumn.getChildren().clear();
             helpColumn.getChildren().add(parent);
+            rightGridPain.setVisible(false);
             MakeNewGroupController makeNewGroupController=fxmlLoader.getController();
             makeNewGroupController.groupPageController=this;
             makeNewGroupController.start();
         }else {
             helpColumn.setVisible(false);
+            rightGridPain.setVisible(true);
             totalGrid.getColumnConstraints().get(1).setPercentWidth(70);
             totalGrid.getColumnConstraints().get(2).setPercentWidth(0);
             totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
@@ -570,5 +597,12 @@ public class GroupPageController {
         totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
         helpColumn.getChildren().clear();
         showGroup(group);
+    }
+
+    public void closeInfo() throws SQLException, IOException, ClassNotFoundException {
+        totalGrid.getColumnConstraints().get(2).setPercentWidth(0);
+        totalGrid.getColumnConstraints().get(1).setPercentWidth(70);
+        showGroup(group);
+        helpColumn.setVisible(false);
     }
 }

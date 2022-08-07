@@ -1,4 +1,4 @@
-package Controllers;
+package Controllers.AnalysePageControllers;
 
 import Controllers.OtherUserPageControllers.ShowAnotherUserPageController;
 import View.Controller;

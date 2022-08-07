@@ -31,10 +31,11 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.Callable;
+import DataBase.UpdateSqlTable;
 
 public class PvPageController {
 
-    public Boolean selectPv=true;
+    public Boolean selectPv=false;
     public Pv pv;
     public int indexOfSearch=0;
     public int totalFindSearch=0;
@@ -105,6 +106,10 @@ public class PvPageController {
 
     @FXML
     public void initialize() throws IOException {
+        if (Controller.stage.getWidth()<990){
+            totalGrid.getColumnConstraints().get(0).setPercentWidth(100);
+            totalGrid.getColumnConstraints().get(1).setPercentWidth(0);
+        }
         rightGridPain.getRowConstraints().get(2).setPercentHeight(0);
         editReplyGridPane.setVisible(false);
         searchInPvGridPane.setDisable(true);
@@ -128,13 +133,14 @@ public class PvPageController {
                 if (selectPv) {
                     totalGrid.getColumnConstraints().get(0).setPercentWidth(0);
                     totalGrid.getColumnConstraints().get(1).setPercentWidth(100);
+                    leftGridPane.setVisible(false);
+                    rightGridPain.setVisible(true);
                 }else {
                     totalGrid.getColumnConstraints().get(0).setPercentWidth(100);
                     totalGrid.getColumnConstraints().get(1).setPercentWidth(0);
+                    leftGridPane.setVisible(true);
+                    rightGridPain.setVisible(false);
                 }
-            }else if (!selectPv){
-                totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
-                totalGrid.getColumnConstraints().get(1).setPercentWidth(70);
             }
         });
 
@@ -294,10 +300,15 @@ public class PvPageController {
         if (!edit && !reply) {
             if (!messageTextArea.getText().isEmpty()) {
                 Message message = new Message(Controller.user, "Text", messageTextArea.getText(), false, false, false);
+                message.setIsPvOrGroup("pv",pv.getPvId());
                 pv.addMessage(message);
                 addMyMessage(message);
                 messageTextArea.setText("");
+                message.addMessageToTable(Controller.user,message.getFormat(),message.getContent(),Controller.user.getGender(),message.getLocalDateTime(),message.getForward(),
+                message.getForwardFrom(),message.getEdited(),message.getReply(),message.getIsMessage(),message.getReplyOfMessageId(),message.getMessageId(),
+                        message.getIsPvOrGroup(),message.getPvOrGroupId());
             }
+
             updatePvs();
         }else if (edit){
             if (!messageTextArea.getText().isEmpty()) {
@@ -307,19 +318,25 @@ public class PvPageController {
                 editMessageTextArea.setText(messageTextArea.getText());
                 messageTextArea.setText("");
                 closeEditReply(null);
+                UpdateSqlTable.editMessage(editMessage);
                 showMessageOfPv(pv);
             }
         }else if (reply){
             if (!messageTextArea.getText().isEmpty()) {
                 Message message = new Message(Controller.user, "Text", messageTextArea.getText(), false, false, true);
+                message.setIsPvOrGroup("pv",pv.getPvId());
                 message.setReplyMessage(replyMessage);
                 pv.addMessage(message);
                 addMyMessage(message);
                 messageTextArea.setText("");
                 closeEditReply(null);
+                message.addMessageToTable(Controller.user,message.getFormat(),message.getContent(),Controller.user.getGender(),message.getLocalDateTime(),message.getForward(),
+                        message.getForwardFrom(),message.getEdited(),message.getReply(),message.getIsMessage(),message.getReplyOfMessageId(),message.getMessageId(),
+                        message.getIsPvOrGroup(),message.getPvOrGroupId());
             }
         }
         Controller.user.getReadMessagePv().set(Controller.user.getPvs().indexOf(pv),pv.getMessages().size());
+        UpdateSqlTable.setReadMessagePv(pv,Controller.user);
         updatePvs();
     }
     @FXML
@@ -341,7 +358,12 @@ public class PvPageController {
         }else {
             searchInPvTextField.setStyle("-fx-background-color: white");
             ArrayList<Message> messageFind=new ArrayList<>();
+            System.out.println("****");
+            System.out.println(pv.getMessages().size());
+            System.out.println("****");
             for (int i = pv.getMessages().size()-1; i>=0;i--){
+                System.out.println(pv.getMessages().get(i).getContent());
+                System.out.println("___");
                 if (Controller.find(pv.getMessages().get(i).getContent(),searchInPvTextField.getText())){
                     messageFind.add(pv.getMessages().get(i));
                     findMessages.add(pv.getMessages().size()-1-i);
@@ -406,11 +428,7 @@ public class PvPageController {
         User user=Controller.user;
         ArrayList<Pv> pvs=new ArrayList<>();
         for (int i=0;i<user.getPvs().size();i++){
-            if(user.getPvs().get(i).getMessages().size()==0){
-                user.getPvs().get(i).getUser1().removePv(user.getPvs().get(i));
-            }else {
-                pvs.add(user.getPvs().get(i));
-            }
+            pvs.add(user.getPvs().get(i));
         }
         Collections.sort(pvs, new Comparator<Pv>() {
             @Override
@@ -439,10 +457,18 @@ public class PvPageController {
         pvsVbox.getChildren().add(pv);
     }
     public void showPv(User userWithId) throws SQLException, ClassNotFoundException, IOException {
-
+        if (Controller.stage.getWidth() < 990){
+            totalGrid.getColumnConstraints().get(1).setPercentWidth(100);
+            totalGrid.getColumnConstraints().get(0).setPercentWidth(0);
+            leftGridPane.setVisible(false);
+        }else {
+            totalGrid.getColumnConstraints().get(1).setPercentWidth(70);
+            totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
+        }
         if (Controller.user.getPv(userWithId)==null){
             Controller.user.addPv(userWithId);
         }
+        selectPv=true;
         Pv pv=Controller.user.getPv(userWithId);
         this.pv=pv;
         if (pv.getBlock()) {
@@ -495,6 +521,7 @@ public class PvPageController {
         Parent parent=fxmlLoader.load();
         MyMessageBoxController myMessageBoxController=fxmlLoader.getController();
         myMessageBoxController.pvPageController=this;
+        myMessageBoxController.nowParent=nowParent;
         myMessageBoxController.set(message);
         addToReverseVbox(parent);
         myMessageBoxController.handleResizing();
@@ -508,6 +535,7 @@ public class PvPageController {
         Parent parent=fxmlLoader.load();
         AnotherMessageController anotherMessageController=fxmlLoader.getController();
         anotherMessageController.pvPageController=this;
+        anotherMessageController.nowParent=nowParent;
         anotherMessageController.set(message);
         addToReverseVbox(parent);
         anotherMessageController.handleResizing();
@@ -557,7 +585,7 @@ public class PvPageController {
         messageScrollPane.setVvalue(reverseVboxForSendMessage.getChildren().get(findMessages.get(indexOfSearch-1)).getLayoutY()/reverseVboxForSendMessage.getHeight());
         reverseVboxForSendMessage.getChildren().get(findMessages.get(indexOfSearch-1)).setStyle("-fx-border-color: Gold");
     }
-    public void newMessageOrDown(MouseEvent mouseEvent) throws IOException {
+    public void newMessageOrDown(MouseEvent mouseEvent) throws IOException, SQLException, ClassNotFoundException {
         if (arrow.getRotate()==180 && reverseVboxForSendMessage.getChildren().size()>0) {
             RotateTransition rotateTransition=new RotateTransition();
             rotateTransition.setToAngle(0);
@@ -570,6 +598,7 @@ public class PvPageController {
                 messageScrollPane.setVvalue(reverseVboxForSendMessage.getChildren().get(pv.getMessages().size() - Controller.user.getReadMessagePv().get(Controller.user.getPvs().indexOf(pv)) - 1).getLayoutY() / reverseVboxForSendMessage.getHeight());
             }
             Controller.user.getReadMessagePv().set(Controller.user.getPvs().indexOf(pv),pv.getMessages().size());
+            UpdateSqlTable.setReadMessagePv(pv,Controller.user);
         }else {
             messageScrollPane.setVvalue(0);
         }

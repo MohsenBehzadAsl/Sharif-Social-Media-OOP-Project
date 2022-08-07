@@ -1,6 +1,6 @@
 package Controllers;
 
-import Controllers.OtherUserPageControllers.UserIconInFollowingFollowerPageController;
+import Controllers.PostControllers.PostController;
 import DataBase.DataBase;
 import Manager.UserRecommender;
 import View.Controller;
@@ -21,7 +21,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;

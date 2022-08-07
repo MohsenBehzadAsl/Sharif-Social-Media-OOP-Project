@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import DataBase.UpdateSqlTable;
 
 public class User {
 
@@ -283,7 +284,7 @@ public class User {
         );
         preparedStatement.setString(1,this.getId());
         preparedStatement.setString(2, group.getGroupId());
-        preparedStatement.setString(3, String.valueOf(this.readMessageGroup.get(this.getReadMessagePv().size())-1));
+        preparedStatement.setString(3, String.valueOf(this.readMessageGroup.get(this.getGroups().indexOf(group))));
         preparedStatement.executeUpdate();
     }
 
@@ -325,7 +326,7 @@ public class User {
         this.groups.remove(group);
     }
 
-    public void removePv(Pv pv) {
+    public void removePv(Pv pv) throws SQLException, ClassNotFoundException {
         User user2=pv.getUser2();
         if (user2.getPvs().contains(pv)) {
             user2.getPvs().remove(pv);
@@ -336,6 +337,8 @@ public class User {
             user1.getPvs().remove(pv);
             user1.getLinkedPvs().remove(pv);
         }
+        UpdateSqlTable.deletePv(pv);
+        UpdateSqlTable.readMessageDeletePv(pv);
     }
     public static void addFollowerAndFollowingToTable(User user,User user1) throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");

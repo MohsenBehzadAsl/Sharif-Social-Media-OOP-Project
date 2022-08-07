@@ -14,21 +14,18 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class FollowerMakeNewGroupController {
-
-
+public class FollowerIconInAddMemberController {
     public Parent backParent;
     public User user;
     public boolean select=false;
     public ArrayList<User> members=new ArrayList<>();
+    GroupInfoController groupInfoController;
 
-    @FXML
-    private Button followButton;
 
     @FXML
     private Label id;
@@ -39,33 +36,8 @@ public class FollowerMakeNewGroupController {
     @FXML
     private Label name;
 
-    @FXML
-    private GridPane total;
 
-    @FXML
-    void follow(MouseEvent event) {
-        if (!select){
-            select=true;
-            members.add(user);
-        }else {
-            members.remove(user);
-            select=false;
-        }
 
-        if (select){
-            String style="";
-            style+="-fx-background-color: Red;";
-            style+="-fx-background-radius: 50;";
-            followButton.setStyle(style);
-            followButton.setText("UnSelect");
-        }else {
-            String style="";
-            style+="-fx-background-color: Green;";
-            style+="-fx-background-radius: 50;";
-            followButton.setStyle(style);
-            followButton.setText("Select");
-        }
-    }
 
     @FXML
     void visitPage(MouseEvent event) throws IOException {
@@ -82,19 +54,15 @@ public class FollowerMakeNewGroupController {
     }
 
     public void setFirst(User user){
-        if (Controller.user==user){
-            followButton.setVisible(false);
-        }
         this.user=user;
-        String style="";
-        style+="-fx-background-color: Green;";
-        style+="-fx-background-radius: 50;";
-        followButton.setStyle(style);
-        followButton.setText("Select");
         id.setText(id.getText()+"@"+user.getId());
         name.setText(user.getUserName());
         image.setFill(new ImagePattern(new Image(user.getPhotoNameFromImageFolder())));
     }
 
-
+    public void addMember(MouseEvent mouseEvent) throws IOException, SQLException, ClassNotFoundException {
+        groupInfoController.group.addMember(user);
+        groupInfoController.updateMembers();
+        groupInfoController.updateFollowers();
+    }
 }

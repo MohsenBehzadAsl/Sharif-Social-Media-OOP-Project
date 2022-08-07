@@ -418,11 +418,12 @@ public class UpdateSqlTable {
                         DataBase.password);
         PreparedStatement preparedStatement =connection.prepareStatement(
                 " UPDATE message " +
-                        "SET content = ?" +
+                        "SET content = ? ,edited = ?" +
                         "WHERE messageId=? "
         );
         preparedStatement.setString(1, message.getContent());
-        preparedStatement.setString(2, message.getMessageId());
+        preparedStatement.setString(3, message.getMessageId());
+        preparedStatement.setString(2,"true");
         preparedStatement.executeUpdate();
     }
 }
