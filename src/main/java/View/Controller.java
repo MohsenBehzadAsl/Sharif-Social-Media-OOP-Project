@@ -1,7 +1,9 @@
 package View;
 
+import Controllers.ForwardPopUpControllers;
 import Controllers.MainPageController;
 import DataBase.DataBase;
+import component.Post;
 import component.User;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -33,33 +35,33 @@ public class Controller {
          scene = new Scene(parent);
          String css=Controller.class.getResource("/CSS/DARK.css").toExternalForm();
          scene.getStylesheets().add(css);
-       // AquaFx.style();
 
+       // AquaFx.style();
         Controller.stage.setScene(scene);
 
 
 
     }
     public static boolean find(String sentence, String key) {
-        if (key.matches("(^\")(.+)(\"$)")) { //exact search
-            key=key.replaceAll("\"","");
-            if (sentence.matches("(.*)" + "(\\s+)" + key + "(\\s+)" + "(.*)") ||
-                    sentence.matches("^" + key + "(\\s+)" + "(.*)") ||
-                    sentence.matches("(.*)" + "(\\s+)" + key + "$") ||
-                    sentence.matches("^"+key+"$")) {
-                return true;
+        String finder[]=sentence.split("\n");
+        for (int i=0;i<finder.length;i++) {
+            if (key.matches("(^\")(.+)(\"$)")) { //exact search
+                key = key.replaceAll("\"", "");
+                if (finder[i].matches("(.*)" + "(\\s+)" + key + "(\\s+)" + "(.*)") ||
+                        sentence.matches("^" + key + "(\\s+)" + "(.*)") ||
+                        sentence.matches("(.*)" + "(\\s+)" + key + "$") ||
+                        sentence.matches("^" + key + "$")) {
+                    return true;
+                }
+                return false;
+            } else {
+                if (finder[i].matches("(.*)" + key + "(.*)")) {
+                    return true;
+                }
             }
-            return false;
-        }else{
-            if (sentence.matches("(.*)"+ key +"(.*)")){
-                return true;
-            }
-            return false;
         }
+        return false;
     }
-
-
-
     public static void changeTextFieldColor(TextField textField, String promptText, String color, Boolean timer,Boolean clicked){
         textField.setStyle("-fx-background-color:"+color);
         textField.setText("");
@@ -86,7 +88,21 @@ public class Controller {
             }, 3000l);
         }
     }
-
-
+    public static void forwardMessageSimple(Post post) throws IOException {
+        FXMLLoader fxmlLoader=new FXMLLoader(Controller.class.getResource("/fxml/ForwardPopUp.fxml"));
+        Parent parent=fxmlLoader.load();
+        ForwardPopUpControllers forwardPopUpControllers=fxmlLoader.getController();
+        forwardPopUpControllers.isPost=true;
+        forwardPopUpControllers.post=post;
+        Scene scene = new Scene(parent, 520, 550);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setX(Controller.stage.getX()+Controller.stage.getWidth()/2-520/2);
+        stage.setY(Controller.stage.getY()+Controller.stage.getHeight()/2-550/2);
+        stage.setResizable(false);
+        forwardPopUpControllers.popUp=stage;
+        forwardPopUpControllers.set();
+        stage.show();
+    }
 
 }

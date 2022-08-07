@@ -1,7 +1,6 @@
 package Controllers.OtherUserPageControllers;
 
-import Controllers.OtherUserPageControllers.FollowerOrFollowingPopUpController;
-import Controllers.PostController;
+import Controllers.PostControllers.PostController;
 import Controllers.PvControllers.PvPageController;
 import Controllers.UserRecommendationController;
 import DataBase.DataBase;
@@ -88,8 +87,6 @@ public class ShowAnotherUserPageController {
         myFollowersLabel.setText(""+user.getFollowers().size());
         myFollowingsLabel.setText(""+user.getFollowings().size());
     }
-
-
     public void showUserRecommendationHelp() throws IOException {
         ArrayList<User> recommendedUsers=new ArrayList<>();
         UserRecommender userRecommender=new UserRecommender();
@@ -116,7 +113,6 @@ public class ShowAnotherUserPageController {
         }
 
     }
-
     @FXML
     void sendMessage(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/PvsPage.fxml"));

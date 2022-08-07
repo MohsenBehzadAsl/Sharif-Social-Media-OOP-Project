@@ -1,4 +1,4 @@
-package Controllers;
+package Controllers.SettingControllers;
 
 import DataBase.UpdateSqlTable;
 import View.Controller;

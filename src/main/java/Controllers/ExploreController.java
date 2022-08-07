@@ -1,5 +1,6 @@
 package Controllers;
 
+import Controllers.PostControllers.PostController;
 import DataBase.DataBase;
 import Manager.AdRecommender;
 import View.Controller;
@@ -15,7 +16,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.text.Font;
 
 import java.io.IOException;
 import java.sql.SQLException;

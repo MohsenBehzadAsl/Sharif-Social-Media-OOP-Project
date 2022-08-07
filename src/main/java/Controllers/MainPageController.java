@@ -1,16 +1,15 @@
 package Controllers;
 
+import Controllers.AnalysePageControllers.AnalyzePageController;
 import Controllers.GroupControllers.GroupPageController;
 import Controllers.PvControllers.PvPageController;
 import View.Controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.ImagePattern;
 
 import java.io.IOException;
 import java.sql.SQLException;

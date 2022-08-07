@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="total" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="892.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.FollowerFollowingPageController">
+<GridPane fx:id="total" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="735.0" prefWidth="892.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.FollowerFollowingPageController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="48.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="4.0" prefWidth="100.0" />
@@ -64,7 +64,7 @@
                               <Image url="@../images/group.png" />
                            </image>
                         </ImageView>
-                        <Label text="Followings" textFill="WHITE">
+                        <Label prefHeight="184.0" prefWidth="342.0" text="Followings" textFill="WHITE">
                            <font>
                               <Font name="Bell MT Bold" size="36.0" />
                            </font>
@@ -178,7 +178,7 @@
                               <Image url="@../images/user.png" />
                            </image>
                         </ImageView>
-                        <Label minHeight="0.0" minWidth="0.0" text="Followers" textFill="WHITE">
+                        <Label minHeight="0.0" minWidth="0.0" prefHeight="219.0" prefWidth="442.0" text="Followers" textFill="WHITE">
                            <font>
                               <Font name="Bell MT Bold" size="36.0" />
                            </font>

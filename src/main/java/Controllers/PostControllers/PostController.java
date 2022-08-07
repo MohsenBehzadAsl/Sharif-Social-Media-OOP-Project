@@ -1,5 +1,6 @@
-package Controllers;
+package Controllers.PostControllers;
 
+import Controllers.MyHomePostPageController;
 import Controllers.OtherUserPageControllers.ShowAnotherUserPageController;
 import DataBase.DataBase;
 import View.Controller;

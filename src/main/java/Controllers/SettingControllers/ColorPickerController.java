@@ -1,4 +1,4 @@
-package Controllers;
+package Controllers.SettingControllers;
 
 public class ColorPickerController {
 }

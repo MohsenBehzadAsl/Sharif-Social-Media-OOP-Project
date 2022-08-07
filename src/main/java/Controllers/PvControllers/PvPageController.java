@@ -35,7 +35,7 @@ import DataBase.UpdateSqlTable;
 
 public class PvPageController {
 
-    public Boolean selectPv=true;
+    public Boolean selectPv=false;
     public Pv pv;
     public int indexOfSearch=0;
     public int totalFindSearch=0;
@@ -106,6 +106,10 @@ public class PvPageController {
 
     @FXML
     public void initialize() throws IOException {
+        if (Controller.stage.getWidth()<990){
+            totalGrid.getColumnConstraints().get(0).setPercentWidth(100);
+            totalGrid.getColumnConstraints().get(1).setPercentWidth(0);
+        }
         rightGridPain.getRowConstraints().get(2).setPercentHeight(0);
         editReplyGridPane.setVisible(false);
         searchInPvGridPane.setDisable(true);
@@ -129,13 +133,14 @@ public class PvPageController {
                 if (selectPv) {
                     totalGrid.getColumnConstraints().get(0).setPercentWidth(0);
                     totalGrid.getColumnConstraints().get(1).setPercentWidth(100);
+                    leftGridPane.setVisible(false);
+                    rightGridPain.setVisible(true);
                 }else {
                     totalGrid.getColumnConstraints().get(0).setPercentWidth(100);
                     totalGrid.getColumnConstraints().get(1).setPercentWidth(0);
+                    leftGridPane.setVisible(true);
+                    rightGridPain.setVisible(false);
                 }
-            }else if (!selectPv){
-                totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
-                totalGrid.getColumnConstraints().get(1).setPercentWidth(70);
             }
         });
 
@@ -331,6 +336,7 @@ public class PvPageController {
             }
         }
         Controller.user.getReadMessagePv().set(Controller.user.getPvs().indexOf(pv),pv.getMessages().size());
+        UpdateSqlTable.setReadMessagePv(pv,Controller.user);
         updatePvs();
     }
     @FXML
@@ -451,10 +457,18 @@ public class PvPageController {
         pvsVbox.getChildren().add(pv);
     }
     public void showPv(User userWithId) throws SQLException, ClassNotFoundException, IOException {
-
+        if (Controller.stage.getWidth() < 990){
+            totalGrid.getColumnConstraints().get(1).setPercentWidth(100);
+            totalGrid.getColumnConstraints().get(0).setPercentWidth(0);
+            leftGridPane.setVisible(false);
+        }else {
+            totalGrid.getColumnConstraints().get(1).setPercentWidth(70);
+            totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
+        }
         if (Controller.user.getPv(userWithId)==null){
             Controller.user.addPv(userWithId);
         }
+        selectPv=true;
         Pv pv=Controller.user.getPv(userWithId);
         this.pv=pv;
         if (pv.getBlock()) {
@@ -507,6 +521,7 @@ public class PvPageController {
         Parent parent=fxmlLoader.load();
         MyMessageBoxController myMessageBoxController=fxmlLoader.getController();
         myMessageBoxController.pvPageController=this;
+        myMessageBoxController.nowParent=nowParent;
         myMessageBoxController.set(message);
         addToReverseVbox(parent);
         myMessageBoxController.handleResizing();
@@ -520,6 +535,7 @@ public class PvPageController {
         Parent parent=fxmlLoader.load();
         AnotherMessageController anotherMessageController=fxmlLoader.getController();
         anotherMessageController.pvPageController=this;
+        anotherMessageController.nowParent=nowParent;
         anotherMessageController.set(message);
         addToReverseVbox(parent);
         anotherMessageController.handleResizing();
@@ -569,7 +585,7 @@ public class PvPageController {
         messageScrollPane.setVvalue(reverseVboxForSendMessage.getChildren().get(findMessages.get(indexOfSearch-1)).getLayoutY()/reverseVboxForSendMessage.getHeight());
         reverseVboxForSendMessage.getChildren().get(findMessages.get(indexOfSearch-1)).setStyle("-fx-border-color: Gold");
     }
-    public void newMessageOrDown(MouseEvent mouseEvent) throws IOException {
+    public void newMessageOrDown(MouseEvent mouseEvent) throws IOException, SQLException, ClassNotFoundException {
         if (arrow.getRotate()==180 && reverseVboxForSendMessage.getChildren().size()>0) {
             RotateTransition rotateTransition=new RotateTransition();
             rotateTransition.setToAngle(0);
@@ -582,6 +598,7 @@ public class PvPageController {
                 messageScrollPane.setVvalue(reverseVboxForSendMessage.getChildren().get(pv.getMessages().size() - Controller.user.getReadMessagePv().get(Controller.user.getPvs().indexOf(pv)) - 1).getLayoutY() / reverseVboxForSendMessage.getHeight());
             }
             Controller.user.getReadMessagePv().set(Controller.user.getPvs().indexOf(pv),pv.getMessages().size());
+            UpdateSqlTable.setReadMessagePv(pv,Controller.user);
         }else {
             messageScrollPane.setVvalue(0);
         }

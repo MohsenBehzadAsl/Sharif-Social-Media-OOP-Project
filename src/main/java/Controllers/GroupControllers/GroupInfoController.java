@@ -56,7 +56,8 @@ public class GroupInfoController {
     void back(MouseEvent event) throws SQLException, IOException, ClassNotFoundException {
         updateInfoOfGroup();
         groupPageController.closeInfo();
-
+        groupPageController.updateGroups();
+        groupPageController.beckFromSetting();
     }
 
     private void updateInfoOfGroup() {

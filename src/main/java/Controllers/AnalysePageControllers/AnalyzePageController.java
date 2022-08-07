@@ -1,6 +1,6 @@
-package Controllers;
+package Controllers.AnalysePageControllers;
 
-import Manager.UserRecommender;
+import Controllers.AnalysePageControllers.ViewUserInAnalyzePageController;
 import View.Controller;
 import component.User;
 import javafx.fxml.FXML;
@@ -12,11 +12,9 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 
 import java.io.IOException;

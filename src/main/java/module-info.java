@@ -16,4 +16,10 @@ module oop_project {
     opens Controllers.OtherUserPageControllers to javafx.fxml;
     exports Controllers.GroupControllers;
     opens Controllers.GroupControllers to javafx.fxml;
+    exports Controllers.SettingControllers;
+    opens Controllers.SettingControllers to javafx.fxml;
+    exports Controllers.AnalysePageControllers;
+    opens Controllers.AnalysePageControllers to javafx.fxml;
+    exports Controllers.PostControllers;
+    opens Controllers.PostControllers to javafx.fxml;
 }

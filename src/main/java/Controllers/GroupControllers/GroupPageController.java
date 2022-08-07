@@ -106,6 +106,11 @@ public class GroupPageController {
 
     @FXML
     public void initialize() throws IOException {
+        if (Controller.stage.getWidth()<990){
+            totalGrid.getColumnConstraints().get(0).setPercentWidth(100);
+            totalGrid.getColumnConstraints().get(1).setPercentWidth(0);
+            totalGrid.getColumnConstraints().get(2).setPercentWidth(0);
+        }
         helpColumn.setVisible(false);
         totalGrid.getColumnConstraints().get(2).setPercentWidth(0);
         rightGridPain.getRowConstraints().get(2).setPercentHeight(0);
@@ -118,13 +123,17 @@ public class GroupPageController {
                     if (selectGroup) {
                         totalGrid.getColumnConstraints().get(0).setPercentWidth(0);
                         totalGrid.getColumnConstraints().get(1).setPercentWidth(100);
+                        leftGridPane.setVisible(false);
                     } else {
                         totalGrid.getColumnConstraints().get(0).setPercentWidth(100);
                         totalGrid.getColumnConstraints().get(1).setPercentWidth(0);
+                        leftGridPane.setVisible(true);
                     }
                 } else if (!selectGroup) {
                     totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
                     totalGrid.getColumnConstraints().get(1).setPercentWidth(70);
+                    leftGridPane.setVisible(true);
+
                 }
             }
         });
@@ -280,6 +289,8 @@ public class GroupPageController {
         Parent parent=fxmlLoader.load();
         MyMessageBoxController myMessageBoxController=fxmlLoader.getController();
         myMessageBoxController.groupPageController=this;
+        myMessageBoxController.nowParent=nowParent;
+        myMessageBoxController.isInPv=false;
         myMessageBoxController.set(message);
         addToReverseVbox(parent);
         myMessageBoxController.handleResizing();
@@ -313,6 +324,7 @@ public class GroupPageController {
         AnotherMessageBoxInGroupController anotherMessageBoxInGroupController=fxmlLoader.getController();
         anotherMessageBoxInGroupController.groupPageController=this;
         anotherMessageBoxInGroupController.set(message);
+        anotherMessageBoxInGroupController.nowParent=nowParent;
         addToReverseVbox(parent);
         anotherMessageBoxInGroupController.handleResizing();
     }
@@ -422,9 +434,19 @@ public class GroupPageController {
     }
     public void showGroup (Group group) throws SQLException, ClassNotFoundException, IOException {
         this.group=group;
-        totalGrid.getColumnConstraints().get(1).setPercentWidth(70);
-        totalGrid.getColumnConstraints().get(2).setPercentWidth(0);
-        totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
+        if (Controller.stage.getWidth() < 990){
+            totalGrid.getColumnConstraints().get(1).setPercentWidth(100);
+            totalGrid.getColumnConstraints().get(2).setPercentWidth(0);
+            totalGrid.getColumnConstraints().get(0).setPercentWidth(0);
+            leftGridPane.setVisible(false);
+            helpColumn.setVisible(false);
+        }else {
+            totalGrid.getColumnConstraints().get(1).setPercentWidth(70);
+            totalGrid.getColumnConstraints().get(2).setPercentWidth(0);
+            totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
+            leftGridPane.setVisible(true);
+            helpColumn.setVisible(false);
+        }
         groupName.setText(group.getName());
         groupPhoto.setFill(new ImagePattern(new Image(group.getPhoto())));
         groupMembersNumber.setText("Num:"+group.getMembers().size());
@@ -530,12 +552,15 @@ public class GroupPageController {
             totalGrid.getColumnConstraints().get(0).setPercentWidth(30);
             FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/MakeNewGroup.fxml"));
             Parent parent=fxmlLoader.load();
+            helpColumn.getChildren().clear();
             helpColumn.getChildren().add(parent);
+            rightGridPain.setVisible(false);
             MakeNewGroupController makeNewGroupController=fxmlLoader.getController();
             makeNewGroupController.groupPageController=this;
             makeNewGroupController.start();
         }else {
             helpColumn.setVisible(false);
+            rightGridPain.setVisible(true);
             totalGrid.getColumnConstraints().get(1).setPercentWidth(70);
             totalGrid.getColumnConstraints().get(2).setPercentWidth(0);
             totalGrid.getColumnConstraints().get(0).setPercentWidth(30);

@@ -1,4 +1,4 @@
-package Controllers;
+package Controllers.PostControllers;
 
 import View.Controller;
 import component.Comment;
