@@ -287,6 +287,7 @@ public class User {
         preparedStatement.setString(3, String.valueOf(this.readMessageGroup.get(this.getGroups().indexOf(group))));
         preparedStatement.executeUpdate();
     }
+
     public ArrayList<Group> getGroups() {
 
         return groups;

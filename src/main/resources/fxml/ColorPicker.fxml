@@ -8,8 +8,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="328.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="328.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ColorPickerController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -35,12 +37,18 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Label text="Label" />
+                        <Label text="BASE">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
                      </children>
                   </HBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                      <children>
-                        <ColorPicker />
+                        <ColorPicker fx:id="myBaseColorPicker" onAction="#changeBase">
+                           <value>
+                              <Color red="0.21568627655506134" green="0.24313725531101227" blue="0.26274511218070984" />
+                           </value></ColorPicker>
                      </children>
                   </VBox>
                </children>
@@ -51,7 +59,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="61.0" prefWidth="328.0">
                <children>
-                  <Button mnemonicParsing="false" text="CHANGE" />
+                  <Button fx:id="myChangeButton" mnemonicParsing="false" onAction="#change" prefHeight="26.0" prefWidth="170.0" text="CHANGE" />
                </children>
             </HBox>
          </children></HBox>
@@ -66,12 +74,18 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="Label" />
+                  <Label text="LABEL">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <ColorPicker />
+                  <ColorPicker fx:id="myLabelColorPicker" onAction="#changeLabel">
+                     <value>
+                        <Color red="0.8274509906768799" green="0.8274509906768799" blue="0.8274509906768799" />
+                     </value></ColorPicker>
                </children>
             </HBox>
          </children>
@@ -87,12 +101,18 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="Label" />
+                  <Label text="TEXT FIELD">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <ColorPicker />
+                  <ColorPicker fx:id="myTextFieldColorPicker" onAction="#changeTextField">
+                     <value>
+                        <Color red="0.501960813999176" green="0.501960813999176" blue="0.501960813999176" />
+                     </value></ColorPicker>
                </children>
             </HBox>
          </children>
@@ -108,12 +128,15 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="Label" />
+                  <Label text="BUTTON">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <ColorPicker />
+                  <ColorPicker fx:id="myButtonColorPicker" onAction="#changeButton" />
                </children>
             </HBox>
          </children>
@@ -129,12 +152,18 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="Label" />
+                  <Label text="ACCENT">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <ColorPicker />
+                  <ColorPicker fx:id="myAccentColorPicker" onAction="#changeAccent">
+                     <value>
+                        <Color red="0.11764705926179886" green="0.45490196347236633" blue="0.7764706015586853" />
+                     </value></ColorPicker>
                </children>
             </HBox>
          </children>

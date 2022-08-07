@@ -57,6 +57,8 @@ public class SettingController implements Initializable {
     @FXML
     private RadioButton mySilverRadioButton;
     @FXML
+    private RadioButton myCustomRadioButton;
+    @FXML
     private RadioButton mySkyRadioButton;
     @FXML
     private RadioButton myDarkRadioButton;
@@ -160,7 +162,7 @@ public class SettingController implements Initializable {
                 myLabel.setText("PROFILE PHOTO CHANGED SUCCESSFULLY");
             }
     }
-    public void getBackground(ActionEvent actionEvent){
+    public void getBackground(ActionEvent actionEvent) throws IOException {
         if(myDarkRadioButton.isSelected()){
             Controller.scene.getStylesheets().clear();
             Controller.scene.getStylesheets().removeAll();
@@ -205,6 +207,19 @@ public class SettingController implements Initializable {
                 Controller.scene.getStylesheets().add(css);
                 Controller.scene.getStylesheets().add(css1);
             }
+        }
+        else if(myCustomRadioButton.isSelected()){
+            FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/ColorPicker.fxml"));
+            Parent parent = fxmlLoader.load();
+            ColorPickerController colorPickerController = fxmlLoader.getController();
+            Scene scene = new Scene(parent, 328, 400);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setX(Controller.stage.getX()+Controller.stage.getWidth()/2-328/2);
+            stage.setY(Controller.stage.getY()+Controller.stage.getHeight()/2-400/2);
+            stage.setResizable(false);
+            stage.show();
+            colorPickerController.stage=stage;
         }
     }
 
@@ -288,16 +303,13 @@ public class SettingController implements Initializable {
                 Controller.scene.getStylesheets().removeAll();
 
                 String css1=Controller.class.getResource("/CSS/SILVER.css").toExternalForm();
-              Controller.  scene.getStylesheets().add(css);
+                Controller.  scene.getStylesheets().add(css);
                 Controller.scene.getStylesheets().add(css1);
             }
         }
         else if(myChangeBackgroundChoiceBox.getValue().equals("DARK")){
-
             String css=Controller.class.getResource("/CSS/DARK.css").toExternalForm();
-
             if(myChangeItemChoiceBox.getValue()==null){
-
             }
             else if(!(myChangeItemChoiceBox.getValue().equals("SILVER"))){
                 Controller.scene.getStylesheets().clear();
@@ -317,11 +329,8 @@ public class SettingController implements Initializable {
     }*/
   /*  public void item(Event event)  {
         if(myChangeItemChoiceBox.getValue().equals("SILVER")){
-
             String css=Controller.class.getResource("/CSS/SILVER.css").toExternalForm();
-
             if(myChangeBackgroundChoiceBox.getValue()==null){
-
             }
            else if(myChangeBackgroundChoiceBox.getValue().equals("SKY")){
                 Controller.scene.getStylesheets().clear();
