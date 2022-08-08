@@ -1,6 +1,7 @@
 package Controllers.GroupControllers;
 
 import Controllers.PvControllers.*;
+import DataBase.UpdateSqlTable;
 import View.Controller;
 import component.Group;
 import component.Message;
@@ -23,7 +24,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -36,6 +40,10 @@ public class GroupPageController {
     public Group group;
     public boolean makeNewGroup=false;
     public boolean inSetting=false;
+
+    public String photoName=new String();
+    public boolean isPhotoType=false;
+
 
     public int indexOfSearch=0;
     public int totalFindSearch=0;
@@ -102,6 +110,8 @@ public class GroupPageController {
     private Label whoEditReply;
     @FXML
     private ImageView zarebbin;
+    @FXML
+    private ImageView photoDisplay;
 
 
     @FXML
@@ -226,7 +236,20 @@ public class GroupPageController {
     }
     @FXML
     public void selectPhotoMessage(MouseEvent event) {
-
+        FileChooser fileChooser=new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("All Images", "*.*"),
+                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+                new FileChooser.ExtensionFilter("PNG", "*.png")
+        );
+        Stage stage=(Stage) totalGrid.getScene().getWindow();
+        File file=  fileChooser.showOpenDialog(stage);
+        if(file!=null){
+            Image image = new Image(file.toURI().toString());
+            photoName=file.toURI().toString();
+            photoDisplay.setImage(image);
+            isPhotoType=true;
+        }
     }
     public void visibleGroup(boolean visible){
         totalGrid.getChildren().get(1).setVisible(visible);
@@ -253,35 +276,69 @@ public class GroupPageController {
     }
     @FXML
     public void sendMessage(MouseEvent event) throws IOException, SQLException, ClassNotFoundException {
-        if (!edit && !reply) {
-            if (!messageTextArea.getText().isEmpty()) {
-                Message message = new Message(Controller.user, "Text", messageTextArea.getText(), false, false, false);
+        if (!isPhotoType) {
+            if (!edit && !reply) {
+                if (!messageTextArea.getText().isEmpty()) {
+                    Message message = new Message(Controller.user, "Text", messageTextArea.getText(), false, false, false);
+                    group.addMessage(message);
+                    addMyMessage(message);
+                    message.setIsPvOrGroup("group",group.getSqlId());
+                    message.addMessageToTable();
+                    messageTextArea.setText("");
+                }
+            } else if (edit) {
+                if (!messageTextArea.getText().isEmpty()) {
+                    editMessage.setContent(messageTextArea.getText());
+                    editMessage.setEdited(true);
+                    edited.setVisible(true);
+                    editMessageTextArea.setText(messageTextArea.getText());
+                    messageTextArea.setText("");
+                    closeEditReply(null);
+                    showMessageOfGroup(group);
+                    UpdateSqlTable.editMessage(editMessage);
+                }
+            } else if (reply) {
+                if (!messageTextArea.getText().isEmpty()) {
+                    Message message = new Message(Controller.user, "Text", messageTextArea.getText(), false, false, true);
+                    message.setReplyMessage(replyMessage);
+                    group.addMessage(message);
+                    addMyMessage(message);
+                    message.setIsPvOrGroup("group",group.getSqlId());
+                    messageTextArea.setText("");
+                    closeEditReply(null);
+                    message.addMessageToTable();
+                }
+            }
+        }else {
+            if (!edit && !reply) {
+                Message message = new Message(Controller.user, "image", messageTextArea.getText(), false, false, false);
                 group.addMessage(message);
+                message.setPhotoAddress(photoName);
+                message.setIsPvOrGroup("group",group.getSqlId());
                 addMyMessage(message);
                 messageTextArea.setText("");
-            }
-            updateGroups();
-        }else if (edit){
-            if (!messageTextArea.getText().isEmpty()) {
-                editMessage.setContent(messageTextArea.getText());
-                editMessage.setEdited(true);
-                edited.setVisible(true);
-                editMessageTextArea.setText(messageTextArea.getText());
-                messageTextArea.setText("");
-                closeEditReply(null);
-                showMessageOfGroup(group);
-            }
-        }else if (reply){
-            if (!messageTextArea.getText().isEmpty()) {
-                Message message = new Message(Controller.user, "Text", messageTextArea.getText(), false, false, true);
-                message.setReplyMessage(replyMessage);
-                group.addMessage(message);
-                addMyMessage(message);
-                messageTextArea.setText("");
-                closeEditReply(null);
+                message.addMessageToTable();
+            } else if (edit) {
+                System.out.println("not handled :[]");
+            } else if (reply) {
+                if (!messageTextArea.getText().isEmpty()) {
+                    Message message = new Message(Controller.user, "image", messageTextArea.getText(), false, false, true);
+                    message.setReplyMessage(replyMessage);
+                    message.setPhotoAddress(photoName);
+                    group.addMessage(message);
+                    addMyMessage(message);
+                    message.setIsPvOrGroup("group",group.getSqlId());
+                    messageTextArea.setText("");
+                    message.addMessageToTable();
+                    closeEditReply(null);
+                }
             }
         }
+        isPhotoType=false;
+        photoName=null;
+        photoDisplay.setImage(new Image(String.valueOf(getClass().getResource("/images/clip2.png"))));
         Controller.user.getReadMessageGroup().set(Controller.user.getGroups().indexOf(group),group.getMessages().size());
+        UpdateSqlTable.setReadMessageGroup(group,Controller.user);
         updateGroups();
     }
     public void addMyMessage(Message message) throws IOException {
@@ -511,7 +568,7 @@ public class GroupPageController {
         messageScrollPane.setVvalue(reverseVboxForSendMessage.getChildren().get(findMessages.get(indexOfSearch-1)).getLayoutY()/reverseVboxForSendMessage.getHeight());
         reverseVboxForSendMessage.getChildren().get(findMessages.get(indexOfSearch-1)).setStyle("-fx-border-color: Gold");
     }
-    public void newMessageOrDown(MouseEvent mouseEvent) throws IOException {
+    public void newMessageOrDown(MouseEvent mouseEvent) throws IOException, SQLException, ClassNotFoundException {
         if (arrow.getRotate()==180 && reverseVboxForSendMessage.getChildren().size()>0) {
             RotateTransition rotateTransition=new RotateTransition();
             rotateTransition.setToAngle(0);
@@ -520,9 +577,10 @@ public class GroupPageController {
             if (group.getMessages().size()==Controller.user.getReadMessageGroup().get(Controller.user.getGroups().indexOf(group))){
                 messageScrollPane.setVvalue(0);
             }else {
-                messageScrollPane.setVvalue(reverseVboxForSendMessage.getChildren().get(group.getMessages().size() - Controller.user.getReadMessagePv().get(Controller.user.getGroups().indexOf(group)) - 1).getLayoutY() / reverseVboxForSendMessage.getHeight());
+                messageScrollPane.setVvalue(reverseVboxForSendMessage.getChildren().get(group.getMessages().size() - Controller.user.getReadMessageGroup().get(Controller.user.getGroups().indexOf(group)) - 1).getLayoutY() / reverseVboxForSendMessage.getHeight());
             }
             Controller.user.getReadMessageGroup().set(Controller.user.getGroups().indexOf(group),group.getMessages().size());
+            UpdateSqlTable.setReadMessageGroup(group,Controller.user);
         }else {
             messageScrollPane.setVvalue(0);
         }
@@ -541,9 +599,6 @@ public class GroupPageController {
             }, 3000l);
         }
     }
-
-
-
     public void showMakeNewGroup(boolean visible) throws IOException {
         if (visible){
             helpColumn.setVisible(true);
@@ -568,10 +623,6 @@ public class GroupPageController {
             updateGroups();
         }
     }
-
-
-
-
     @FXML
     void Setting(MouseEvent event) throws IOException {
         inSetting=true;
@@ -587,8 +638,6 @@ public class GroupPageController {
         groupInfoController.group=group;
         groupInfoController.setFirst();
     }
-
-
     public void beckFromSetting() throws SQLException, IOException, ClassNotFoundException {
         inSetting=false;
         helpColumn.setVisible(false);
@@ -598,7 +647,6 @@ public class GroupPageController {
         helpColumn.getChildren().clear();
         showGroup(group);
     }
-
     public void closeInfo() throws SQLException, IOException, ClassNotFoundException {
         totalGrid.getColumnConstraints().get(2).setPercentWidth(0);
         totalGrid.getColumnConstraints().get(1).setPercentWidth(70);

@@ -153,9 +153,9 @@ public class UpdateSqlTable {
                         , "root",
                         DataBase.password);
         PreparedStatement preparedStatement =connection.prepareStatement(
-                " UPDATE users " +
+                " UPDATE tweets " +
                         "SET commentAbility = ?" +
-                        "WHERE id = ?"
+                        "WHERE postId = ?"
         );
         preparedStatement.setString(1, String.valueOf(commentAbility));
         preparedStatement.setString(2,post.getPostId());
@@ -189,6 +189,16 @@ public class UpdateSqlTable {
         preparedStatement.setString(1, String.valueOf(blockOrUnblock));
         preparedStatement.setString(2,blocker.getId());
         preparedStatement.setString(3,pv.getPvId());
+        if (!blockOrUnblock){
+            PreparedStatement preparedStatement1 =connection.prepareStatement(
+                    " UPDATE pv " +
+                            "SET blockerId=? " +
+                            "WHERE pvId = ?"
+            );
+            preparedStatement1.setString(1,"");
+            preparedStatement1.setString(2,pv.getPvId());
+            preparedStatement1.executeUpdate();
+        }
         preparedStatement.executeUpdate();
     }
     public static void deletePv(Pv pv) throws SQLException, ClassNotFoundException {
@@ -241,7 +251,7 @@ public class UpdateSqlTable {
                         , "root",
                         DataBase.password);
         PreparedStatement preparedStatement =connection.prepareStatement(
-                "DELETE FROM groupMembers WHERE groupId=?,userId=? "
+                "DELETE FROM groupMembers WHERE (groupId=?) And (userId=?) "
         );
         preparedStatement.setString(1,group.getSqlId());
         preparedStatement.setString(2, user.getId());
@@ -418,11 +428,12 @@ public class UpdateSqlTable {
                         DataBase.password);
         PreparedStatement preparedStatement =connection.prepareStatement(
                 " UPDATE message " +
-                        "SET content = ?" +
+                        "SET content = ? , edited=? " +
                         "WHERE messageId=? "
         );
         preparedStatement.setString(1, message.getContent());
-        preparedStatement.setString(2, message.getMessageId());
+        preparedStatement.setString(3, message.getMessageId());
+        preparedStatement.setString(2, String.valueOf(true));
         preparedStatement.executeUpdate();
     }
     public static void removeLikeFromButton(User liker,Post post) throws ClassNotFoundException, SQLException {

@@ -58,6 +58,7 @@ public class GroupIconInGroupPageController {
             User forwarder;
             if (isPost) {
                 message = new Message(Controller.user, selectPost.getFormat(), selectPost.getContent(), false, true, false);
+                message.setPhotoAddress(selectPost.getPhotoAddress());
                 forwarder=selectPost.getSender();
             }else {
                 message = new Message(Controller.user, selectMessage.getFormat(), selectMessage.getContent(), false, true, false);
@@ -66,14 +67,16 @@ public class GroupIconInGroupPageController {
                 }else {
                     forwarder=selectMessage.getForwardFrom();
                 }
+                message.setPhotoAddress(selectMessage.getPhotoAddress());
             }
             message.setForwardFrom(forwarder);
-            group.addMessage(message);
             group.addMessage(message);
             if (isGroupForward) {
                 groupPageController.updateGroups();
                 groupPageController.showGroup(group);
             }
+            message.setIsPvOrGroup("group",group.getSqlId());
+            message.addMessageToTable();
             popUp.close();
         }
     }
@@ -82,6 +85,8 @@ public class GroupIconInGroupPageController {
         this.group=group;
         id.setText("@"+group.getGroupId());
         name.setText(group.getName());
+        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$4");
+        System.out.println(group.getPhoto());
         photo.setFill(new ImagePattern(new Image(group.getPhoto())));
         if (group.getMessages().size()!=0) {
             lastContent.setText(group.getMessages().get(group.getMessages().size() - 1).getContent().split("\n")[0]);

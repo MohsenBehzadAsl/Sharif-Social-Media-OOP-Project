@@ -19,9 +19,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -33,6 +35,10 @@ public class AnotherMessageBoxInGroupController {
 
     public GroupPageController groupPageController;
     public Parent nowParent;
+    @FXML
+    private HBox visiblePhoto;
+    @FXML
+    private Rectangle photoPlace;
     @FXML
     private GridPane messageBoxWithPhoto;
     @FXML
@@ -76,8 +82,8 @@ public class AnotherMessageBoxInGroupController {
             Controller.main.add(parent, 0, 0);
             showAnotherUserPageController.nowParent = parent;
             showAnotherUserPageController.backParent = nowParent;
-            showAnotherUserPageController.set(message.getSender());
-            showAnotherUserPageController.start(message.getSender());
+            showAnotherUserPageController.set(message.getForwardFrom());
+            showAnotherUserPageController.start(message.getForwardFrom());
         }
     }
 
@@ -93,9 +99,13 @@ public class AnotherMessageBoxInGroupController {
             edited.setVisible(false);
         }
         if (message.getForward()){
-            System.out.println(1);
+            forwardOrReplyLabel.setText("Forwarded From "+message.getForwardFrom().getUserName());
+            forwardOrReplyGridPane.getRowConstraints().get(1).setPercentHeight(50);
+            forwardOrReplyGridPane.getRowConstraints().get(0).setPercentHeight(50);
         }else if (message.getReply()){
             forwardOrReplyLabel.setText("Reply to "+message.getReplyMessage().getSender().getUserName()+" :"+message.getReplyMessage().getContent());
+            forwardOrReplyGridPane.getRowConstraints().get(1).setPercentHeight(50);
+            forwardOrReplyGridPane.getRowConstraints().get(0).setPercentHeight(50);
         }else {
             vboxForwardOrReply.setVisible(false);
             forwardOrReplyGridPane.getRowConstraints().get(1).setPercentHeight(0);
@@ -159,20 +169,59 @@ public class AnotherMessageBoxInGroupController {
                 return text.getBoundsInLocal().getHeight();
             }
         }, text.boundsInLocalProperty()).add(20));
+//        ContentTextArea.heightProperty().addListener((obs, oldVal, newVal) -> {
+//            if (total.getHeight() <= 230) {
+//                total.setPrefHeight(ContentTextArea.getPrefHeight() * 100 / 60);
+//            } else {
+//                total.setPrefHeight(ContentTextArea.getPrefHeight() + 30 + 53);
+//                messageGrid.getRowConstraints().get(0).setPercentHeight(30 / total.getHeight() * 100);
+//                messageGrid.getRowConstraints().get(2).setPercentHeight(53 / total.getHeight() * 100);
+//                messageGrid.getRowConstraints().get(1).setPercentHeight(100 - (53 / total.getHeight() + 30 / total.getHeight()) * 100);
+//
+//            }
+//
+//
+////            rightGridPain.getRowConstraints().get(3).setPercentHeight(messageTextArea.getPrefHeight()/rightGridPain.getHeight()*100);
+////            rightGridPain.getRowConstraints().get(2).setPercentHeight(84-messageTextArea.getPrefHeight()/rightGridPain.getHeight()*100);
+//        });
         ContentTextArea.heightProperty().addListener((obs, oldVal, newVal) -> {
-            if (total.getHeight() <= 230) {
-                total.setPrefHeight(ContentTextArea.getPrefHeight() * 100 / 60);
+            if (total.getHeight() <= 230 && message.getFormat().equalsIgnoreCase("text")) {
+                total.setPrefHeight(ContentTextArea.getPrefHeight() * 100 / 64);
+                System.out.println(ContentTextArea.getPrefHeight());
+                messageGrid.setPrefHeight(total.getPrefHeight());
+                messageGrid.getRowConstraints().get(0).setPercentHeight(23);
+                messageGrid.getRowConstraints().get(2).setPercentHeight(64);
+                messageGrid.getRowConstraints().get(3).setPercentHeight(13);
+                messageGrid.getRowConstraints().get(1).setPercentHeight(0);
+                visiblePhoto.setVisible(false);
             } else {
-                total.setPrefHeight(ContentTextArea.getPrefHeight() + 30 + 53);
-                messageGrid.getRowConstraints().get(0).setPercentHeight(30 / total.getHeight() * 100);
-                messageGrid.getRowConstraints().get(2).setPercentHeight(53 / total.getHeight() * 100);
-                messageGrid.getRowConstraints().get(1).setPercentHeight(100 - (53 / total.getHeight() + 30 / total.getHeight()) * 100);
-
+                if (message.getFormat().equalsIgnoreCase("text")) { //true
+                    total.setPrefHeight(ContentTextArea.getPrefHeight() + 30 + 53);
+                    messageGrid.getRowConstraints().get(0).setPercentHeight(30 / total.getHeight() * 100);
+                    messageGrid.getRowConstraints().get(3).setPercentHeight(53 / total.getHeight() * 100);
+                    messageGrid.getRowConstraints().get(2).setPercentHeight(100 - (53 / total.getHeight() + 30 / total.getHeight()) * 100);
+                } else if (message.getContent().isEmpty()) {
+                    total.setPrefHeight(30 + 53 + 200);
+                    messageGrid.getRowConstraints().get(3).setPercentHeight(30 / total.getHeight() * 100);
+                    messageGrid.getRowConstraints().get(0).setPercentHeight(53 / total.getHeight() * 100);
+                    messageGrid.getRowConstraints().get(1).setPercentHeight(200 / total.getHeight() * 100);
+                    messageGrid.getRowConstraints().get(2).setPercentHeight(0);
+                    visiblePhoto.setVisible(true);
+                    photoPlace.setHeight(200);
+                    photoPlace.setWidth(messageGrid.getWidth());
+                    photoPlace.setFill(new ImagePattern(new Image(message.getPhotoAddress())));
+                } else {
+                    total.setPrefHeight(ContentTextArea.getPrefHeight() + 30 + 60 + 200);
+                    messageGrid.getRowConstraints().get(3).setPercentHeight(30 / total.getHeight() * 100);
+                    messageGrid.getRowConstraints().get(0).setPercentHeight(53 / total.getHeight() * 100);
+                    messageGrid.getRowConstraints().get(1).setPercentHeight(200 / total.getHeight() * 100);
+                    visiblePhoto.setVisible(true);
+                    photoPlace.setHeight(200);
+                    photoPlace.setWidth(messageGrid.getWidth());
+                    photoPlace.setFill(new ImagePattern(new Image(message.getPhotoAddress())));
+                    messageGrid.getRowConstraints().get(2).setPercentHeight(100 - (53 / total.getHeight() + 30 / total.getHeight() + 200 / total.getHeight()) * 100);
+                }
             }
-
-
-//            rightGridPain.getRowConstraints().get(3).setPercentHeight(messageTextArea.getPrefHeight()/rightGridPain.getHeight()*100);
-//            rightGridPain.getRowConstraints().get(2).setPercentHeight(84-messageTextArea.getPrefHeight()/rightGridPain.getHeight()*100);
         });
     }
 }
