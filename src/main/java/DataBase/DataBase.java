@@ -60,16 +60,16 @@ public class DataBase {
         return user;
     }
 
-    public static void updateComments() {
-        for (int i=comments.size()-1;i>=0;i--){
-            //ManagerShow.showCommentInMyHomePost(comments.get(i).getSender(),comments.get(i));
-            for (Post dataBasePost : posts) {
-                if(dataBasePost.getPostId().equals(comments.get(i).getCommentOfPost().getPostId())){
-                    dataBasePost.addComment(comments.get(i));
-                }
-            }
-        }
-    }
+//    public static void updateComments() {
+//        for (int i=comments.size()-1;i>=0;i--){
+//            //ManagerShow.showCommentInMyHomePost(comments.get(i).getSender(),comments.get(i));
+//            for (Post dataBasePost : posts) {
+//                if(dataBasePost.getPostId().equals(comments.get(i).getCommentOfPost().getPostId())){
+//                    dataBasePost.addComment(comments.get(i));
+//                }
+//            }
+//        }
+//    }
 
     public void initializeAddUser(String userName, String id, String password, String passwordHint, Scanner in , String type,String question,String ansQuestion) {
         users.add(new User(userName, id, password, passwordHint, type, question, ansQuestion));

@@ -409,6 +409,8 @@ public class MyHomePostPageController {
             //Controller.user.setPhotoNameFromImageFolder(file.toURI().toString());
             //myImageView.setImage(image);
             photoAddress=file.toURI().toString();
+            imageOfPostRectangle.setVisible(true);
+            imageOfPostRectangle.setImage(null);
             imageOfPostRectangle.setFitHeight(500);
             imageOfPostRectangle.setFitWidth(500);
             imageOfPostRectangle.setPreserveRatio(true);

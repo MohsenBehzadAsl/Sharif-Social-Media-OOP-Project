@@ -1,6 +1,7 @@
 package DataBase;
 
 import component.*;
+import javafx.geometry.Pos;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -8,8 +9,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class Datainitializer {
+
+    private LinkedHashMap<Integer,String> helpInComment=new LinkedHashMap<>();
     private ArrayList<Message> messageArrayList=new ArrayList<>();
     public void createTable(Connection connection) throws SQLException {
         Datainitialize(connection.createStatement());
@@ -258,9 +262,10 @@ public class Datainitializer {
             post.setCommentAbility(Boolean.parseBoolean(resultSet2.getString("commentAbility")));
             post.setIsComment(resultSet2.getString("isComment"));
             if (resultSet2.getString("format").equals("image")){
-                System.out.println(resultSet2.getString("imagePost"));
+                //System.out.println(resultSet2.getString("imagePost"));
                 post.setPhotoAddress(resultSet2.getString("imagePost"));
             }
+            helpInComment.put(Integer.parseInt(post.getPostId()),post.getIsComment());
             dataBase.getPosts().add(post);
         }
         while (resultSet3.next()){
@@ -286,17 +291,47 @@ public class Datainitializer {
                 comment.setPhotoAddress(resultSet3.getString("photoAddress"));
             }
             post.setPostId(resultSet3.getString("commentOfPostId"));
-            for (Post dataBasePost : dataBase.getPosts()) {
-                if(dataBasePost.getPostId().equals(post.getPostId())){
-                   // dataBasePost.getComments().add(comment);
-                    post=dataBasePost;
+
+
+
+            if (helpInComment.get(Integer.parseInt(post.getPostId())).equals("post")){
+                for (Post dataBasePost : dataBase.getPosts()) {
+                    if (dataBasePost.getPostId().equals(post.getPostId())) {
+                        dataBasePost.getComments().add(comment);
+                        comment.setCommentOfPost(dataBasePost);
+                    }
+                }
+            }else{
+
+                Comment help = new Comment();
+                help.setPostId(resultSet3.getString("commentOfPostId"));
+                for (Comment comment1 : DataBase.getComments()) {
+                    if (comment1.getPostId().equals(help.getPostId())){
+                        comment1.getComments().add(comment);
+                        comment.setCommentOfPost(comment1);
+                    }
                 }
             }
-            comment.setCommentOfPost(post);
+
+            //Comment comment = (Comment) post;
+            //            this.post=comment.getCommentOfPost();
+            //
+            //            if (post.getIsComment().equals("post")) {
+            //                mainComment.getChildren().clear();
+            //                this.post.setIsComment("post");
+            //                showCommentII();
+            //            }else{
+            //                commentController.setComment((Comment) post);
+            //                commentController.showCommentII();
+            //            }
+
+
+            //comment.setCommentOfPost(post);
+            //post.getComments().add(comment);
             DataBase.getComments().add(comment);
         }
 
-        DataBase.updateComments();
+        //DataBase.updateComments();
         while (resultSet4.next()){
             Post post=new Post();
             User user=new User();
