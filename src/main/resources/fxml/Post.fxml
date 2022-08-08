@@ -58,18 +58,6 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <Label fx:id="username" prefHeight="53.0" prefWidth="592.0" text="Username" textFill="#f8f0f0">
-                                 <font>
-                                    <Font size="36.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                           <padding>
-                              <Insets left="5.0" />
-                           </padding>
-                        </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                            <children>
                               <Label alignment="CENTER_RIGHT" prefHeight="53.0" prefWidth="592.0">
@@ -93,6 +81,35 @@
                               <Insets left="5.0" />
                            </padding>
                         </HBox>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" percentHeight="70.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" percentHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Label fx:id="username" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="45.0" prefWidth="247.0" text="userName" textFill="#fcf2f2">
+                                       <font>
+                                          <Font name="Bell MT" size="36.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label fx:id="date" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="45.0" prefWidth="242.0" text="Date" textFill="#f2eaea">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </GridPane>
                      </children>
                   </GridPane>
                </children>

@@ -127,7 +127,18 @@ public class PostController {
     private Label username;
 
     @FXML
+    private Label date;
+
+    @FXML
     private Label toLike;
+
+    public Label getDate() {
+        return date;
+    }
+
+    public void setDate(Label date) {
+        this.date = date;
+    }
 
     public HBox getIsAd() {
         return isAd;

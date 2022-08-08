@@ -20,6 +20,7 @@ import javafx.scene.paint.ImagePattern;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -138,6 +139,8 @@ public class ExploreController {
                 postController.getAll().getColumnConstraints().get(1).setPercentWidth(0);
                 postController.getAll().getColumnConstraints().get(2).setPercentWidth(0);
                 postController.getUsername().setText(posts.get(i).getSender().getUserName());
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+                postController.getDate().setText(dtf.format(posts.get(i).getDate()));
                 postController.getNumOfViews().setText("Num Of Views : "+String.valueOf(posts.get(i).getViews().size()));
                 postController.getNumofLike().setText("Num Of Likes : "+String.valueOf(posts.get(i).getLikes().size()));
                 postController.getNumOfComments().setText("Num Of Comments : "+String.valueOf(posts.get(i).getComments().size()));

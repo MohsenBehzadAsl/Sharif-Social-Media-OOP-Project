@@ -39,7 +39,7 @@ public class Comment extends Post{
                         , "root",
                 DataBase.password);
         PreparedStatement preparedStatement =connection.prepareStatement(
-                " INSERT INTO comments  (senderId,postId,format,content,gender,sendTime,commentAbility,commentOfPostId,commentId,photoAddress) VALUES (?,?,?,?,?,?,?,?,?,?)"
+                " INSERT INTO comments  (senderId,postId,format,content,gender,sendTime,commentAbility,commentOfPostId,commentId) VALUES (?,?,?,?,?,?,?,?,?)"
             /*    UPDATE Customers
                 SET ContactName='Juan'
                 WHERE Country='Mexico';*/ /*"insert into users(userName,id,password,passwordHint,gender,question,ansQuestion,addToGroupAbility)" +
@@ -54,7 +54,6 @@ public class Comment extends Post{
         preparedStatement.setString(7, String.valueOf(commentAbility));
         preparedStatement.setString(8,commentOfPostId);
         preparedStatement.setString(9,commentId);
-        preparedStatement.setString(10,photoAddress);
 
         preparedStatement.executeUpdate();
     }
