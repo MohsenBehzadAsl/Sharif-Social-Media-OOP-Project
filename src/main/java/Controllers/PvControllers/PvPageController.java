@@ -26,14 +26,23 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.Callable;
 import DataBase.UpdateSqlTable;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class PvPageController {
+
+
+    @FXML
+    public ImageView photoDisplay;
+    public String photoName=new String();
+    public boolean isPhotoType=false;
 
     public Boolean selectPv=false;
     public Pv pv;
@@ -278,7 +287,7 @@ public class PvPageController {
             rotateTransition.setNode(plusPv);
             rotateTransition.setToAngle(45);
             rotateTransition.play();
-            searchUser.setVisible(true);
+//            searchUser.setVisible(true);
             showNewUsers(Controller.user.getFollowers());
         }else {
             RotateTransition rotateTransition=new RotateTransition();
@@ -293,48 +302,97 @@ public class PvPageController {
     }
     @FXML
     public void selectPhotoMessage(MouseEvent event) {
-
+        FileChooser fileChooser=new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("All Images", "*.*"),
+                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+                new FileChooser.ExtensionFilter("PNG", "*.png")
+        );
+        Stage stage=(Stage) totalGrid.getScene().getWindow();
+        File file=  fileChooser.showOpenDialog(stage);
+        if(file!=null){
+            Image image = new Image(file.toURI().toString());
+            photoName=file.toURI().toString();
+            photoDisplay.setImage(image);
+            isPhotoType=true;
+        }
     }
     @FXML
     public void sendMessage(MouseEvent event) throws IOException, SQLException, ClassNotFoundException {
-        if (!edit && !reply) {
-            if (!messageTextArea.getText().isEmpty()) {
-                Message message = new Message(Controller.user, "Text", messageTextArea.getText(), false, false, false);
-                message.setIsPvOrGroup("pv",pv.getPvId());
-                pv.addMessage(message);
-                addMyMessage(message);
-                messageTextArea.setText("");
-                message.addMessageToTable(Controller.user,message.getFormat(),message.getContent(),Controller.user.getGender(),message.getLocalDateTime(),message.getForward(),
-                message.getForwardFrom(),message.getEdited(),message.getReply(),message.getIsMessage(),message.getReplyOfMessageId(),message.getMessageId(),
-                        message.getIsPvOrGroup(),message.getPvOrGroupId(),message.getPhotoAddress());
-            }
+        if (!isPhotoType) {
+            if (!edit && !reply) {
+                if (!messageTextArea.getText().isEmpty()) {
+                    Message message = new Message(Controller.user, "Text", messageTextArea.getText(), false, false, false);
+                    message.setIsPvOrGroup("pv", pv.getPvId());
+                    pv.addMessage(message);
+                    addMyMessage(message);
+                    messageTextArea.setText("");
+                    message.addMessageToTable(Controller.user, message.getFormat(), message.getContent(), Controller.user.getGender(), message.getLocalDateTime(), message.getForward(),
+                            message.getForwardFrom(), message.getEdited(), message.getReply(), message.getIsMessage(), message.getReplyOfMessageId(), message.getMessageId(),
+                            message.getIsPvOrGroup(), message.getPvOrGroupId(), message.getPhotoAddress());
+                }
 
-            updatePvs();
-        }else if (edit){
-            if (!messageTextArea.getText().isEmpty()) {
-                editMessage.setContent(messageTextArea.getText());
-                editMessage.setEdited(true);
-                edited.setVisible(true);
-                editMessageTextArea.setText(messageTextArea.getText());
-                messageTextArea.setText("");
-                closeEditReply(null);
-                UpdateSqlTable.editMessage(editMessage);
-                showMessageOfPv(pv);
+                updatePvs();
+            } else if (edit) {
+                if (!messageTextArea.getText().isEmpty()) {
+                    editMessage.setContent(messageTextArea.getText());
+                    editMessage.setEdited(true);
+                    edited.setVisible(true);
+                    editMessageTextArea.setText(messageTextArea.getText());
+                    messageTextArea.setText("");
+                    closeEditReply(null);
+                    UpdateSqlTable.editMessage(editMessage);
+                    showMessageOfPv(pv);
+                }
+            } else if (reply) {
+                if (!messageTextArea.getText().isEmpty()) {
+                    Message message = new Message(Controller.user, "Text", messageTextArea.getText(), false, false, true);
+                    message.setIsPvOrGroup("pv", pv.getPvId());
+                    message.setReplyMessage(replyMessage);
+                    pv.addMessage(message);
+                    addMyMessage(message);
+                    messageTextArea.setText("");
+                    closeEditReply(null);
+                    message.addMessageToTable(Controller.user, message.getFormat(), message.getContent(), Controller.user.getGender(), message.getLocalDateTime(), message.getForward(),
+                            message.getForwardFrom(), message.getEdited(), message.getReply(), message.getIsMessage(), message.getReplyOfMessageId(), message.getMessageId(),
+                            message.getIsPvOrGroup(), message.getPvOrGroupId(), message.getPhotoAddress());
+                }
             }
-        }else if (reply){
-            if (!messageTextArea.getText().isEmpty()) {
-                Message message = new Message(Controller.user, "Text", messageTextArea.getText(), false, false, true);
-                message.setIsPvOrGroup("pv",pv.getPvId());
-                message.setReplyMessage(replyMessage);
+        }else {
+            System.out.println("1");
+            if (!edit && !reply) {
+                Message message = new Message(Controller.user, "image", messageTextArea.getText(), false, false, false);
+                message.setIsPvOrGroup("pv", pv.getPvId());
+                message.setPhotoAddress(photoName);
                 pv.addMessage(message);
                 addMyMessage(message);
                 messageTextArea.setText("");
-                closeEditReply(null);
-                message.addMessageToTable(Controller.user,message.getFormat(),message.getContent(),Controller.user.getGender(),message.getLocalDateTime(),message.getForward(),
-                        message.getForwardFrom(),message.getEdited(),message.getReply(),message.getIsMessage(),message.getReplyOfMessageId(),message.getMessageId(),
-                        message.getIsPvOrGroup(),message.getPvOrGroupId(),message.getPhotoAddress());
+                message.addMessageToTable(Controller.user, message.getFormat(), message.getContent(), Controller.user.getGender(), message.getLocalDateTime(), message.getForward(),
+                        message.getForwardFrom(), message.getEdited(), message.getReply(), message.getIsMessage(), message.getReplyOfMessageId(), message.getMessageId(),
+                        message.getIsPvOrGroup(), message.getPvOrGroupId(), message.getPhotoAddress());
+                updatePvs();
+                System.out.println("2");
+            }else if (edit) {
+                System.out.println("not handled :]|:");
+            }else if (reply) {
+                if (!messageTextArea.getText().isEmpty()) {
+                    Message message = new Message(Controller.user, "image", messageTextArea.getText(), false, false, true);
+                    message.setIsPvOrGroup("pv", pv.getPvId());
+                    message.setReplyMessage(replyMessage);
+                    message.setPhotoAddress(photoName);
+                    pv.addMessage(message);
+                    addMyMessage(message);
+                    messageTextArea.setText("");
+                    closeEditReply(null);
+                    message.addMessageToTable(Controller.user, message.getFormat(), message.getContent(), Controller.user.getGender(), message.getLocalDateTime(), message.getForward(),
+                            message.getForwardFrom(), message.getEdited(), message.getReply(), message.getIsMessage(), message.getReplyOfMessageId(), message.getMessageId(),
+                            message.getIsPvOrGroup(), message.getPvOrGroupId(), message.getPhotoAddress());
+                }
             }
         }
+        isPhotoType=false;
+        photoName=null;
+        photoDisplay.setImage(new Image(String.valueOf(getClass().getResource("/images/clip2.png"))));
         Controller.user.getReadMessagePv().set(Controller.user.getPvs().indexOf(pv),pv.getMessages().size());
         UpdateSqlTable.setReadMessagePv(pv,Controller.user);
         updatePvs();

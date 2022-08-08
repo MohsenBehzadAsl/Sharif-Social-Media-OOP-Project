@@ -430,6 +430,7 @@ public class Datainitializer {
             System.out.println(resultSet7.getString("sqlId"));
             System.out.println(resultSet7.getString("groupId"));
             System.out.println(resultSet7.getString("isBan"));
+            System.out.println(group.getPhoto());
         }
         while (resultSet8.next()) {
             User user = new User();

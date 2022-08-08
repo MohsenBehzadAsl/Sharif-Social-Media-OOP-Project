@@ -177,14 +177,15 @@ public void addGroupToTable(Group group,String name,String bio,boolean banGroup)
         this.bio = bio;
     }
     public String getPhoto() {
-        if (photo==""||photo==null||photo.equals(null)||photo.isEmpty()){
-            photo=new String();
+        System.out.println(photoAddress);
+        if (photoAddress==""||photoAddress==null||photo.equals(null)||photoAddress.isEmpty()){
+            photoAddress=new String();
             int index= ((int) (Math.random()*10))%7;
-            photo="sampleProfilePhoto"+index;
-            photo= String.valueOf(Controller.class.getResource("/images/"+photo+".png"));
-            System.out.println(photo);
+            photoAddress="sampleProfilePhoto"+index;
+            photoAddress= String.valueOf(Controller.class.getResource("/images/"+photoAddress+".png"));
+            System.out.println(photoAddress);
         }
-        return photo;
+        return photoAddress.replaceAll("^file:/","");
     }
     public void setPhoto(String photo) {
         this.photo = photo;

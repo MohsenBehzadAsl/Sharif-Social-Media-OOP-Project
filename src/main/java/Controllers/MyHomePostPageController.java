@@ -408,6 +408,7 @@ public class MyHomePostPageController {
             Image image = new Image(file.toURI().toString());
             //Controller.user.setPhotoNameFromImageFolder(file.toURI().toString());
             //myImageView.setImage(image);
+            imageOfPostRectangle.setVisible(true);
             photoAddress=file.toURI().toString();
             imageOfPostRectangle.setVisible(true);
             imageOfPostRectangle.setImage(null);
@@ -415,8 +416,6 @@ public class MyHomePostPageController {
             imageOfPostRectangle.setFitWidth(500);
             imageOfPostRectangle.setPreserveRatio(true);
             imageOfPostRectangle.setImage(new Image(photoAddress));
-
-
         }
     }
 }

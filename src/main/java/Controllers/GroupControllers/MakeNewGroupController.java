@@ -2,6 +2,7 @@ package Controllers.GroupControllers;
 
 import Controllers.GroupControllers.FollowerMakeNewGroupController;
 import Controllers.GroupControllers.GroupPageController;
+import DataBase.UpdateSqlTable;
 import View.Controller;
 import component.Group;
 import component.User;
@@ -61,7 +62,7 @@ public class MakeNewGroupController {
         groupPageController.showMakeNewGroup(false);
     }
     @FXML
-    void changePhoto(MouseEvent event) {
+    void changePhoto(MouseEvent event) throws SQLException, ClassNotFoundException {
         FileChooser fileChooser=new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("All Images", "*.*"),
@@ -73,6 +74,7 @@ public class MakeNewGroupController {
         if(file!=null){
             photo=file.toURI().toString();
             image.setFill(new ImagePattern(new Image(photo)));
+            UpdateSqlTable.setGroupNewPhoto(groupPageController.group,photo);
         }
     }
     @FXML
