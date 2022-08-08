@@ -88,7 +88,7 @@ public class GroupInfoController {
     }
 
     @FXML
-    void changePhoto(MouseEvent event) {
+    void changePhoto(MouseEvent event) throws SQLException, ClassNotFoundException {
         FileChooser fileChooser=new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("All Images", "*.*"),
@@ -100,6 +100,7 @@ public class GroupInfoController {
         if(file!=null){
             group.setPhoto(file.toURI().toString());
             image.setFill(new ImagePattern(new Image(group.getPhoto())));
+            UpdateSqlTable.setGroupNewPhoto(group,group.getPhoto());
         }
     }
 

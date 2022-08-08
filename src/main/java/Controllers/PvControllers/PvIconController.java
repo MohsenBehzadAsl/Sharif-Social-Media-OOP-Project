@@ -112,6 +112,7 @@ public class PvIconController {
             if (isPost) {
                 message = new Message(Controller.user, selectPost.getFormat(), selectPost.getContent(), false, true, false);
                 forwarder=selectPost.getSender();
+                message.setPhotoAddress(selectPost.getPhotoAddress());
             }else {
                 message = new Message(Controller.user, selectMessage.getFormat(), selectMessage.getContent(), false, true, false);
                 if (!selectMessage.getForward()) {
@@ -119,6 +120,7 @@ public class PvIconController {
                 }else {
                     forwarder=selectMessage.getForwardFrom();
                 }
+                message.setPhotoAddress(selectMessage.getPhotoAddress());
             }
             message.setForwardFrom(forwarder);
             pv.addMessage(message);
@@ -132,6 +134,9 @@ public class PvIconController {
                     pvPageController.showPv(pv.getUser1());
                 }
             }
+            message.setIsPvOrGroup("pv",pv.getPvId());
+            message.addMessageToTable();
+            popUp.close();
 
         }
     }
