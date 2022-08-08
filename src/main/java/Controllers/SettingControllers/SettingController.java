@@ -27,20 +27,14 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class SettingController implements Initializable {
-
-
     @FXML
     private ChoiceBox<String> myChangeInformationChoiceBox;
-
-
     @FXML
     private Button myChangeProfileButton;
     @FXML
     private ImageView myImageView;
-
     @FXML
     private Label myLabel;
-
     @FXML
     private Button mySubmitButton;
     @FXML

@@ -306,7 +306,7 @@ public class PvPageController {
                 messageTextArea.setText("");
                 message.addMessageToTable(Controller.user,message.getFormat(),message.getContent(),Controller.user.getGender(),message.getLocalDateTime(),message.getForward(),
                 message.getForwardFrom(),message.getEdited(),message.getReply(),message.getIsMessage(),message.getReplyOfMessageId(),message.getMessageId(),
-                        message.getIsPvOrGroup(),message.getPvOrGroupId());
+                        message.getIsPvOrGroup(),message.getPvOrGroupId(),message.getPhotoAddress());
             }
 
             updatePvs();
@@ -332,7 +332,7 @@ public class PvPageController {
                 closeEditReply(null);
                 message.addMessageToTable(Controller.user,message.getFormat(),message.getContent(),Controller.user.getGender(),message.getLocalDateTime(),message.getForward(),
                         message.getForwardFrom(),message.getEdited(),message.getReply(),message.getIsMessage(),message.getReplyOfMessageId(),message.getMessageId(),
-                        message.getIsPvOrGroup(),message.getPvOrGroupId());
+                        message.getIsPvOrGroup(),message.getPvOrGroupId(),message.getPhotoAddress());
             }
         }
         Controller.user.getReadMessagePv().set(Controller.user.getPvs().indexOf(pv),pv.getMessages().size());

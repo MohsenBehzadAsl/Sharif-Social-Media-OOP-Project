@@ -18,7 +18,7 @@ public class Comment extends Post{
         super(user,format,text,b,true);
         this.commentOfPost=post;
 
-        addCommentToTable(user,this.getPostId(),commentOfPost.getPostId(),String.valueOf(index),format,text,b);
+        addCommentToTable(user,this.getPostId(),commentOfPost.getPostId(),String.valueOf(index),format,text,b,this.getPhotoAddress());
         index++;
         // Post post=new Post();
         // System.out.println("post.getPostId());
@@ -32,14 +32,14 @@ public class Comment extends Post{
         super.addComment(comment);
     }
 
-    public void addCommentToTable(User sender, String postId, String commentOfPostId, String commentId, String format, String content, boolean commentAbility) throws ClassNotFoundException, SQLException {
+    public void addCommentToTable(User sender, String postId, String commentOfPostId, String commentId, String format, String content, boolean commentAbility,String photoAddress) throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection connection= DriverManager.
                 getConnection("jdbc:mysql://localhost:3306/joel"
                         , "root",
                 DataBase.password);
         PreparedStatement preparedStatement =connection.prepareStatement(
-                " INSERT INTO comments  (senderId,postId,format,content,gender,sendTime,commentAbility,commentOfPostId,commentId) VALUES (?,?,?,?,?,?,?,?,?)"
+                " INSERT INTO comments  (senderId,postId,format,content,gender,sendTime,commentAbility,commentOfPostId,commentId,photoAddress) VALUES (?,?,?,?,?,?,?,?,?,?)"
             /*    UPDATE Customers
                 SET ContactName='Juan'
                 WHERE Country='Mexico';*/ /*"insert into users(userName,id,password,passwordHint,gender,question,ansQuestion,addToGroupAbility)" +
@@ -54,6 +54,7 @@ public class Comment extends Post{
         preparedStatement.setString(7, String.valueOf(commentAbility));
         preparedStatement.setString(8,commentOfPostId);
         preparedStatement.setString(9,commentId);
+        preparedStatement.setString(10,photoAddress);
 
         preparedStatement.executeUpdate();
     }

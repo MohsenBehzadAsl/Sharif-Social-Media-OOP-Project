@@ -69,7 +69,6 @@ public class DataBase {
                 }
             }
         }
-
     }
 
     public void initializeAddUser(String userName, String id, String password, String passwordHint, Scanner in , String type,String question,String ansQuestion) {
@@ -94,7 +93,7 @@ public class DataBase {
                         DataBase.password);
         PreparedStatement preparedStatement =connection.prepareStatement(
                 "insert into users(userName,id,password,passwordHint,gender,question,ansQuestion)" +
-                        "value (?,?,?,?,?,?,?)"
+                        "value (?,?,?,?,?,?,?,?)"
         );//yedone alamat soal va boolean addToGroupAbility
         preparedStatement.setString(1, user.getUserName());
         preparedStatement.setString(2, user.getId());
@@ -103,7 +102,7 @@ public class DataBase {
         preparedStatement.setString(5, user.getType());
         preparedStatement.setString(6, user.getQuestion());
         preparedStatement.setString(7, user.getAnsQuestion());
-        //   preparedStatement.setString(8,String.valueOf(user.getAddToGroupAbility()));
+        preparedStatement.setString(8,String.valueOf(user.getAddToGroupAbility()));
         preparedStatement.executeUpdate();
     }
     public static void setNewPasswordInTable(User user) throws ClassNotFoundException, SQLException {

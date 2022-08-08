@@ -438,4 +438,34 @@ public class UpdateSqlTable {
         preparedStatement.setString(2, post.getPostId());
         preparedStatement.executeUpdate();
     }
+    public static void setUserNewProfilePhoto(User user,String photoAddress) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection= DriverManager.
+                getConnection("jdbc:mysql://localhost:3306/joel"
+                        , "root",
+                        DataBase.password);
+        PreparedStatement preparedStatement =connection.prepareStatement(
+                " UPDATE users " +
+                        "SET photoAddress = ?" +
+                        "WHERE userId=? "
+        );
+        preparedStatement.setString(1,photoAddress);
+        preparedStatement.setString(2,user.getId());
+        preparedStatement.executeUpdate();
+    }
+    public static void setGroupNewPhoto(Group group,String photoAddress) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection= DriverManager.
+                getConnection("jdbc:mysql://localhost:3306/joel"
+                        , "root",
+                        DataBase.password);
+        PreparedStatement preparedStatement =connection.prepareStatement(
+                " UPDATE groupInformation " +
+                        "SET photoAddress = ?" +
+                        "WHERE sqlId=? "
+        );
+        preparedStatement.setString(1,photoAddress);
+        preparedStatement.setString(2, group.getSqlId());
+        preparedStatement.executeUpdate();
+    }
 }
