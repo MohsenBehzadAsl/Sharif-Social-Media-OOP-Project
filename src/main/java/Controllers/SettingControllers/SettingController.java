@@ -205,6 +205,9 @@ public class SettingController implements Initializable {
             System.out.println(ioException);
         }
     }
+    public int add12(int a , int b){
+        return a+b;
+    }
     public void setMyChangeProfileButton(ActionEvent actionEvent) {
         FileChooser fileChooser=new FileChooser();
         fileChooser.getExtensionFilters().addAll(
@@ -215,11 +218,11 @@ public class SettingController implements Initializable {
         Stage stage=(Stage) myGridPane.getScene().getWindow();
         File file=  fileChooser.showOpenDialog(stage);
         if(file!=null){
-            myTextField.setText(file.getAbsolutePath());
+//            myTextField.setText(file.getAbsolutePath());
             Image image = new Image(file.toURI().toString().replace("^file:/",""));
             user.setPhotoNameFromImageFolder(file.toURI().toString().replace("^file:/",""));
             myImageView.setImage(image);
-            myLabel.setText("PROFILE PHOTO CHANGED SUCCESSFULLY");
+//            myLabel.setText("PROFILE PHOTO CHANGED SUCCESSFULLY");
             mainPageController.update();
         }
     }
