@@ -8,9 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class UpdateSqlTable {
-   public UpdateSqlTable(){
+    public UpdateSqlTable(){
 
-   }
+    }
     public static void setProfilePhotoToTable(User user, String address) throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection connection= DriverManager.
@@ -278,21 +278,21 @@ public class UpdateSqlTable {
         preparedStatement.setString(2, group.getSqlId());
         preparedStatement.executeUpdate();
     }
-/*    public static void setGroupBioToTable(Group group,String bio) throws SQLException, ClassNotFoundException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection connection= DriverManager.
-                getConnection("jdbc:mysql://localhost:3306/joel"
-                        , "root",
-                        DataBase.password);
-        PreparedStatement preparedStatement =connection.prepareStatement(
-                " UPDATE groupInformation " +
-                        "SET bio = ?" +
-                        "WHERE sqlId = ?"
-        );
-        preparedStatement.setString(1,bio);
-        preparedStatement.setString(2, group.getSqlId());
-        preparedStatement.executeUpdate();
-    }*/
+    /*    public static void setGroupBioToTable(Group group,String bio) throws SQLException, ClassNotFoundException {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection= DriverManager.
+                    getConnection("jdbc:mysql://localhost:3306/joel"
+                            , "root",
+                            DataBase.password);
+            PreparedStatement preparedStatement =connection.prepareStatement(
+                    " UPDATE groupInformation " +
+                            "SET bio = ?" +
+                            "WHERE sqlId = ?"
+            );
+            preparedStatement.setString(1,bio);
+            preparedStatement.setString(2, group.getSqlId());
+            preparedStatement.executeUpdate();
+        }*/
     public static void setBanMemberToTable(Group group,User user,boolean isBan) throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection connection= DriverManager.
@@ -418,12 +418,24 @@ public class UpdateSqlTable {
                         DataBase.password);
         PreparedStatement preparedStatement =connection.prepareStatement(
                 " UPDATE message " +
-                        "SET content = ? ,edited = ?" +
+                        "SET content = ?" +
                         "WHERE messageId=? "
         );
         preparedStatement.setString(1, message.getContent());
-        preparedStatement.setString(3, message.getMessageId());
-        preparedStatement.setString(2,"true");
+        preparedStatement.setString(2, message.getMessageId());
+        preparedStatement.executeUpdate();
+    }
+    public static void removeLikeFromButton(User liker,Post post) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection= DriverManager.
+                getConnection("jdbc:mysql://localhost:3306/joel"
+                        , "root",
+                        DataBase.password);
+        PreparedStatement preparedStatement =connection.prepareStatement(
+                "DELETE FROM likes WHERE (likerId=?) AND (postId=?)"
+        );
+        preparedStatement.setString(1,liker.getId());
+        preparedStatement.setString(2, post.getPostId());
         preparedStatement.executeUpdate();
     }
 }

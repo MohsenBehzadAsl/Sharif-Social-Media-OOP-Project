@@ -112,7 +112,8 @@ public class Datainitializer {
                 "replyOfMessageId varchar(255),"+//many to one va in ro neshon mide k in payam b kodom payam reply shode
                 "messageId varchar(255),"+
                 "isPvOrGroup varchar(255),"+
-                "pvOrGroupId varchar(255))");
+                "pvOrGroupId varchar(255)," +
+                "image varchar(255))");
     }
     public void Datainitialize8(Statement statement) throws SQLException {
         statement.executeUpdate("CREATE TABLE IF NOT EXISTS "+
