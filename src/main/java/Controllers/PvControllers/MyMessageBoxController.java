@@ -16,7 +16,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -31,8 +33,14 @@ public class MyMessageBoxController {
     public boolean isInPv=true;
     public PvPageController pvPageController;
 
+
+
     public GroupPageController groupPageController;
 
+    @FXML
+    public HBox visiblePhoto;
+    @FXML
+    public Rectangle photoPlace;
     @FXML
     private GridPane messageGrid;
     @FXML
@@ -107,14 +115,17 @@ public class MyMessageBoxController {
             System.out.println(1);
             forwarded=true;
             forwardOrReplyLabel.setText("Forwarded From "+message.getForwardFrom().getUserName());
+            forwardOrReplyGridPane.getRowConstraints().get(1).setPercentHeight(100);
+            forwardOrReplyGridPane.getRowConstraints().get(0).setPercentHeight(0);
         }else if (message.getReply()){
             reply=true;
             forwardOrReplyLabel.setText("Reply to ["+message.getReplyMessage().getSender().getUserName()+" :"+message.getReplyMessage().getContent()+"]");
+            forwardOrReplyGridPane.getRowConstraints().get(1).setPercentHeight(100);
+            forwardOrReplyGridPane.getRowConstraints().get(0).setPercentHeight(0);
         }else {
             vboxForwardOrReply.setVisible(false);
             forwardOrReplyGridPane.getRowConstraints().get(1).setPercentHeight(0);
             forwardOrReplyGridPane.getRowConstraints().get(0).setPercentHeight(100);
-
         }
         ContentTextArea.setText(message.getContent());
         if(isInPv) {
@@ -171,7 +182,8 @@ public class MyMessageBoxController {
             messageGrid.setOnContextMenuRequested(e -> {
                 menu.show(messageGrid.getScene().getWindow(), e.getScreenX(), e.getScreenY());
             });
-        }else {
+        }
+        else {
             MenuItem edit = new MenuItem("Edit");
             edit.setOnAction(e -> {
                 groupPageController.edit = true;
@@ -225,6 +237,59 @@ public class MyMessageBoxController {
             messageGrid.setOnContextMenuRequested(e -> {
                 menu.show(messageGrid.getScene().getWindow(), e.getScreenX(), e.getScreenY());
             });
+        }
+
+
+        if(total.getHeight()<=230) {
+            System.out.println(message.getFormat());
+            if (message.getFormat().equalsIgnoreCase("text")) {
+                System.out.println("1");
+                total.setPrefHeight(10);
+                photoPlace.setWidth(0);
+                photoPlace.setHeight(0);
+                System.out.println(ContentTextArea.getPrefHeight());
+                messageGrid.setPrefHeight(total.getPrefHeight());
+                messageGrid.getRowConstraints().get(0).setPercentHeight(23);
+                messageGrid.getRowConstraints().get(2).setPercentHeight(64);
+                messageGrid.getRowConstraints().get(3).setPercentHeight(13);
+                messageGrid.getRowConstraints().get(1).setPercentHeight(0);
+//                visiblePhoto.setVisible(false);
+            }else if (message.getFormat().isEmpty()){
+                System.out.println("2");
+                total.setPrefHeight(30+53+200);
+                messageGrid.getRowConstraints().get(0).setPercentHeight(30/total.getHeight()*100);
+                messageGrid.getRowConstraints().get(3).setPercentHeight(53/total.getHeight()*100);
+                messageGrid.getRowConstraints().get(1).setPercentHeight(200/total.getHeight()*100);
+                messageGrid.getRowConstraints().get(2).setPercentHeight(0);
+            }else {
+                System.out.println("3");
+                total.setPrefHeight(ContentTextArea.getPrefHeight()+30+53+200);
+                messageGrid.getRowConstraints().get(0).setPercentHeight(30/total.getHeight()*100);
+                messageGrid.getRowConstraints().get(3).setPercentHeight(53/total.getHeight()*100);
+                messageGrid.getRowConstraints().get(1).setPercentHeight(200/total.getHeight()*100);
+                messageGrid.getRowConstraints().get(2).setPercentHeight(100-(53/total.getHeight()+30/total.getHeight()+200/total.getHeight())*100);
+            }
+        }else {
+            System.out.println(message.getType());
+            if (message.getFormat().equalsIgnoreCase("text")) {
+                System.out.println("!****************");
+                total.setPrefHeight(ContentTextArea.getPrefHeight()+30+53);
+                messageGrid.getRowConstraints().get(0).setPercentHeight(30/total.getHeight()*100);
+                messageGrid.getRowConstraints().get(3).setPercentHeight(53/total.getHeight()*100);
+                messageGrid.getRowConstraints().get(2).setPercentHeight(100-(53/total.getHeight()+30/total.getHeight())*100);
+            }else if (message.getFormat().isEmpty()){
+                total.setPrefHeight(30+53+200);
+                messageGrid.getRowConstraints().get(0).setPercentHeight(30/total.getHeight()*100);
+                messageGrid.getRowConstraints().get(3).setPercentHeight(53/total.getHeight()*100);
+                messageGrid.getRowConstraints().get(1).setPercentHeight(200/total.getHeight()*100);
+                messageGrid.getRowConstraints().get(2).setPercentHeight(0);
+            }else {
+                total.setPrefHeight(ContentTextArea.getPrefHeight()+30+53+200);
+                messageGrid.getRowConstraints().get(0).setPercentHeight(30/total.getHeight()*100);
+                messageGrid.getRowConstraints().get(3).setPercentHeight(53/total.getHeight()*100);
+                messageGrid.getRowConstraints().get(1).setPercentHeight(200/total.getHeight()*100);
+                messageGrid.getRowConstraints().get(2).setPercentHeight(100-(53/total.getHeight()+30/total.getHeight()+200/total.getHeight())*100);
+            }
         }
     }
 
@@ -295,16 +360,49 @@ public class MyMessageBoxController {
 
         ContentTextArea.heightProperty().addListener((obs, oldVal, newVal) -> {
             if(total.getHeight()<=230) {
-                total.setPrefHeight(ContentTextArea.getPrefHeight() *100/64);
+                if (message.getType().equalsIgnoreCase("text")) {
+                    System.out.println("1*");
+                    total.setPrefHeight(ContentTextArea.getPrefHeight()*100/64);
+                    System.out.println(ContentTextArea.getPrefHeight());
+                    messageGrid.setPrefHeight(total.getPrefHeight());
+                    messageGrid.getRowConstraints().get(0).setPercentHeight(23);
+                    messageGrid.getRowConstraints().get(2).setPercentHeight(64);
+                    messageGrid.getRowConstraints().get(3).setPercentHeight(13);
+                    messageGrid.getRowConstraints().get(1).setPercentHeight(0);
+                    visiblePhoto.setVisible(false);
+                }else if (message.getContent().isEmpty()){
+                    total.setPrefHeight(30+53+200);
+                    messageGrid.getRowConstraints().get(0).setPercentHeight(30/total.getHeight()*100);
+                    messageGrid.getRowConstraints().get(3).setPercentHeight(53/total.getHeight()*100);
+                    messageGrid.getRowConstraints().get(1).setPercentHeight(200/total.getHeight()*100);
+                    messageGrid.getRowConstraints().get(2).setPercentHeight(0);
+                }else {
+                    total.setPrefHeight(ContentTextArea.getPrefHeight()+30+53+200);
+                    messageGrid.getRowConstraints().get(0).setPercentHeight(30/total.getHeight()*100);
+                    messageGrid.getRowConstraints().get(3).setPercentHeight(53/total.getHeight()*100);
+                    messageGrid.getRowConstraints().get(1).setPercentHeight(200/total.getHeight()*100);
+                    messageGrid.getRowConstraints().get(2).setPercentHeight(100-(53/total.getHeight()+30/total.getHeight()+200/total.getHeight())*100);
+                }
             }else {
-                total.setPrefHeight(ContentTextArea.getPrefHeight()+30+53);
-                messageGrid.getRowConstraints().get(0).setPercentHeight(30/total.getHeight()*100);
-                messageGrid.getRowConstraints().get(2).setPercentHeight(53/total.getHeight()*100);
-                messageGrid.getRowConstraints().get(1).setPercentHeight(100-(53/total.getHeight()+30/total.getHeight())*100);
-
+                if (message.getType().equalsIgnoreCase("text")) {
+                    total.setPrefHeight(ContentTextArea.getPrefHeight()+30+53);
+                    messageGrid.getRowConstraints().get(0).setPercentHeight(30/total.getHeight()*100);
+                    messageGrid.getRowConstraints().get(2).setPercentHeight(53/total.getHeight()*100);
+                    messageGrid.getRowConstraints().get(1).setPercentHeight(100-(53/total.getHeight()+30/total.getHeight())*100);
+                }else if (message.getContent().isEmpty()){
+                    total.setPrefHeight(30+53+200);
+                    messageGrid.getRowConstraints().get(0).setPercentHeight(30/total.getHeight()*100);
+                    messageGrid.getRowConstraints().get(3).setPercentHeight(53/total.getHeight()*100);
+                    messageGrid.getRowConstraints().get(1).setPercentHeight(200/total.getHeight()*100);
+                    messageGrid.getRowConstraints().get(2).setPercentHeight(0);
+                }else {
+                    total.setPrefHeight(ContentTextArea.getPrefHeight()+30+53+200);
+                    messageGrid.getRowConstraints().get(0).setPercentHeight(30/total.getHeight()*100);
+                    messageGrid.getRowConstraints().get(3).setPercentHeight(53/total.getHeight()*100);
+                    messageGrid.getRowConstraints().get(1).setPercentHeight(200/total.getHeight()*100);
+                    messageGrid.getRowConstraints().get(2).setPercentHeight(100-(53/total.getHeight()+30/total.getHeight()+200/total.getHeight())*100);
+                }
             }
-
-
 //            rightGridPain.getRowConstraints().get(3).setPercentHeight(messageTextArea.getPrefHeight()/rightGridPain.getHeight()*100);
 //            rightGridPain.getRowConstraints().get(2).setPercentHeight(84-messageTextArea.getPrefHeight()/rightGridPain.getHeight()*100);
         });

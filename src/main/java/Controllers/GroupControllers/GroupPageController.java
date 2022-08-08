@@ -520,7 +520,7 @@ public class GroupPageController {
             if (group.getMessages().size()==Controller.user.getReadMessageGroup().get(Controller.user.getGroups().indexOf(group))){
                 messageScrollPane.setVvalue(0);
             }else {
-                messageScrollPane.setVvalue(reverseVboxForSendMessage.getChildren().get(group.getMessages().size() - Controller.user.getReadMessagePv().get(Controller.user.getPvs().indexOf(group)) - 1).getLayoutY() / reverseVboxForSendMessage.getHeight());
+                messageScrollPane.setVvalue(reverseVboxForSendMessage.getChildren().get(group.getMessages().size() - Controller.user.getReadMessagePv().get(Controller.user.getGroups().indexOf(group)) - 1).getLayoutY() / reverseVboxForSendMessage.getHeight());
             }
             Controller.user.getReadMessageGroup().set(Controller.user.getGroups().indexOf(group),group.getMessages().size());
         }else {

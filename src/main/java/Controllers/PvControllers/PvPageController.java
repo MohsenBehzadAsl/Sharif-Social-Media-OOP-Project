@@ -26,14 +26,23 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.Callable;
 import DataBase.UpdateSqlTable;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class PvPageController {
+
+
+    @FXML
+    public ImageView photoDisplay;
+    public String photoName=new String();
+    public boolean isPhotoType=false;
 
     public Boolean selectPv=false;
     public Pv pv;
@@ -293,7 +302,19 @@ public class PvPageController {
     }
     @FXML
     public void selectPhotoMessage(MouseEvent event) {
-
+        FileChooser fileChooser=new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("All Images", "*.*"),
+                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+                new FileChooser.ExtensionFilter("PNG", "*.png")
+        );
+        Stage stage=(Stage) totalGrid.getScene().getWindow();
+        File file=  fileChooser.showOpenDialog(stage);
+        if(file!=null){
+            Image image = new Image(file.toURI().toString());
+            photoName=file.toURI().toString();
+            photoDisplay.setImage(image);
+        }
     }
     @FXML
     public void sendMessage(MouseEvent event) throws IOException, SQLException, ClassNotFoundException {

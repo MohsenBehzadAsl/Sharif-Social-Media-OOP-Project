@@ -333,12 +333,15 @@
                         </ImageView>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                  <HBox alignment="CENTER" maxWidth="-Infinity" prefHeight="100.0" prefWidth="55.0">
                      <children>
-                        <ImageView fitHeight="41.0" fitWidth="83.0" onMouseClicked="#selectPhotoMessage" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="photoDisplay" fitHeight="41.0" fitWidth="83.0" onMouseClicked="#selectPhotoMessage" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/clip2.png" />
                            </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </ImageView>
                      </children>
                   </HBox>
