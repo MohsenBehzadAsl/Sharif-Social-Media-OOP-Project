@@ -17,6 +17,8 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public class UserRecommendationController {
+
+    public Parent nowParent= null;
     @FXML
     private GridPane total;
 
@@ -55,6 +57,8 @@ public class UserRecommendationController {
         Controller.mainPageController.setMain(parent);
         showAnotherUserPageController.user=user;
         showAnotherUserPageController.start(user);
+        showAnotherUserPageController.nowParent=parent;
+        showAnotherUserPageController.backParent=nowParent;
         user.getViewsFromPage().put(Controller.user, LocalDateTime.now());
     }
 

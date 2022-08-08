@@ -15,6 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,12 +27,17 @@ public class Controller {
     public static GridPane main;
     public static Scene scene;
     public static MainPageController mainPageController;
-    public static void showHomePage(String id) throws IOException {
+    public static void showHomePage(String id) throws IOException, SQLException, ClassNotFoundException {
         Controller.user= DataBase.getUserWithId(id);
 
          FXMLLoader fxmlLoader=new FXMLLoader(Controller.class.getResource("/fxml/MainPage.fxml"));
          Parent parent=fxmlLoader.load();
          mainPageController=fxmlLoader.getController();
+         mainPageController.update();
+         if (user.getType().equalsIgnoreCase("Normal")){
+             mainPageController.getAnalyzeHBox().setVisible(false);
+         }
+         mainPageController.Home(null);
          scene = new Scene(parent);
          String css=Controller.class.getResource("/CSS/DARK.css").toExternalForm();
          scene.getStylesheets().add(css);

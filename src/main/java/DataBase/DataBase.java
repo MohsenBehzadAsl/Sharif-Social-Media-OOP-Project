@@ -36,7 +36,7 @@ public class DataBase {
         DataBase.comments = comments;
     }
 
-    public static String password="Mohammad1381";
+    public static String password="mohsen0312699670";
 
 
     public DataBase(){
@@ -92,8 +92,8 @@ public class DataBase {
                         , "root",
                         DataBase.password);
         PreparedStatement preparedStatement =connection.prepareStatement(
-                "insert into users(userName,id,password,passwordHint,gender,question,ansQuestion)" +
-                        "value (?,?,?,?,?,?,?,?)"
+                "insert into users(userName,id,password,passwordHint,gender,question,ansQuestion,addToGroupAbility,profilePhoto)" +
+                        "value (?,?,?,?,?,?,?,?,?)"
         );//yedone alamat soal va boolean addToGroupAbility
         preparedStatement.setString(1, user.getUserName());
         preparedStatement.setString(2, user.getId());
@@ -103,6 +103,7 @@ public class DataBase {
         preparedStatement.setString(6, user.getQuestion());
         preparedStatement.setString(7, user.getAnsQuestion());
         preparedStatement.setString(8,String.valueOf(user.getAddToGroupAbility()));
+        preparedStatement.setString(9,user.getPhotoNameFromImageFolder());
         preparedStatement.executeUpdate();
     }
     public static void setNewPasswordInTable(User user) throws ClassNotFoundException, SQLException {

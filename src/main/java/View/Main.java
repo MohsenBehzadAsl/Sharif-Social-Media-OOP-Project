@@ -42,21 +42,7 @@ public class Main extends Application {
                 DataBase.password);
         ArrayList<String> s=new ArrayList<>();
         UserRepository.getData().createTable(connection);
-        System.out.println(String.valueOf(getClass().getResource("/CSS/DARK.css")).replaceAll("^file:/",""));
-        File file=new File(String.valueOf(getClass().getResource("/CSS/newCssMain.css")).replaceAll("^file:/",""));
-        Scanner scanner=new Scanner(file);
-        while (scanner.hasNextLine()){
-            s.add(scanner.nextLine());
-            if (s.get(s.size()-1).matches("(.*)-fx-border-style:(.*)")){
-                s.set(s.size()-1,"-fx-border-style: "+"Blue");
-            }
-        }
-        for (int i=0;i<s.size();i++){
-            System.out.println(s.get(i));
-        }
-        System.out.println("******_________***");
-        FileWriter fileWriter=new FileWriter(file);
-        fileWriter.write("hello");
+
 
         UserRepository.getData().initializeuser(connection);
 //        Scanner in=new Scanner(System.in);

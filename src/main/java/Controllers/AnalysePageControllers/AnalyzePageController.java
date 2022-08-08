@@ -26,7 +26,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public class AnalyzePageController {
+
+    public Parent nowParent = null;
+
+
     private LinkedHashMap<String,Integer> helpToPlot1=new LinkedHashMap<>();
+
 
     @FXML
     private GridPane all;
@@ -117,6 +122,7 @@ public class AnalyzePageController {
                 ViewUserInAnalyzePageController viewUserInAnalyzePageController=fxmlLoader.getController();
                 viewUserInAnalyzePageController.getName().setText(keyList.get(i).getUserName());
                 viewUserInAnalyzePageController.getId().setText("@"+keyList.get(i).getId());
+                viewUserInAnalyzePageController.nowParent=nowParent;
             //  viewUserInAnalyzePageController.getImage().setFill(new ImagePattern(new Image(keyList.get(i).getPhotoNameFromImageFolder())));
                 viewUserInAnalyzePageController.getFollowers().setText("Num of followers : " +  keyList.get(i).getFollowers().size());
                 viewUserInAnalyzePageController.getFollowings().setText("Num of followings : " +  keyList.get(i).getFollowings().size());

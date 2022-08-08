@@ -11,9 +11,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="total" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainPageController">
+<GridPane fx:id="total" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainPageController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -60,7 +61,7 @@
                                     </ImageView>
                                     <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                                        <children>
-                                          <Label prefHeight="40.0" prefWidth="51.0" text="Home" textAlignment="CENTER">
+                                          <Label prefHeight="40.0" prefWidth="100.0" text="Home" textAlignment="CENTER">
                                              <font>
                                                 <Font name="Bell MT Bold" size="18.0" />
                                              </font>
@@ -266,7 +267,7 @@
                                     </ImageView>
                                     <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                                        <children>
-                                          <Label prefHeight="40.0" prefWidth="137.0" text="Near" textAlignment="CENTER">
+                                          <Label prefHeight="40.0" prefWidth="137.0" text="Friends" textAlignment="CENTER">
                                              <font>
                                                 <Font name="Bell MT Bold" size="18.0" />
                                              </font>
@@ -356,7 +357,7 @@
                               </GridPane>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="65.0" prefWidth="151.0">
+                        <HBox fx:id="analyzeHBox" alignment="CENTER" prefHeight="65.0" prefWidth="151.0">
                            <children>
                               <GridPane>
                                  <columnConstraints>
@@ -398,15 +399,6 @@
                   </VBox>
                </content>
             </ScrollPane>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <ImageView fitHeight="98.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/home-2-line.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </HBox>
             <HBox fx:id="LogOutButton" alignment="CENTER" prefHeight="69.0" prefWidth="113.0" GridPane.rowIndex="2">
                <children>
                   <ImageView fitHeight="36.0" fitWidth="48.0" onMouseClicked="#Exit" pickOnBounds="true" preserveRatio="true">
@@ -424,6 +416,27 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" percentHeight="70.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Circle fx:id="profilePhoto" fill="DODGERBLUE" radius="35.0" stroke="BLACK" strokeType="INSIDE" />
+                     </children>
+                  </VBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+                     <children>
+                        <Label fx:id="userName" alignment="CENTER" prefHeight="31.0" prefWidth="165.0" text="username" />
+                     </children>
+                  </HBox>
+               </children>
+            </GridPane>
          </children>
       </GridPane>
       <GridPane fx:id="main" gridLinesVisible="true" GridPane.columnIndex="1">

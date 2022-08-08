@@ -122,12 +122,17 @@ public class PvIconController {
             }
             message.setForwardFrom(forwarder);
             pv.addMessage(message);
-            pvPageController.updatePvs();
-            if (pv.getUser1()==Controller.user) {
-                pvPageController.showPv(pv.getUser2());
-            }else {
-                pvPageController.showPv(pv.getUser1());
+
+            if (isPvForward){
+                pvPageController.updatePvs();
+
+                if (pv.getUser1()==Controller.user) {
+                    pvPageController.showPv(pv.getUser2());
+                }else {
+                    pvPageController.showPv(pv.getUser1());
+                }
             }
+
         }
     }
 

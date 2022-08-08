@@ -26,6 +26,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import static View.Controller.mainPageController;
+
 public class SettingController implements Initializable {
     @FXML
     private ChoiceBox<String> myChangeInformationChoiceBox;
@@ -214,10 +216,11 @@ public class SettingController implements Initializable {
         File file=  fileChooser.showOpenDialog(stage);
         if(file!=null){
             myTextField.setText(file.getAbsolutePath());
-            Image image = new Image(file.toURI().toString());
-            user.setPhotoNameFromImageFolder(file.toURI().toString());
+            Image image = new Image(file.toURI().toString().replace("^file:/",""));
+            user.setPhotoNameFromImageFolder(file.toURI().toString().replace("^file:/",""));
             myImageView.setImage(image);
             myLabel.setText("PROFILE PHOTO CHANGED SUCCESSFULLY");
+            mainPageController.update();
         }
     }
     public void getBackground(ActionEvent actionEvent) throws IOException {

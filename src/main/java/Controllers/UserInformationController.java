@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 
 import java.sql.SQLException;
 
+import static View.Controller.mainPageController;
+
 public class UserInformationController {
     public Stage stage;
     private String information;
@@ -72,6 +74,13 @@ public class UserInformationController {
             Controller.user.setAddToGroupAbility(Boolean.valueOf(newInformation));
         }
         stage.close();
+
+        mainPageController.update();
+        if (Controller.user.getType().equalsIgnoreCase("Normal")){
+            mainPageController.getAnalyzeHBox().setVisible(false);
+        }else{
+            mainPageController.getAnalyzeHBox().setVisible(true);
+        }
     }
 
     @FXML

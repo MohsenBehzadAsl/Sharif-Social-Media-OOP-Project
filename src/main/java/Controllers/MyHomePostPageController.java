@@ -37,6 +37,7 @@ import java.util.concurrent.Callable;
 public class MyHomePostPageController {
 
 
+    public Parent nowParent = null;
 
     @FXML
     private VBox userRecommendation;
@@ -184,9 +185,13 @@ public class MyHomePostPageController {
 
                 postController.setMyHomePostPageController(this);
                 postController.setPost(posts.get(i));
+                postController.nowParent=nowParent;
                 postController.getAll().getColumnConstraints().get(0).setPercentWidth(100);
                 postController.getAll().getColumnConstraints().get(1).setPercentWidth(0);
                 postController.getAll().getColumnConstraints().get(2).setPercentWidth(0);
+                if (posts.get(i).getSender().getType().equalsIgnoreCase("Normal")){
+                    postController.getIsAd().setVisible(false);
+                }
                 postController.getUsername().setText(Controller.user.getUserName());
                 postController.getNumOfViews().setText("Num Of Views : "+String.valueOf(posts.get(i).getViews().size()));
                 postController.getNumofLike().setText("Num Of Likes : "+String.valueOf(posts.get(i).getLikes().size()));
@@ -276,36 +281,45 @@ public class MyHomePostPageController {
     }
 
     public void showUserRecommendation(MouseEvent mouseEvent) throws IOException {
-        all.getRowConstraints().get(0).setPercentHeight(13.6);
-        all.getRowConstraints().get(1).setPercentHeight(50);
-        all.getRowConstraints().get(2).setPercentHeight(0);
-        all.getRowConstraints().get(4).setPercentHeight(0);
-        all.getRowConstraints().get(3).setPercentHeight(36.4);
-
-
-
-        ArrayList<User> recommendedUsers=new ArrayList<>();
-        UserRecommender userRecommender=new UserRecommender();
-        recommendedUsers=userRecommender.findFinalUsersIndivisually(Controller.user);
-        if (recommendedUsers.size() == 0) {
-
-        } else {
+        if ( all.getRowConstraints().get(3).getPercentHeight()==30){
             userRecommendation.getChildren().clear();
-            for (int i = 0; i < recommendedUsers.size(); i++) {
-                FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/UserRecommendation.fxml"));
-                Parent parent=fxmlLoader.load();
-                UserRecommendationController userRecommendationController=fxmlLoader.getController();
-                userRecommendationController.getName().setText(recommendedUsers.get(i).getUserName());
-                userRecommendationController.getId().setText("@"+recommendedUsers.get(i).getId());
-                userRecommendationController.getImage().setFill(new ImagePattern(new Image(recommendedUsers.get(i).getPhotoNameFromImageFolder())));
-                userRecommendationController.getFollowers().setText("Num of followers : " +  recommendedUsers.get(i).getFollowers().size());
-                userRecommendationController.getFollowings().setText("Num of followings : " +  recommendedUsers.get(i).getFollowings().size());
-                userRecommendationController.getType().setText(recommendedUsers.get(i).getType());
-                userRecommendationController.setUser(recommendedUsers.get(i));
-                userRecommendation.getChildren().add(parent);
+            all.getRowConstraints().get(0).setPercentHeight(13.6);
+            all.getRowConstraints().get(1).setPercentHeight(86.4);
+            all.getRowConstraints().get(2).setPercentHeight(0);
+            all.getRowConstraints().get(3).setPercentHeight(0);
+            all.getRowConstraints().get(4).setPercentHeight(0);
+        }else {
+            all.getRowConstraints().get(0).setPercentHeight(13.6);
+            all.getRowConstraints().get(1).setPercentHeight(50);
+            all.getRowConstraints().get(2).setPercentHeight(6.4);
+            all.getRowConstraints().get(4).setPercentHeight(0);
+            all.getRowConstraints().get(3).setPercentHeight(30);
+
+
+            ArrayList<User> recommendedUsers = new ArrayList<>();
+            UserRecommender userRecommender = new UserRecommender();
+            recommendedUsers = userRecommender.findFinalUsersIndivisually(Controller.user);
+            if (recommendedUsers.size() == 0) {
+
+            } else {
+                userRecommendation.getChildren().clear();
+                for (int i = 0; i < recommendedUsers.size(); i++) {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/UserRecommendation.fxml"));
+                    Parent parent = fxmlLoader.load();
+                    UserRecommendationController userRecommendationController = fxmlLoader.getController();
+                    userRecommendationController.getName().setText(recommendedUsers.get(i).getUserName());
+                    userRecommendationController.getId().setText("@" + recommendedUsers.get(i).getId());
+                    userRecommendationController.nowParent = nowParent;
+                    userRecommendationController.getImage().setFill(new ImagePattern(new Image(recommendedUsers.get(i).getPhotoNameFromImageFolder())));
+                    userRecommendationController.getFollowers().setText("Num of followers : " + recommendedUsers.get(i).getFollowers().size());
+                    userRecommendationController.getFollowings().setText("Num of followings : " + recommendedUsers.get(i).getFollowings().size());
+                    userRecommendationController.getType().setText(recommendedUsers.get(i).getType());
+                    userRecommendationController.setUser(recommendedUsers.get(i));
+                    userRecommendation.getChildren().add(parent);
+
+                }
 
             }
-
         }
 
     }
@@ -344,8 +358,8 @@ public class MyHomePostPageController {
 
         System.out.println("/////////////////////");
         all.getRowConstraints().get(0).setPercentHeight(13.6);
-        all.getRowConstraints().get(1).setPercentHeight(80);
-        all.getRowConstraints().get(2).setPercentHeight(6.4);
+        all.getRowConstraints().get(1).setPercentHeight(86.4);
+        all.getRowConstraints().get(2).setPercentHeight(0);
         all.getRowConstraints().get(3).setPercentHeight(0);
         all.getRowConstraints().get(4).setPercentHeight(0);
 

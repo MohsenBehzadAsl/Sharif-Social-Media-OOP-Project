@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 
 public class ViewUserInAnalyzePageController {
 
+    public Parent nowParent = null;
     public User user;
 
     public User getUser() {
@@ -58,6 +59,8 @@ public class ViewUserInAnalyzePageController {
         ShowAnotherUserPageController showAnotherUserPageController=fxmlLoader.getController();
         Controller.mainPageController.setMain(parent);
         showAnotherUserPageController.user=user;
+        showAnotherUserPageController.nowParent=parent;
+        showAnotherUserPageController.backParent=nowParent;
         showAnotherUserPageController.start(user);
         user.getViewsFromPage().put(Controller.user, LocalDateTime.now());
     }
