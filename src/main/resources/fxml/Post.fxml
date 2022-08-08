@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="all" gridLinesVisible="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PostControllers.PostController">
+<GridPane fx:id="all" gridLinesVisible="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PostControllers.PostController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="65.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
@@ -157,7 +157,7 @@
                         </VBox>
                         <HBox alignment="CENTER_LEFT" onMouseClicked="#like" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                            <children>
-                              <Label prefHeight="61.0" prefWidth="94.0" text="Like" textFill="#f8f0f0">
+                              <Label fx:id="toLike" prefHeight="61.0" prefWidth="94.0" text="Like" textFill="#f8f0f0">
                                  <font>
                                     <Font name="Bell MT" size="28.0" />
                                  </font>
@@ -504,6 +504,15 @@
                   </HBox>
                </children>
             </GridPane>
+            <HBox fx:id="isAd" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: purple;">
+               <children>
+                  <Label alignment="CENTER" prefHeight="81.0" prefWidth="149.0" text="\$ isAd $" textFill="#f8f5f5">
+                     <font>
+                        <Font name="Bell MT" size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
          </children>
       </GridPane>
    </children>

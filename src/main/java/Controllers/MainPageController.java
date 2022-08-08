@@ -7,9 +7,13 @@ import View.Controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -21,6 +25,23 @@ public class MainPageController {
 
     @FXML
     private GridPane main;
+
+    @FXML
+    private Circle profilePhoto;
+
+    @FXML
+    private Label userName;
+
+    @FXML
+    private HBox analyzeHBox;
+
+    public HBox getAnalyzeHBox() {
+        return analyzeHBox;
+    }
+
+    public void setAnalyzeHBox(HBox analyzeHBox) {
+        this.analyzeHBox = analyzeHBox;
+    }
 
     public GridPane getMain() {
         return main;
@@ -49,8 +70,17 @@ public class MainPageController {
         Parent parent=fxmlLoader.load();
         AnalyzePageController analyzePageController=fxmlLoader.getController();
         setMain(parent);
+        analyzePageController.nowParent=parent;
         analyzePageController.getWhere().setText("Analyze Page");
         analyzePageController.startShowPost();
+    }
+
+
+    public void update(){
+        System.out.println(Controller.user.getPhotoNameFromImageFolder());
+        profilePhoto.setFill(new ImagePattern(new Image(Controller.user.getPhotoNameFromImageFolder())));
+        userName.setText(Controller.user.getUserName());
+        // postController.getUserProfile().setFill(new ImagePattern(new Image(posts.get(i).getSender().getPhotoNameFromImageFolder())));
     }
     @FXML
     void Exit(MouseEvent event) {
@@ -61,7 +91,9 @@ public class MainPageController {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Explore.fxml"));
         Parent parent=fxmlLoader.load();
         ExploreController exploreController=fxmlLoader.getController();
-        setMain(parent);exploreController.getWhere().setText("Explore");
+        setMain(parent);
+        exploreController.nowParent=parent;
+        exploreController.getWhere().setText("Explore");
         exploreController.startShowPost();
 
     }
@@ -74,20 +106,21 @@ public class MainPageController {
         groupPageController.nowParent=parent;
     }
     @FXML
-    void Home(MouseEvent event) throws IOException, SQLException, ClassNotFoundException {
+    public void Home(MouseEvent event) throws IOException, SQLException, ClassNotFoundException {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/MyHomePostPage.fxml"));
         Parent parent=fxmlLoader.load();
         MyHomePostPageController myHomePostPageController=fxmlLoader.getController();
         setMain(parent);
+        myHomePostPageController.nowParent=parent;
         myHomePostPageController.startShowPost();
         myHomePostPageController.getUsername().setText(Controller.user.getUserName());
         myHomePostPageController.getId().setText("@"+Controller.user.getId());
         myHomePostPageController.getFollowers().setText("Num Of Followers: "+ Controller.user.getFollowers().size());
         myHomePostPageController.getFollowing().setText("Num Of Following: "+ Controller.user.getFollowings().size());
-      //  myHomePostPageController.getImageProfile().setFill(new ImagePattern(new Image(Controller.user.getPhotoNameFromImageFolder())));
+        myHomePostPageController.getImageProfile().setFill(new ImagePattern(new Image(Controller.user.getPhotoNameFromImageFolder())));
         myHomePostPageController.getAll().getRowConstraints().get(0).setPercentHeight(13.6);
-        myHomePostPageController.getAll().getRowConstraints().get(1).setPercentHeight(80);
-        myHomePostPageController.getAll().getRowConstraints().get(2).setPercentHeight(6.4);
+        myHomePostPageController.getAll().getRowConstraints().get(1).setPercentHeight(86.4);
+        myHomePostPageController.getAll().getRowConstraints().get(2).setPercentHeight(0);
         myHomePostPageController.getAll().getRowConstraints().get(3).setPercentHeight(0);
         myHomePostPageController.getAll().getRowConstraints().get(4).setPercentHeight(0);
     }
@@ -98,6 +131,7 @@ public class MainPageController {
         Parent parent=fxmlLoader.load();
         ExploreController exploreController=fxmlLoader.getController();
         setMain(parent);
+        exploreController.nowParent=parent;
         exploreController.startShowPost();
         exploreController.getWhere().setText("Main Page");
     }

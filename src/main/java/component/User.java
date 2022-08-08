@@ -161,7 +161,7 @@ public class User {
     public User(String userName, String id, String password, String passwordHint , String gender, String question, String ansQuestion) {
         photoNameFromImageFolder=new String();
         int index= (int) Math.random()%7;
-        photoNameFromImageFolder="sampleProfilePhoto"+index;
+
         //     Repository.statement.executeQuery("INSERT INTO meow  (userName,id,password,passwordHint,type,question,ansQuestion) VALUES (a,b,c,d,e,f,g))");
         this.userName = userName;
         this.id = id;
@@ -378,11 +378,13 @@ public class User {
         preparedStatement1.executeUpdate();
     }
     public String getPhotoNameFromImageFolder() {
-        if (photoNameFromImageFolder==null){
+        if (photoNameFromImageFolder==null||photoNameFromImageFolder.isEmpty()||photoNameFromImageFolder.equals("")){
             photoNameFromImageFolder=new String();
             int index= ((int) (Math.random()*10))%7;
             photoNameFromImageFolder="sampleProfilePhoto"+index;
+            System.out.println("1- " +photoNameFromImageFolder);
             photoNameFromImageFolder= String.valueOf(Controller.class.getResource("/images/"+photoNameFromImageFolder+".png"));
+            System.out.println("2- "+photoNameFromImageFolder);
         }
         return photoNameFromImageFolder;
     }

@@ -73,7 +73,8 @@ public class Datainitializer {
                 "sendTime varchar(255),"+
                 "commentAbility varchar(255), "+
                 "commentOfPostId varchar(255),"+
-                "commentId varchar(255))"
+                "commentId varchar(255)," +
+                "photoAddress varchar(255))"
         );
     }
     public void Datainitialize(Statement statement) throws SQLException {
@@ -112,7 +113,8 @@ public class Datainitializer {
                 "replyOfMessageId varchar(255),"+//many to one va in ro neshon mide k in payam b kodom payam reply shode
                 "messageId varchar(255),"+
                 "isPvOrGroup varchar(255),"+
-                "pvOrGroupId varchar(255))");
+                "pvOrGroupId varchar(255)," +
+                "photoAddress varchar(255))");
     }
     public void Datainitialize8(Statement statement) throws SQLException {
         statement.executeUpdate("CREATE TABLE IF NOT EXISTS "+
@@ -126,7 +128,8 @@ public class Datainitializer {
                 "replyOfMessageId varchar(255),"+//many to one va in ro neshon mide k in payam b kodom payam reply shode
                 "messageId varchar(255),"+
                 "isPvOrGroup varchar(255),"+
-                "pvOrGroupId varchar(255))");
+                "pvOrGroupId varchar(255),"+
+                "photoAddress varchar(255))");
     }
     public void Datainitialize9(Statement statement) throws SQLException {
         statement.executeUpdate("CREATE TABLE IF NOT EXISTS "+
@@ -141,7 +144,8 @@ public class Datainitializer {
                 "groupId varchar(255),"+
                 "nameOfGroup varchar(255),"+
                 "bio varchar(255),"+
-                "isBan varchar(255))");
+                "isBan varchar(255)," +
+                "photoAddress varchar(255))");
     }
     public void Datainitialize11(Statement statement) throws SQLException {
         statement.executeUpdate("CREATE TABLE IF NOT EXISTS "+
@@ -278,6 +282,9 @@ public class Datainitializer {
             comment.setDate(LocalDateTime.parse(resultSet3.getString("sendTime")));
             comment.setIsComment("comment");
             comment.setCommentAbility(Boolean.parseBoolean(resultSet3.getString("commentAbility")));
+            if (resultSet3.getString("format").equals("image")){
+                comment.setPhotoAddress(resultSet3.getString("photoAddress"));
+            }
             post.setPostId(resultSet3.getString("commentOfPostId"));
             for (Post dataBasePost : dataBase.getPosts()) {
                 if(dataBasePost.getPostId().equals(post.getPostId())){
@@ -378,6 +385,7 @@ public class Datainitializer {
             group.setBio(resultSet7.getString("bio"));
             group.setSqlId(resultSet7.getString("sqlId"));
             group.setGroupId(resultSet7.getString("groupId"));
+            group.setPhotoAddress(resultSet7.getString("photoAddress"));
             groups.add(group);
             Group.setIndex(Group.getIndex()+1);
             //  group.setBanGroup(Boolean.valueOf(resultSet7.getString("isBan")));
@@ -472,6 +480,9 @@ public class Datainitializer {
             message.setContent(resultSet9.getString("content"));
             message.setGender(resultSet9.getString("gender"));
             message.setDate(LocalDateTime.parse(resultSet9.getString("sendTime")));
+            if (resultSet9.getString("format").equals("image")){
+                message.setPhotoAddress(resultSet9.getString("photoAddress"));
+            }
             for (User dataBaseUser : dataBase.getUsers()) {
                 if(dataBaseUser.getId().equals(user2.getId())){
                     message.setForwardFrom(dataBaseUser);

@@ -14,6 +14,8 @@ public class OtherUsersController {
     @FXML
     private Label userName;
 
+
+
     public void showOthersPage(MouseEvent mouseEvent) {
 
     }

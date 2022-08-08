@@ -14,6 +14,9 @@ public class Group {
     private static int index=0;
     private String sqlId;
 
+    private  String photoAddress;
+
+
 
     private LinkedHashMap<User,Boolean> linkedMembers=new LinkedHashMap<User,Boolean>(); // Boolean-->ban  true==ban
     private ArrayList<User> members=new ArrayList<>();
@@ -223,5 +226,11 @@ public void addGroupToTable(Group group,String name,String bio,boolean banGroup)
         this.members = members;
     }
 
+    public String getPhotoAddress() {
+        return photoAddress;
+    }
 
+    public void setPhotoAddress(String photoAddress) {
+        this.photoAddress = photoAddress;
+    }
 }

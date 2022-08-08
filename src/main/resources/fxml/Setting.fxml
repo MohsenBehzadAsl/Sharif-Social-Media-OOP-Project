@@ -2,9 +2,9 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -12,16 +12,16 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="myGridPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="0.0" prefHeight="519.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.SettingControllers.SettingController">
+<GridPane fx:id="myGridPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="0.0" prefHeight="521.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.SettingControllers.SettingController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints minHeight="10.0" percentHeight="15.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" percentHeight="70.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" percentHeight="85.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -138,9 +138,13 @@
                                     <RadioButton fx:id="mySkyRadioButton" mnemonicParsing="false" onAction="#getBackground" text="SKY" toggleGroup="$background" />
                                  </children>
                               </HBox>
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+                              <HBox alignment="CENTER" prefHeight="87.0" prefWidth="200.0" GridPane.rowIndex="2">
                                  <children>
-                                    <RadioButton fx:id="myCustomRadioButton" mnemonicParsing="false" onAction="#getBackground" text="CUSTOM" toggleGroup="$background" />
+                                    <ColorPicker fx:id="myColorPicker" onAction="#custom">
+                                       <value>
+                                          <Color red="0.21568627655506134" green="0.24313725531101227" blue="0.26274511218070984" />
+                                       </value>
+                                    </ColorPicker>
                                  </children>
                               </HBox>
                            </children>
@@ -175,8 +179,8 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="149.60000457763672" minHeight="10.0" prefHeight="134.39999237060547" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="84.00000610351563" minHeight="10.0" prefHeight="46.40000762939454" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="149.60000457763672" minHeight="10.0" percentHeight="65.0" prefHeight="134.39999237060547" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="84.00000610351563" minHeight="10.0" percentHeight="35.0" prefHeight="46.40000762939454" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <HBox alignment="CENTER" prefHeight="141.0" prefWidth="600.0">
@@ -191,37 +195,6 @@
                   </HBox>
                </children>
             </GridPane>
-         </children>
-      </GridPane>
-      <GridPane GridPane.rowIndex="2">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="359.2" minWidth="10.0" prefWidth="336.7999755859375" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="306.4000244140625" minWidth="10.0" prefWidth="157.6000244140625" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.20001220703125" minWidth="10.0" prefWidth="93.5999755859375" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label fx:id="myLabel" prefHeight="27.0" prefWidth="337.0" text="CHANGE ...........">
-                     <font>
-                        <Font name="Bell MT" size="16.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
-               <children>
-                  <TextField fx:id="myTextField" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
-               <children>
-                  <Button fx:id="mySubmitButton" mnemonicParsing="false" onAction="#submit" text="SUBMIT" />
-               </children>
-            </HBox>
          </children>
       </GridPane>
    </children>

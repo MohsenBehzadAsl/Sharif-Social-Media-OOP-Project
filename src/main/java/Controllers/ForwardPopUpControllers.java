@@ -68,7 +68,7 @@ public class ForwardPopUpControllers {
             }else {
                 pvIconController.selectMessage=message;
             }
-            System.out.println(message.getContent());
+
             pvIconController.set(Controller.user.getPvs().get(i));
             pvs.getChildren().add(parent);
         }

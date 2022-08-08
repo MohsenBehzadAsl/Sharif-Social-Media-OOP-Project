@@ -37,6 +37,8 @@ public class ShowAnotherUserPageController {
     public Parent nowParent=null;
 
     @FXML
+    private Label type;
+    @FXML
     private VBox userRecommendation;
     @FXML
     private GridPane all;
@@ -69,6 +71,7 @@ public class ShowAnotherUserPageController {
         if (Controller.user.getFollowings().contains(user)){
             Controller.user.getFollowings().remove(user);
             user.getFollowers().remove(Controller.user);
+            userRecommendation.getChildren().clear();
             all.getRowConstraints().get(3).setPercentHeight(5);
             all.getRowConstraints().get(4).setPercentHeight(68);
         }else {
@@ -88,6 +91,7 @@ public class ShowAnotherUserPageController {
         myFollowingsLabel.setText(""+user.getFollowings().size());
     }
     public void showUserRecommendationHelp() throws IOException {
+
         ArrayList<User> recommendedUsers=new ArrayList<>();
         UserRecommender userRecommender=new UserRecommender();
         recommendedUsers=userRecommender.findFinalUsersIndivisually(Controller.user);
@@ -101,6 +105,7 @@ public class ShowAnotherUserPageController {
                 UserRecommendationController userRecommendationController=fxmlLoader.getController();
                 userRecommendationController.getName().setText(recommendedUsers.get(i).getUserName());
                 userRecommendationController.getId().setText("@"+recommendedUsers.get(i).getId());
+                userRecommendationController.nowParent=nowParent;
                 userRecommendationController.getImage().setFill(new ImagePattern(new Image(recommendedUsers.get(i).getPhotoNameFromImageFolder())));
                 userRecommendationController.getFollowers().setText("Num of followers : " +  recommendedUsers.get(i).getFollowers().size());
                 userRecommendationController.getFollowings().setText("Num of followings : " +  recommendedUsers.get(i).getFollowings().size());
@@ -174,10 +179,15 @@ public class ShowAnotherUserPageController {
         myFollowersLabel.setText(""+user.getFollowers().size());
         myFollowingsLabel.setText(""+user.getFollowings().size());
         name.setText(user.getUserName());
+        type.setText("Type : "+userWithId.getType());
         if (Controller.user.getFollowings().contains(user)){
             followOrUnFollow.setText("UnFollow");
         }else {
             followOrUnFollow.setText("Follow");
+        }
+
+        if (Controller.user.equals(user)){
+            followOrUnFollow.setDisable(true);
         }
 
     }
@@ -226,6 +236,9 @@ public class ShowAnotherUserPageController {
                 postController.getAll().getColumnConstraints().get(0).setPercentWidth(100);
                 postController.getAll().getColumnConstraints().get(1).setPercentWidth(0);
                 postController.getAll().getColumnConstraints().get(2).setPercentWidth(0);
+                if (posts.get(i).getSender().getType().equalsIgnoreCase("Normal")){
+                    postController.getIsAd().setVisible(false);
+                }
                 postController.getUsername().setText(posts.get(i).getSender().getUserName());
                 postController.getNumOfViews().setText("Num Of Views : "+String.valueOf(posts.get(i).getViews().size()));
                 postController.getNumofLike().setText("Num Of Likes : "+String.valueOf(posts.get(i).getLikes().size()));

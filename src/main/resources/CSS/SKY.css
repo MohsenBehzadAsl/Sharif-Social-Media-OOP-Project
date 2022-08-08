@@ -77,7 +77,7 @@
     -fx-border-color: rgba(255, 255, 255, .80);
     -fx-border-radius: 8;
     -fx-padding: 6 6 6 6;
-    -fx-font: bold italic 8pt "LucidaBrightDemiBold";
+    -fx-font: bold italic 7pt "LucidaBrightDemiBold";
 }
 .borders{
     -fx-border-color: rgba(255, 255, 255, .80);

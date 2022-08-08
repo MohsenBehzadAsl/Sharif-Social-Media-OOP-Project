@@ -80,7 +80,7 @@ public class SignUpController {
         }else {
             if (managerLoginPage.validID(ID.getText())){
                 Controller.changeTextFieldColor(ID,"database have this id :(", "#ec1a1a",true,true);
-
+                flag=false;
             }
         }if (password1.getText().isEmpty()){
                 Controller.changeTextFieldColor(password1,"Please fill password.", "#ec1a1a",true,true);
@@ -126,10 +126,13 @@ public class SignUpController {
         if (managerLoginPage.validPassword(newPassword)) {
             if (!newPassword.equals(check)){
                 Controller.changeTextFieldColor(checkPassword,"Please enter your new password correctly ", "#ec1a1a",true,true);
+                flag=false;
             }
+
         }else{
             Controller.changeTextFieldColor(password1,"Please enter valid Password.", "#ec1a1a",true,true);
             Controller.changeTextFieldColor(checkPassword," ", "#ec1a1a",true,true);
+            flag=false;
         }
 
 

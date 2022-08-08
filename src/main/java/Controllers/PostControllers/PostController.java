@@ -23,6 +23,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -38,6 +39,7 @@ import java.util.concurrent.Callable;
 
 public class PostController {
 
+    public Parent nowParent = null;
 
     public MyHomePostPageController getMyHomePostPageController() {
         return myHomePostPageController;
@@ -123,6 +125,20 @@ public class PostController {
 
     @FXML
     private Label username;
+
+    @FXML
+    private Label toLike;
+
+    public HBox getIsAd() {
+        return isAd;
+    }
+
+    public void setIsAd(HBox isAd) {
+        this.isAd = isAd;
+    }
+
+    @FXML
+    private HBox isAd;
 
     @FXML
     private Label numofLike;
@@ -277,6 +293,23 @@ public class PostController {
             helpInListener.getRowConstraints().get(0).setPercentHeight(80/left.getHeight()*100/2);
             helpShowButtonsInListener.getRowConstraints().get(0).setPercentHeight(80/left.getHeight()*100);
         });
+
+
+
+
+
+        if (!Controller.user.getFollowings().contains(post.getSender()) ) {
+            if ( !Controller.user.equals(post.getSender())){
+                banCommentOrFollow.setText("Follow");
+            }
+        }else{
+            banCommentOrFollow.setText("Unfollow");
+        }
+
+
+        if (post.getLikes().containsKey(Controller.user)){
+            toLike.setText("Unlike");
+        }
     }
 
 
@@ -499,6 +532,8 @@ public class PostController {
             Parent parent=fxmlLoader.load();
             ShowAnotherUserPageController showAnotherUserPageController=fxmlLoader.getController();
             Controller.mainPageController.setMain(parent);
+            showAnotherUserPageController.nowParent=parent;
+            showAnotherUserPageController.backParent=nowParent;
             showAnotherUserPageController.set(post.getSender());
             showAnotherUserPageController.start(post.getSender());
             post.getSender().getViewsFromPage().put(Controller.user,LocalDateTime.now());
@@ -586,7 +621,7 @@ public class PostController {
                 otherUsersController.getUserName().setFont(Font.font(16));
 
 
-                //otherUsersController.getUserProfile().setImage(new Image(users.get(i).getPhotoNameFromImageFolder()));
+                otherUsersController.getUserProfile().setImage(new Image(users.get(i).getPhotoNameFromImageFolder()));
 
 
 
@@ -649,8 +684,8 @@ public class PostController {
         }
     }
 
-    public void forward(MouseEvent mouseEvent) {
-
+    public void forward(MouseEvent mouseEvent) throws IOException {
+        Controller.forwardMessageSimple(post);
     }
 
     public void comment(MouseEvent mouseEvent) throws SQLException, ClassNotFoundException, IOException {
@@ -660,16 +695,26 @@ public class PostController {
 
 
     public void like(MouseEvent mouseEvent) throws SQLException, ClassNotFoundException {
-        post.addLikeToTable(Controller.user,post.getPostId(), LocalDateTime.now());
-        post.getLikes().put(Controller.user, LocalDateTime.now());
-        if (Controller.user.getLikedInfo().containsKey(post.getSender())){
-            int kkk=Controller.user.getLikedInfo().get(post.getSender());
-            Controller.user.getLikedInfo().put(post.getSender(),kkk+1);
-        }else{
-            Controller.user.getLikedInfo().put(post.getSender(),1);
-        }
-        liked.setImage(new Image(getClass().getResource("/images/liked.png").toExternalForm()));
-        numofLike.setText("Num of likes : "+String.valueOf(post.getLikes().size()));
+       if (post.getLikes().containsKey(Controller.user)){
+           UpdateSqlTable.removeLikeFromButton(Controller.user,post);
+           post.getLikes().remove(Controller.user);
+           liked.setImage(new Image(getClass().getResource("/images/like.png").toExternalForm()));
+           numofLike.setText("Num of likes : "+String.valueOf(post.getLikes().size()));
+           toLike.setText("Like");
+
+       }else{
+           post.addLikeToTable(Controller.user,post.getPostId(), LocalDateTime.now());
+           post.getLikes().put(Controller.user, LocalDateTime.now());
+           if (Controller.user.getLikedInfo().containsKey(post.getSender())){
+               int kkk=Controller.user.getLikedInfo().get(post.getSender());
+               Controller.user.getLikedInfo().put(post.getSender(),kkk+1);
+           }else{
+               Controller.user.getLikedInfo().put(post.getSender(),1);
+           }
+           liked.setImage(new Image(getClass().getResource("/images/liked.png").toExternalForm()));
+           numofLike.setText("Num of likes : "+String.valueOf(post.getLikes().size()));
+           toLike.setText("Unlike");
+       }
     }
 
 

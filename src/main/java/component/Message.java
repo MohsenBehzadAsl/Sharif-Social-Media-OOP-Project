@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 
 public class Message extends Post{
 
-
     private static int index=0;
     private String messageId;
     private Boolean forward=false;
@@ -46,7 +45,7 @@ public class Message extends Post{
     }
     public void addMessageToTable(User sender,String format,String content,String gender,LocalDateTime sendTime,boolean forward,
                                   User forwardFrom,boolean edited,boolean reply,String isMessage,String replyOfMessageId,String messageId,
-                                  String isPvOrGroup,String pvOrGroupId) throws ClassNotFoundException, SQLException {
+                                  String isPvOrGroup,String pvOrGroupId,String photoAddress) throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection connection= DriverManager.
                 getConnection("jdbc:mysql://localhost:3306/joel"
@@ -54,14 +53,14 @@ public class Message extends Post{
                         DataBase.password);
         PreparedStatement preparedStatement =connection.prepareStatement(
                 " INSERT INTO message  (senderId,format,content,gender,sendTime,forward,forwardedFromId,edited," +
-                        "reply,isMessage,replyOfMessageId,messageId,isPvOrGroup,pvOrGroupId)" +
-                        " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+                        "reply,isMessage,replyOfMessageId,messageId,isPvOrGroup,pvOrGroupId,photoAddress)" +
+                        " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
         );
         if(reply) {
             PreparedStatement preparedStatement1 = connection.prepareStatement(
                     "INSERT INTO reply(senderId,format,content,gender,sendTime,edited,isMessage" +
-                            ",replyOfMessageId,messageId,isPvOrGroup,pvOrGroupId)" +
-                            "VALUES (?,?,?,?,?,?,?,?,?,?,?)"
+                            ",replyOfMessageId,messageId,isPvOrGroup,pvOrGroupId,photoAddress)" +
+                            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)"
             );
             preparedStatement1.setString(1,sender.getId());
             preparedStatement1.setString(2,format);
@@ -74,6 +73,7 @@ public class Message extends Post{
             preparedStatement1.setString(9,messageId);
             preparedStatement1.setString(10,isPvOrGroup);
             preparedStatement1.setString(11,pvOrGroupId);
+            preparedStatement1.setString(12,photoAddress);
         }
         preparedStatement.setString(1,sender.getId());
         preparedStatement.setString(2,format);
@@ -89,6 +89,7 @@ public class Message extends Post{
         preparedStatement.setString(12,messageId);
         preparedStatement.setString(13,isPvOrGroup);
         preparedStatement.setString(14,pvOrGroupId);
+        preparedStatement.setString(15,photoAddress);
         preparedStatement.executeUpdate();
 
 
@@ -187,7 +188,7 @@ public class Message extends Post{
     }*/
     public void addMessageToTable() throws SQLException, ClassNotFoundException {
         addMessageToTable(this.getSender(),this.getFormat(),this.getContent(),this.getSender().getType(),LocalDateTime.now(),forward,
-                forwardFrom,edited,reply,isMessage,replyOfMessageId,messageId,isPvOrGroup,pvOrGroupId);
+                forwardFrom,edited,reply,isMessage,replyOfMessageId,messageId,isPvOrGroup,pvOrGroupId,this.getPhotoAddress());
     }
     public String getPvOrGroupId() {
         return pvOrGroupId;

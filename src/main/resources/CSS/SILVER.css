@@ -27,7 +27,7 @@
 .button,.menu-button,.toggle-button,.split-menu-button {
     -fx-font-size: 14;
     -fx-background-radius: 4;
-    -fx-border-radius: 4;
+    -fx-border-radius: 50;
     -fx-pref-height: 30;
     -fx-min-width: 30;
 }
@@ -108,9 +108,9 @@
 }
 
 .split-menu-button.first > .arrow-button, .split-menu-button.middle > .arrow-button {
-    -fx-border-radius: 0;
+    -fx-border-radius: 50;
     -fx-background-radius: 0;
-    -fx-border-radius: 0;
+    -fx-border-radius: 50;
     -fx-background-radius: 0;
 }
 
@@ -142,17 +142,17 @@ VBox > .split-menu-button.first > .arrow-button {
 
 /*middle*/
 .middle {
-    -fx-border-radius: 0;
+    -fx-border-radius: 50;
     -fx-background-radius: 0;
-    -fx-border-radius: 0;
+    -fx-border-radius: 50;
     -fx-background-radius: 0;
 }
 
 /*last*/
 .split-menu-button.middle > .label, .split-menu-button.last > .label {
-    -fx-border-radius: 0;
+    -fx-border-radius: 50;
     -fx-background-radius: 0;
-    -fx-border-radius: 0;
+    -fx-border-radius: 50;
     -fx-background-radius: 0;
 }
 
@@ -165,9 +165,9 @@ VBox > .split-menu-button.first > .arrow-button {
 
 .button.middle, .text-field.middle, .text-area.middle, .split-menu-button.middle, .toggle-button.middle {
     -fx-text-fill :black;
-    -fx-border-radius: 0;
+    -fx-border-radius: 50;
     -fx-background-radius: 0;
-    -fx-border-radius: 0;
+    -fx-border-radius: 50;
     -fx-background-radius: 0;
 }
 
@@ -540,10 +540,10 @@ VBox > .split-menu-button.last > .arrow-button {
 
 
 .context-menu {
-    -fx-border-radius: 4;
+    -fx-border-radius: 50;
     -fx-background-radius: 4;
     -fx-border-color: #bebec0;
-    -fx-border-radius: 4;
+    -fx-border-radius: 50;
     -fx-background-radius: 4;
     -fx-border-color: #bebec0;
 }
@@ -576,10 +576,10 @@ VBox > .split-menu-button.last > .arrow-button {
 }
 
 .combo-box, .choice-box, .color-picker, .date-picker {
-    -fx-border-radius: 4;
+    -fx-border-radius: 50;
     -fx-background-radius: 4;
     -fx-pref-height: 30;
-    -fx-border-radius: 4;
+    -fx-border-radius: 50;
     -fx-background-radius: 4;
     -fx-pref-height: 30;
 }
@@ -610,12 +610,12 @@ VBox > .split-menu-button.last > .arrow-button {
     -fx-text-fill :black;
     -fx-border-color: #cccccc;
     -fx-background-color: white;
-    -fx-border-radius: 4;
+    -fx-border-radius: 50;
     -fx-background-radius: 4;
     -fx-effect: innershadow(gaussian, transparent, 0, 0, 0, 0);
     -fx-border-color: #cccccc;
     -fx-background-color: white;
-    -fx-border-radius: 4;
+    -fx-border-radius: 50;
     -fx-background-radius: 4;
     -fx-effect: innershadow(gaussian, transparent, 0, 0, 0, 0);
 }
@@ -846,11 +846,11 @@ VBox > .split-menu-button.last > .arrow-button {
     -fx-background-radius: 0;
     -fx-background-insets: 0;
     -fx-border-width: 0;
-    -fx-border-radius: 0;
+    -fx-border-radius: 50;
     -fx-background-radius: 0;
     -fx-background-insets: 0;
     -fx-border-width: 0;
-    -fx-border-radius: 0;
+    -fx-border-radius: 50;
 }
 
 .menu-bar > .container > .menu-button:hover,
@@ -889,9 +889,9 @@ VBox > .split-menu-button.last > .arrow-button {
 
 .pagination > .pagination-control > .control-box > .number-button {
     -fx-background-radius: 0;
-    -fx-border-radius: 0;
+    -fx-border-radius: 50;
     -fx-background-radius: 0;
-    -fx-border-radius: 0;
+    -fx-border-radius: 50;
 }
 
 .progress-bar > .track {
@@ -1131,9 +1131,9 @@ VBox > .split-menu-button.last > .arrow-button {
 .accordion > .titled-pane > .title,
 .accordion > .titled-pane > .content {
     -fx-background-radius: 0;
-    -fx-border-radius: 0;
+    -fx-border-radius: 50;
     -fx-background-radius: 0;
-    -fx-border-radius: 0;
+    -fx-border-radius: 50;
 }
 
 .tool-bar:vertical { /* left */
@@ -1224,13 +1224,13 @@ VBox > .split-menu-button.last > .arrow-button {
     /*-org.alfalfa.fx-padding: 0.166667em 0.166667em 0.25em 0.25em; !* 2 2 3 3 *!*/
     -fx-padding: 0;
     -fx-border-color: #56c0e0;
-    -fx-border-radius: 3;
+    -fx-border-radius: 50;
     -fx-background-color: white;
     -fx-background-radius: 3;
     /*-fx-padding: 0.166667em 0.166667em 0.25em 0.25em; !* 2 2 3 3 *!*/
     -fx-padding:0;
     -fx-border-color: #56c0e0;
-    -fx-border-radius: 3;
+    -fx-border-radius: 50;
     -fx-background-color: white;
 }
 
